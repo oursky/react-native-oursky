@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TextInputProps, TextInput } from "react-native";
+import { ViewProps, TextInputProps, TextInput } from "react-native";
 
 export function createControlGroup(): {
   ControlRoot: React.ComponentClass<{
@@ -47,7 +47,7 @@ export type KeyboardEvent =
   | AndroidKeyboardDidShowEvent
   | IOSKeyboardEvent;
 
-export interface KeyboardAvoidingViewProps {
+export interface KeyboardAvoidingViewProps extends ViewProps {
   behavior?: "margin";
   androidSoftInputMode?: "adjustResize";
 }
