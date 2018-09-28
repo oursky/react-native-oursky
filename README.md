@@ -2,10 +2,8 @@
 
 ## How to install
 
-Install with commit hash
-
-```
-"react-native-oursky": "oursky/react-native-oursky#<commit-hash>"
+```sh
+yarn add --exact @oursky/react-native-oursky
 ```
 
 ## How to use
@@ -22,4 +20,3 @@ So both Flow and TypeScript projects can benefit.
 ## Road map
 
 - Add a companion example project to ease development
-- Publish to NPM to ease installation
