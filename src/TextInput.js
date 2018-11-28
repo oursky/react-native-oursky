@@ -1,5 +1,5 @@
 // @flow
-import React from "react";
+import * as React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
 import Text from "./Text";
@@ -43,7 +43,8 @@ export type Props = {
   optionTextStyle?: TextStyle,
 };
 
-export default (props: Props) => {
+// $FlowFixMe - `React.forwardRef` is not defined in Flow, yet.
+export default React.forwardRef((props: Props, ref?) => {
   const {
     error,
     optionText,
@@ -55,8 +56,8 @@ export default (props: Props) => {
 
   return (
     <View>
-      <TextInput style={[defaultStyles.textInput, style]} {...rest} />
+      <TextInput {...rest} ref={ref} style={[defaultStyles.textInput, style]} />
       {makeExtraText(error, errorStyle, optionText, optionTextStyle)}
     </View>
   );
-};
+});
