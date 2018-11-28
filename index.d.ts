@@ -1,10 +1,13 @@
 import * as React from "react";
 import {
   ViewProps,
-  TextInputProps,
-  TextInput,
+  TextInputProps as NativeTextInputProps,
+  TextInput as NativeTextInput,
   TextProps as NativeTextProps,
   Text as NativeText,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
 } from "react-native";
 
 export function createControlGroup(): {
@@ -15,8 +18,8 @@ export function createControlGroup(): {
     tabIndex: number;
     children: (
       props: {
-        ref: React.RefObject<TextInput>;
-        onSubmitEditing: TextInputProps["onSubmitEditing"];
+        ref: React.RefObject<NativeTextInput>;
+        onSubmitEditing: NativeTextInputProps["onSubmitEditing"];
         blurOnSubmit: false;
       }
     ) => React.ReactNode;
@@ -62,5 +65,15 @@ export class KeyboardAvoidingView extends React.Component<
 > {}
 export interface TextProps extends NativeTextProps {}
 export function Text(props: NativeTextProps): NativeText;
+export interface TextInputProps extends NativeTextInputProps {
+  error?: string | null;
+  errorStyle?: StyleProp<TextStyle>;
+  optionText?: string;
+  optionTextStyle?: StyleProp<TextStyle>;
+}
+export function TextInput(
+  props: TextInputProps
+): React.Component<TextInputProps>;
+
 
 
