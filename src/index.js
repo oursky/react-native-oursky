@@ -8,3 +8,6 @@ export type {
   IOSKeyboardEvent,
   KeyboardEvent,
 } from "./KeyboardAvoidingView";
+export { default as Text } from "./Text";
+export type { Props as TextProps } from "./Text";
+

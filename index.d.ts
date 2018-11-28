@@ -1,5 +1,11 @@
 import * as React from "react";
-import { ViewProps, TextInputProps, TextInput } from "react-native";
+import {
+  ViewProps,
+  TextInputProps,
+  TextInput,
+  TextProps as NativeTextProps,
+  Text as NativeText,
+} from "react-native";
 
 export function createControlGroup(): {
   ControlRoot: React.ComponentClass<{
@@ -54,3 +60,7 @@ export interface KeyboardAvoidingViewProps extends ViewProps {
 export class KeyboardAvoidingView extends React.Component<
   KeyboardAvoidingViewProps
 > {}
+export interface TextProps extends NativeTextProps {}
+export function Text(props: NativeTextProps): NativeText;
+
+
