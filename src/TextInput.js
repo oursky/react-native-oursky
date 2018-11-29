@@ -13,6 +13,9 @@ const defaultStyles = StyleSheet.create({
   extraText: {
     alignSelf: "flex-start",
   },
+  nonvisible: {
+    opacity: 0,
+  },
 });
 
 function makeExtraText(
@@ -31,7 +34,13 @@ function makeExtraText(
     );
   } else if (error !== undefined) {
     // make sure layout won't unstable, whether error message show or not.
-    return <Text style={[defaultStyles.extraText, errorStyle]}>{error}</Text>;
+    return (
+      <Text
+        style={[defaultStyles.extraText, errorStyle, defaultStyles.nonvisible]}
+      >
+        nonvisible
+      </Text>
+    );
   }
 }
 
