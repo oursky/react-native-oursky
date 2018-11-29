@@ -13,3 +13,5 @@ export type { Props as TextProps } from "./Text";
 export { default as TextInput } from "./TextInput";
 export type { Props as TextInputProps } from "./TextInput";
 
+export { default as SignupWithMobile } from "./SignupWithMobile";
+export type { Props as SignupWithMobileProps } from "./SignupWithMobile";

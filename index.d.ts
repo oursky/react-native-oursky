@@ -76,5 +76,32 @@ export function TextInput(
   props: TextInputProps
 ): React.Component<TextInputProps>;
 
+export interface Mobile {
+  countryCode: string;
+  nationalNumber: string;
+}
+export interface SignupWithMobileProps {
+  style?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 
+  headerTitle?: string;
+  headerStyle?: StyleProp<TextStyle>;
+  description?: string;
+  descriptionStyle?: StyleProp<TextStyle>;
+  title?: string;
+  titleStyle?: StyleProp<TextStyle>;
 
+  mobileNumberProps?: TextInputProps;
+
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitButtonText?: string;
+  submitButtonTextStyle?: StyleProp<TextStyle>;
+
+  skipButtonStyle?: StyleProp<ViewStyle>;
+  skipButtonText?: string;
+  skipButtonTextStyle?: StyleProp<TextStyle>;
+
+  onPressButton?: (mobile: Mobile) => void;
+  onPressSkip?: () => void;
+}
+export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
