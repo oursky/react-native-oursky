@@ -3,7 +3,7 @@ import * as React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
 import Text from "./Text";
-import { TextStyle } from "./styles";
+import { TextStyle, ViewStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
   // reset default padding of android device.
@@ -41,6 +41,7 @@ export type Props = {
   errorStyle?: TextStyle,
   optionText?: string,
   optionTextStyle?: TextStyle,
+  containerStyle?: ViewStyle,
 };
 
 // $FlowFixMe - `React.forwardRef` is not defined in Flow, yet.
@@ -51,11 +52,12 @@ export default React.forwardRef((props: Props, ref?) => {
     errorStyle,
     optionTextStyle,
     style,
+    containerStyle,
     ...rest
   } = props;
 
   return (
-    <View>
+    <View style={containerStyle}>
       <TextInput {...rest} ref={ref} style={[defaultStyles.textInput, style]} />
       {makeExtraText(error, errorStyle, optionText, optionTextStyle)}
     </View>

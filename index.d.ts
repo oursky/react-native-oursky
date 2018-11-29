@@ -70,6 +70,7 @@ export interface TextInputProps extends NativeTextInputProps {
   errorStyle?: StyleProp<TextStyle>;
   optionText?: string;
   optionTextStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 export function TextInput(
   props: TextInputProps
