@@ -68,8 +68,8 @@ export function Text(props: NativeTextProps): NativeText;
 export interface TextInputProps extends NativeTextInputProps {
   error?: string | null;
   errorStyle?: StyleProp<TextStyle>;
-  optionText?: string;
-  optionTextStyle?: StyleProp<TextStyle>;
+  option?: string;
+  optionStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }
 export function TextInput(

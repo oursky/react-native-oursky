@@ -21,17 +21,13 @@ const defaultStyles = StyleSheet.create({
 function makeExtraText(
   error?: string | null,
   errorStyle?: TextStyle,
-  optionText?: string,
-  optionTextStyle?: TextStyle
+  option?: string,
+  optionStyle?: TextStyle
 ): Text | null {
   if (error) {
     return <Text style={[defaultStyles.extraText, errorStyle]}>{error}</Text>;
-  } else if (optionText) {
-    return (
-      <Text style={[defaultStyles.extraText, optionTextStyle]}>
-        {optionText}
-      </Text>
-    );
+  } else if (option) {
+    return <Text style={[defaultStyles.extraText, optionStyle]}>{option}</Text>;
   } else if (error !== undefined) {
     // make sure layout won't unstable, whether error message show or not.
     return (
@@ -48,8 +44,8 @@ export type Props = {
   style?: TextStyle,
   error?: string | null,
   errorStyle?: TextStyle,
-  optionText?: string,
-  optionTextStyle?: TextStyle,
+  option?: string,
+  optionStyle?: TextStyle,
   containerStyle?: ViewStyle,
 };
 
@@ -57,9 +53,9 @@ export type Props = {
 export default React.forwardRef((props: Props, ref?) => {
   const {
     error,
-    optionText,
+    option,
     errorStyle,
-    optionTextStyle,
+    optionStyle,
     style,
     containerStyle,
     ...rest
@@ -68,7 +64,7 @@ export default React.forwardRef((props: Props, ref?) => {
   return (
     <View style={containerStyle}>
       <TextInput {...rest} ref={ref} style={[defaultStyles.textInput, style]} />
-      {makeExtraText(error, errorStyle, optionText, optionTextStyle)}
+      {makeExtraText(error, errorStyle, option, optionStyle)}
     </View>
   );
 });
