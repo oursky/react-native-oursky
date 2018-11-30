@@ -9,6 +9,7 @@ const defaultStyles = StyleSheet.create({
   // reset default padding of android device.
   textInput: {
     padding: 0,
+    margin: 0,
   },
   extraText: {
     alignSelf: "flex-start",
@@ -63,7 +64,12 @@ export default React.forwardRef((props: Props, ref?) => {
 
   return (
     <View style={containerStyle}>
-      <TextInput {...rest} ref={ref} style={[defaultStyles.textInput, style]} />
+      <TextInput
+        {...rest}
+        ref={ref}
+        style={[defaultStyles.textInput, style]}
+        underlineColorAndroid="transparent"
+      />
       {makeExtraText(error, errorStyle, option, optionStyle)}
     </View>
   );

@@ -104,6 +104,7 @@ export interface SignupWithMobileProps {
   title?: string;
   titleStyle?: StyleProp<TextStyle>;
 
+  countryPickerProps?: CountryPickerProps;
   mobileNumberProps?: TextInputProps;
 
   submitButtonStyle?: StyleProp<ViewStyle>;
@@ -114,7 +115,7 @@ export interface SignupWithMobileProps {
   skipButtonText?: string;
   skipButtonTextStyle?: StyleProp<TextStyle>;
 
-  onPressButton?: (mobile: Mobile) => void;
-  onPressSkip?: () => void;
+  onPressSubmitButton?: (mobile: Mobile) => void;
+  onPressSkipButton?: () => void;
 }
 export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}

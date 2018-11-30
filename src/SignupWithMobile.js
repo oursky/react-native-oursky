@@ -10,6 +10,8 @@ import Text from "./Text";
 import type { Props as TextProps } from "./Text";
 import TextInput from "./TextInput";
 import type { Props as TextInputProps } from "./TextInput";
+import CountryPicker from "./CountryPicker";
+import type { Props as CountryPickerProps } from "./CountryPicker";
 
 const defaultStyles = StyleSheet.create({
   header: {
@@ -40,14 +42,30 @@ const defaultStyles = StyleSheet.create({
     marginTop: 27,
     fontSize: 24,
   },
-  mobileNumberContainer: {
-    flex: 1,
-    marginTop: 8,
+  countryPickerContainer: {
+    width: 108,
   },
-  mobileNumberText: {
+  countryPicker: {
     borderBottomColor: "rgb(170, 170, 170)",
     borderBottomWidth: 1,
+  },
+  countryPickerText: {
     paddingVertical: 11,
+    fontSize: 16,
+  },
+  mobileNumberContainer: {
+    marginLeft: 15,
+    flex: 1,
+  },
+  mobileNumberText: {
+    // TextInput will have default padding on Android, and it can't be remove.
+    paddingVertical: Platform.select({
+      android: 8,
+      ios: 11,
+    }),
+    borderBottomColor: "rgb(170, 170, 170)",
+    borderBottomWidth: 1,
+    fontSize: 16,
   },
   error: {
     paddingVertical: 4,
@@ -97,6 +115,7 @@ export type Props = {
   title?: string,
   titleStyle?: TextStyle,
 
+  countryPickerProps?: CountryPickerProps,
   mobileNumberProps?: TextInputProps,
 
   submitButtonStyle?: ViewStyle,
@@ -107,19 +126,45 @@ export type Props = {
   skipButtonText?: string,
   skipButtonTextStyle?: TextStyle,
 
-  onPressButton?: (mobile: Mobile) => void,
-  onPressSkip?: () => void,
+  onPressSubmitButton?: (mobile: Mobile) => void,
+  onPressSkipButton?: () => void,
 };
 
-export default class SignupWithMobile extends React.PureComponent<Props> {
+type State = {
+  nationalNumber: string,
+};
+
+export default class SignupWithMobile extends React.PureComponent<
+  Props,
+  State
+> {
+  state = {
+    nationalNumber: "",
+  };
+
+  onChangeText = (text: string) => {
+    if (/^\d*$/.test(text)) {
+      this.setState({
+        nationalNumber: text,
+      });
+    }
+  };
+
+  onPressSubmitButton = () => {
+    if (this.props.onPressSubmitButton) {
+      this.props.onPressSubmitButton({
+        countryCallingCode: "",
+        nationalNumber: this.state.nationalNumber,
+      });
+    }
+  };
+
   render() {
     const {
       headerTitle,
       description,
       title,
-      onPressButton,
       submitButtonText,
-      onPressSkip,
       skipButtonText,
 
       style,
@@ -131,8 +176,13 @@ export default class SignupWithMobile extends React.PureComponent<Props> {
       submitButtonTextStyle,
       skipButtonStyle,
       skipButtonTextStyle,
+      countryPickerProps,
       mobileNumberProps,
+
+      onPressSkipButton,
     } = this.props;
+    const { nationalNumber } = this.state;
+
     return (
       <View style={[style]}>
         <Text style={[defaultStyles.header, headerStyle]}>{headerTitle}</Text>
@@ -142,6 +192,25 @@ export default class SignupWithMobile extends React.PureComponent<Props> {
           </Text>
           <Text style={[defaultStyles.title, titleStyle]}>{title}</Text>
           <View style={defaultStyles.flexRow}>
+            <CountryPicker
+              {...countryPickerProps}
+              style={[
+                defaultStyles.countryPicker,
+                countryPickerProps && countryPickerProps.style,
+              ]}
+              containerStyle={[
+                defaultStyles.countryPickerContainer,
+                countryPickerProps && countryPickerProps.containerStyle,
+              ]}
+              textStyle={[
+                defaultStyles.countryPickerText,
+                countryPickerProps && countryPickerProps.textStyle,
+              ]}
+              errorStyle={[
+                defaultStyles.error,
+                countryPickerProps && countryPickerProps.errorStyle,
+              ]}
+            />
             <TextInput
               {...mobileNumberProps}
               containerStyle={[
@@ -156,11 +225,14 @@ export default class SignupWithMobile extends React.PureComponent<Props> {
                 defaultStyles.error,
                 mobileNumberProps && mobileNumberProps.errorStyle,
               ]}
+              keyboardType="phone-pad"
+              value={nationalNumber}
+              onChangeText={this.onChangeText}
             />
           </View>
           <TouchableOpacity
             style={[defaultStyles.submitButton, submitButtonStyle]}
-            onPress={onPressButton}
+            onPress={this.onPressSubmitButton}
           >
             <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
               {submitButtonText}
@@ -168,7 +240,7 @@ export default class SignupWithMobile extends React.PureComponent<Props> {
           </TouchableOpacity>
           <TouchableOpacity
             style={[defaultStyles.skipButton, skipButtonStyle]}
-            onPress={onPressSkip}
+            onPress={onPressSkipButton}
           >
             <Text style={[defaultStyles.skipText, skipButtonTextStyle]}>
               {skipButtonText}
