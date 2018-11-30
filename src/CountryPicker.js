@@ -18,11 +18,18 @@ import type { CountryCode } from "./countryCode";
 import type { ListRenderItemInfo } from "./types";
 
 const defaultStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   item: {
     paddingHorizontal: 19,
     paddingVertical: 8,
   },
-  container: {
+  style: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textStyle: {
     flex: 1,
   },
   searchbarContainer: {
@@ -36,9 +43,6 @@ const defaultStyles = StyleSheet.create({
     paddingHorizontal: 9,
     borderRadius: 10,
     height: 36,
-  },
-  textStyle: {
-    paddingVertical: 10,
   },
   extraText: {
     alignSelf: "flex-start",
@@ -89,6 +93,8 @@ type State = {
   showPicker: boolean,
   countriesCode: CountryCode[],
 };
+
+const dropdownArrowIcon = require("../images/dropdown-arrow.png");
 
 export default class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -154,20 +160,24 @@ export default class CountryPicker extends React.PureComponent<Props, State> {
       optionStyle,
     } = this.props;
     const { selectedValue, showPicker, countriesCode } = this.state;
-    console.log(placeholder, selectedValue);
     return (
       <>
         <View style={containerStyle}>
-          <TouchableOpacity onPress={this.openPicker} style={style}>
+          <TouchableOpacity
+            onPress={this.openPicker}
+            style={[defaultStyles.style, style]}
+          >
             <Text
               onFocus={this.openPicker}
               style={[
+                defaultStyles.textStyle,
                 textStyle,
                 selectedValue ? null : { color: placeholderTextColor },
               ]}
             >
               {selectedValue !== "" ? `+${selectedValue}` : placeholder}
             </Text>
+            <Image source={dropdownArrowIcon} />
           </TouchableOpacity>
           {makeExtraText(error, errorStyle, option, optionStyle)}
         </View>
