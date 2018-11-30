@@ -16,6 +16,7 @@ import { TextStyle, ViewStyle } from "./styles";
 import { countryCode } from "./countryCode";
 import type { CountryCode } from "./countryCode";
 import type { ListRenderItemInfo } from "./types";
+import withExtraText from "./withExtraText";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -44,47 +45,14 @@ const defaultStyles = StyleSheet.create({
     borderRadius: 10,
     height: 36,
   },
-  extraText: {
-    alignSelf: "flex-start",
-  },
-  nonvisible: {
-    opacity: 0,
-  },
 });
-
-function makeExtraText(
-  error?: string | null,
-  errorStyle?: TextStyle,
-  option?: string,
-  optionStyle?: TextStyle
-): Text | null {
-  if (error) {
-    return <Text style={[defaultStyles.extraText, errorStyle]}>{error}</Text>;
-  } else if (option) {
-    return <Text style={[defaultStyles.extraText, optionStyle]}>{option}</Text>;
-  } else if (error !== undefined) {
-    // make sure layout won't unstable, whether error message show or not.
-    return (
-      <Text
-        style={[defaultStyles.extraText, errorStyle, defaultStyles.nonvisible]}
-      >
-        nonvisible
-      </Text>
-    );
-  }
-}
 
 export type Props = {
   placeholder?: string,
   placeholderTextColor?: string,
   selectedValue?: string,
-  error?: string,
-  errorStyle?: TextStyle,
-  option?: string,
-  optionStyle?: TextStyle,
 
   style?: ViewStyle,
-  containerStyle?: ViewStyle,
   textStyle?: TextStyle,
 };
 
@@ -96,7 +64,7 @@ type State = {
 
 const dropdownArrowIcon = require("../images/dropdown-arrow.png");
 
-export default class CountryPicker extends React.PureComponent<Props, State> {
+class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -147,40 +115,26 @@ export default class CountryPicker extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const {
-      placeholder,
-      placeholderTextColor,
-      style,
-      containerStyle,
-      textStyle,
-
-      error,
-      errorStyle,
-      option,
-      optionStyle,
-    } = this.props;
+    const { placeholder, placeholderTextColor, style, textStyle } = this.props;
     const { selectedValue, showPicker, countriesCode } = this.state;
     return (
       <>
-        <View style={containerStyle}>
-          <TouchableOpacity
-            onPress={this.openPicker}
-            style={[defaultStyles.style, style]}
+        <TouchableOpacity
+          onPress={this.openPicker}
+          style={[defaultStyles.style, style]}
+        >
+          <Text
+            onFocus={this.openPicker}
+            style={[
+              defaultStyles.textStyle,
+              textStyle,
+              selectedValue ? null : { color: placeholderTextColor },
+            ]}
           >
-            <Text
-              onFocus={this.openPicker}
-              style={[
-                defaultStyles.textStyle,
-                textStyle,
-                selectedValue ? null : { color: placeholderTextColor },
-              ]}
-            >
-              {selectedValue !== "" ? `+${selectedValue}` : placeholder}
-            </Text>
-            <Image source={dropdownArrowIcon} />
-          </TouchableOpacity>
-          {makeExtraText(error, errorStyle, option, optionStyle)}
-        </View>
+            {selectedValue !== "" ? `+${selectedValue}` : placeholder}
+          </Text>
+          <Image source={dropdownArrowIcon} />
+        </TouchableOpacity>
         <Modal visible={showPicker} animationType="slide">
           <SafeAreaView style={defaultStyles.container}>
             <View style={defaultStyles.searchbarContainer}>
@@ -202,3 +156,5 @@ export default class CountryPicker extends React.PureComponent<Props, State> {
     );
   }
 }
+
+export default withExtraText(CountryPicker);

@@ -65,27 +65,23 @@ export class KeyboardAvoidingView extends React.Component<
 > {}
 export interface TextProps extends NativeTextProps {}
 export function Text(props: NativeTextProps): NativeText;
-export interface TextInputProps extends NativeTextInputProps {
+interface ExtraTextProps {
   error?: string | null;
   errorStyle?: StyleProp<TextStyle>;
   option?: string;
   optionStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }
+export interface TextInputProps extends NativeTextInputProps, ExtraTextProps {}
 export function TextInput(
   props: TextInputProps
 ): React.Component<TextInputProps>;
-export interface CountryPickerProps {
+export interface CountryPickerProps extends ExtraTextProps {
   placeholder?: string;
   placeholderTextColor?: string;
   selectedValue?: string;
-  error?: string | null;
-  errorStyle?: StyleProp<TextStyle>;
-  option?: string;
-  optionStyle?: StyleProp<TextStyle>;
 
   style?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
 export class CountryPicker extends React.Component<CountryPickerProps> {}
