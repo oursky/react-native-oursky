@@ -57,7 +57,7 @@ export type Props = {
 };
 
 type State = {
-  selectedValue: string,
+  selectedValue: string | null,
   showPicker: boolean,
   countriesCode: CountryCode[],
 };
@@ -68,7 +68,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedValue: this.props.selectedValue || "",
+      selectedValue: this.props.selectedValue || null,
       showPicker: false,
       countriesCode: countryCode.sort((a, b) => {
         if (a.code == b.code) {
@@ -131,7 +131,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
               selectedValue ? null : { color: placeholderTextColor },
             ]}
           >
-            {selectedValue !== "" ? `+${selectedValue}` : placeholder}
+            {selectedValue ? `+${selectedValue}` : placeholder}
           </Text>
           <Image source={dropdownArrowIcon} />
         </TouchableOpacity>
