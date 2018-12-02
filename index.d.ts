@@ -70,9 +70,10 @@ interface ExtraTextProps {
   errorStyle?: StyleProp<TextStyle>;
   option?: string;
   optionStyle?: StyleProp<TextStyle>;
+}
+export interface TextInputProps extends NativeTextInputProps, ExtraTextProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
-export interface TextInputProps extends NativeTextInputProps, ExtraTextProps {}
 export function TextInput(
   props: TextInputProps
 ): React.Component<TextInputProps>;
@@ -83,6 +84,7 @@ export interface CountryPickerProps extends ExtraTextProps {
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 export class CountryPicker extends React.Component<CountryPickerProps> {}
 export interface Mobile {

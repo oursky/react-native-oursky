@@ -12,7 +12,6 @@ import TextInput from "./TextInput";
 import type { Props as TextInputProps } from "./TextInput";
 import CountryPicker from "./CountryPicker";
 import type { Props as CountryPickerProps } from "./CountryPicker";
-import type { Props as ExtraTextProps } from "./withExtraText";
 
 const defaultStyles = StyleSheet.create({
   header: {
@@ -116,8 +115,8 @@ export type Props = {
   title?: string,
   titleStyle?: TextStyle,
 
-  countryPickerProps?: ExtraTextProps<CountryPickerProps>,
-  mobileNumberProps?: ExtraTextProps<TextInputProps>,
+  countryPickerProps?: CountryPickerProps,
+  mobileNumberProps?: TextInputProps,
 
   submitButtonStyle?: ViewStyle,
   submitButtonText?: string,

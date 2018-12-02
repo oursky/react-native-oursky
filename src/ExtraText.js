@@ -15,21 +15,15 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type Props<P> = P & {
+export type Props = {
   error?: string | null,
   errorStyle?: TextStyle,
   option?: string,
   optionStyle?: TextStyle,
-
-  containerStyle?: ViewStyle,
 };
 
-function makeExtraText(
-  error?: string | null,
-  errorStyle?: TextStyle,
-  option?: string,
-  optionStyle?: TextStyle
-): Text | null {
+export default function ExtraText(props: Props) {
+  const { error, errorStyle, option, optionStyle } = props;
   if (error) {
     return <Text style={[defaultStyles.extraText, errorStyle]}>{error}</Text>;
   } else if (option) {
@@ -43,26 +37,7 @@ function makeExtraText(
         nonvisible
       </Text>
     );
+  } else {
+    return null;
   }
-}
-
-export default function withExtraText<P>(Component: React.ComponentType<P>) {
-  const forwardRef = (props: Props<P>, ref?) => {
-    const {
-      error,
-      errorStyle,
-      option,
-      optionStyle,
-      containerStyle,
-      ...rest
-    } = props;
-    return (
-      <View style={containerStyle}>
-        <Component {...rest} ref={ref} />
-        {makeExtraText(error, errorStyle, option, optionStyle)}
-      </View>
-    );
-  };
-  // $FlowFixMe
-  return React.forwardRef(forwardRef);
 }

@@ -16,7 +16,8 @@ import { TextStyle, ViewStyle } from "./styles";
 import { countryCode } from "./countryCode";
 import type { CountryCode } from "./countryCode";
 import type { ListRenderItemInfo } from "./types";
-import withExtraText from "./withExtraText";
+import ExtraText from "./ExtraText";
+import type { Props as ExtraTextProps } from "./ExtraText";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -47,13 +48,14 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type Props = {
+export type Props = ExtraTextProps & {
   placeholder?: string,
   placeholderTextColor?: string,
   selectedValue?: string,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
+  containerStyle?: ViewStyle,
 };
 
 type State = {
@@ -123,10 +125,17 @@ class CountryPicker extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { placeholder, placeholderTextColor, style, textStyle } = this.props;
+    const {
+      placeholder,
+      placeholderTextColor,
+      style,
+      textStyle,
+      containerStyle,
+      ...rest
+    } = this.props;
     const { selectedValue, showPicker, countriesCode } = this.state;
     return (
-      <>
+      <View style={containerStyle}>
         <TouchableOpacity
           onPress={this.openPicker}
           style={[defaultStyles.style, style]}
@@ -143,6 +152,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
           </Text>
           <Image source={dropdownArrowIcon} />
         </TouchableOpacity>
+        <ExtraText {...rest} />
         <Modal visible={showPicker} animationType="slide">
           <SafeAreaView style={defaultStyles.container}>
             <View style={defaultStyles.searchbarContainer}>
@@ -161,9 +171,9 @@ class CountryPicker extends React.PureComponent<Props, State> {
             />
           </SafeAreaView>
         </Modal>
-      </>
+      </View>
     );
   }
 }
 
-export default withExtraText(CountryPicker);
+export default CountryPicker;
