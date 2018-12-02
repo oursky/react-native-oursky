@@ -81,6 +81,7 @@ export interface CountryPickerProps extends ExtraTextProps {
   placeholder?: string;
   placeholderTextColor?: string;
   selectedValue?: string;
+  onValueChange?: (countryCallingCode: string) => void;
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -88,7 +89,7 @@ export interface CountryPickerProps extends ExtraTextProps {
 }
 export class CountryPicker extends React.Component<CountryPickerProps> {}
 export interface Mobile {
-  countryCode: string;
+  countryCallingCode: string;
   nationalNumber: string;
 }
 export interface SignupWithMobileProps {

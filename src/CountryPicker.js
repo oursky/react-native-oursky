@@ -52,6 +52,7 @@ export type Props = ExtraTextProps & {
   placeholder?: string,
   placeholderTextColor?: string,
   selectedValue?: string,
+  onValueChange?: (countryCode: string) => void,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -91,6 +92,9 @@ class CountryPicker extends React.PureComponent<Props, State> {
       selectedValue: item.callingCode,
       showPicker: false,
     });
+    if (this.props.onValueChange) {
+      this.props.onValueChange(item.callingCode);
+    }
   };
 
   search = (text: string) => {

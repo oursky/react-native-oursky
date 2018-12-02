@@ -131,6 +131,7 @@ export type Props = {
 };
 
 type State = {
+  countryCallingCode: string,
   nationalNumber: string,
 };
 
@@ -139,6 +140,7 @@ export default class SignupWithMobile extends React.PureComponent<
   State
 > {
   state = {
+    countryCallingCode: "",
     nationalNumber: "",
   };
 
@@ -150,10 +152,14 @@ export default class SignupWithMobile extends React.PureComponent<
     }
   };
 
+  onCountryCodeChange = (countryCallingCode: string) => {
+    this.setState({ countryCallingCode });
+  };
+
   onPressSubmitButton = () => {
     if (this.props.onPressSubmitButton) {
       this.props.onPressSubmitButton({
-        countryCallingCode: "",
+        countryCallingCode: this.state.countryCallingCode,
         nationalNumber: this.state.nationalNumber,
       });
     }
@@ -181,7 +187,7 @@ export default class SignupWithMobile extends React.PureComponent<
 
       onPressSkipButton,
     } = this.props;
-    const { nationalNumber } = this.state;
+    const { nationalNumber, countryCallingCode } = this.state;
 
     return (
       <View style={[style]}>
@@ -210,6 +216,8 @@ export default class SignupWithMobile extends React.PureComponent<
                 defaultStyles.error,
                 countryPickerProps && countryPickerProps.errorStyle,
               ]}
+              onValueChange={this.onCountryCodeChange}
+              selectedValue={countryCallingCode}
             />
             <TextInput
               {...mobileNumberProps}
