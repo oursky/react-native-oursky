@@ -71,10 +71,10 @@ class CountryPicker extends React.PureComponent<Props, State> {
       selectedValue: this.props.selectedValue || null,
       showPicker: false,
       countriesCode: countryCode.sort((a, b) => {
-        if (a.code == b.code) {
+        if (a.callingCode == b.callingCode) {
           return a.name > b.name ? 1 : -1;
         } else {
-          return a.code > b.code ? 1 : -1;
+          return a.callingCode > b.callingCode ? 1 : -1;
         }
       }),
     };
@@ -86,7 +86,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
 
   onPressCountry = (item: CountryCode) => () => {
     this.setState({
-      selectedValue: item.code,
+      selectedValue: item.callingCode,
       showPicker: false,
     });
   };
@@ -96,20 +96,28 @@ class CountryPicker extends React.PureComponent<Props, State> {
       countriesCode: countryCode
         .filter(
           item =>
-            text ? item.name.includes(text) || item.code.includes(text) : true
+            text
+              ? item.name.includes(text) || item.callingCode.includes(text)
+              : true
         )
-        .sort((a, b) => (a.code > b.code ? 1 : -1)),
+        .sort((a, b) => (a.callingCode > b.callingCode ? 1 : -1)),
     });
+  };
+
+  keyExtractor = (item: CountryCode) => {
+    return item.isoCountryCode;
   };
 
   renderItem = ({ item }: ListRenderItemInfo<CountryCode>) => {
     return (
       <TouchableOpacity
-        key={item.id}
+        key={item.isoCountryCode}
         onPress={this.onPressCountry(item)}
         style={defaultStyles.item}
       >
-        <Text key={item.id}>{`${item.flag} ${item.name} +${item.code}`}</Text>
+        <Text key={item.isoCountryCode}>{`${item.flag} ${item.name} +${
+          item.callingCode
+        }`}</Text>
       </TouchableOpacity>
     );
   };
@@ -147,6 +155,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
             </View>
             <FlatList
               data={countriesCode}
+              keyExtractor={this.keyExtractor}
               extraData={this.state}
               renderItem={this.renderItem}
             />
