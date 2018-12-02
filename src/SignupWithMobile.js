@@ -236,6 +236,7 @@ export default class SignupWithMobile extends React.PureComponent<
               keyboardType="phone-pad"
               value={nationalNumber}
               onChangeText={this.onChangeText}
+              autoFocus={true}
             />
           </View>
           <TouchableOpacity

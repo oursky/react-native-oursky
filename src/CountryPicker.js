@@ -27,6 +27,9 @@ const defaultStyles = StyleSheet.create({
     paddingHorizontal: 19,
     paddingVertical: 8,
   },
+  selectedItem: {
+    backgroundColor: "#F3F3F3",
+  },
   style: {
     flexDirection: "row",
     alignItems: "center",
@@ -114,12 +117,25 @@ class CountryPicker extends React.PureComponent<Props, State> {
     return item.isoCountryCode;
   };
 
+  getItemLayout = (data?: CountryCode[] | null, index: number) => {
+    return {
+      length: 33,
+      offset: 33 * index,
+      index,
+    };
+  };
+
   renderItem = ({ item }: ListRenderItemInfo<CountryCode>) => {
     return (
       <TouchableOpacity
         key={item.isoCountryCode}
         onPress={this.onPressCountry(item)}
-        style={defaultStyles.item}
+        style={[
+          defaultStyles.item,
+          item.callingCode === this.state.selectedValue
+            ? defaultStyles.selectedItem
+            : null,
+        ]}
       >
         <Text key={item.isoCountryCode}>{`${item.flag} ${item.name} +${
           item.callingCode
@@ -138,6 +154,10 @@ class CountryPicker extends React.PureComponent<Props, State> {
       ...rest
     } = this.props;
     const { selectedValue, showPicker, countriesCode } = this.state;
+
+    const selectedValueIndex = countriesCode.findIndex(
+      item => item.callingCode === selectedValue
+    );
     return (
       <View style={containerStyle}>
         <TouchableOpacity
@@ -172,6 +192,9 @@ class CountryPicker extends React.PureComponent<Props, State> {
               keyExtractor={this.keyExtractor}
               extraData={this.state}
               renderItem={this.renderItem}
+              initialScrollIndex={selectedValueIndex}
+              initialNumToRender={25}
+              getItemLayout={this.getItemLayout}
             />
           </SafeAreaView>
         </Modal>
