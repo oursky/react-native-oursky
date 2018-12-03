@@ -16,3 +16,5 @@ export { default as CountryPicker } from "./CountryPicker";
 export type { Props as CountryPickerProps } from "./CountryPicker";
 export { default as SignupWithMobile } from "./SignupWithMobile";
 export type { Props as SignupWithMobileProps } from "./SignupWithMobile";
+export { default as VerifyOTP } from "./VerifyOTP";
+export type { Props as VerifyOTPProps } from "./VerifyOTP";
