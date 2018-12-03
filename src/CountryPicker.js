@@ -1,13 +1,13 @@
 // @flow
 import React from "react";
 import {
-  TouchableOpacity,
+  FlatList,
+  Image,
   Modal,
   SafeAreaView,
-  FlatList,
-  View,
-  Image,
   StyleSheet,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 import Text from "./Text";
@@ -22,10 +22,35 @@ import type { Props as ExtraTextProps } from "./ExtraText";
 const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "rgb(249, 249, 249)",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 9,
+    borderBottomColor: "#CACACA",
+    borderBottomWidth: 1,
+  },
+  backButton: {
+    flexDirection: "row",
+    position: "absolute",
+    left: 9,
+    top: 12,
+  },
+  backButtonText: {
+    fontSize: 17,
+    color: "#007AFF",
+    marginLeft: 5,
+  },
+  headerTitle: {
+    fontSize: 17,
   },
   item: {
     paddingHorizontal: 19,
     paddingVertical: 8,
+    borderBottomColor: "#CACACA",
+    borderBottomWidth: 1,
   },
   selectedItem: {
     backgroundColor: "#F3F3F3",
@@ -56,6 +81,8 @@ export type Props = ExtraTextProps & {
   placeholderTextColor?: string,
   selectedValue?: string,
   onValueChange?: (countryCode: string) => void,
+  backButtonText?: string,
+  headerTitle?: string,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -68,7 +95,9 @@ type State = {
   countriesCode: CountryCode[],
 };
 
+const ITEM_HEIGHT = 34;
 const dropdownArrowIcon = require("../images/dropdown-arrow.png");
+const backIcon = require("../images/back-icon.png");
 
 class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -113,14 +142,20 @@ class CountryPicker extends React.PureComponent<Props, State> {
     });
   };
 
+  closePicker = () => {
+    this.setState({
+      showPicker: false,
+    });
+  };
+
   keyExtractor = (item: CountryCode) => {
     return item.isoCountryCode;
   };
 
   getItemLayout = (data?: CountryCode[] | null, index: number) => {
     return {
-      length: 33,
-      offset: 33 * index,
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
       index,
     };
   };
@@ -151,6 +186,8 @@ class CountryPicker extends React.PureComponent<Props, State> {
       style,
       textStyle,
       containerStyle,
+      backButtonText,
+      headerTitle,
       ...rest
     } = this.props;
     const { selectedValue, showPicker, countriesCode } = this.state;
@@ -179,6 +216,20 @@ class CountryPicker extends React.PureComponent<Props, State> {
         <ExtraText {...rest} />
         <Modal visible={showPicker} animationType="slide">
           <SafeAreaView style={defaultStyles.container}>
+            <View style={defaultStyles.header}>
+              <TouchableOpacity
+                style={defaultStyles.backButton}
+                onPress={this.closePicker}
+              >
+                <Image source={backIcon} />
+                <Text style={defaultStyles.backButtonText}>
+                  {backButtonText || "Back"}
+                </Text>
+              </TouchableOpacity>
+              <Text style={defaultStyles.headerTitle}>
+                {headerTitle || "Select Country"}
+              </Text>
+            </View>
             <View style={defaultStyles.searchbarContainer}>
               <TextInput
                 placeholder="Search"

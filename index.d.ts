@@ -82,6 +82,8 @@ export interface CountryPickerProps extends ExtraTextProps {
   placeholderTextColor?: string;
   selectedValue?: string;
   onValueChange?: (countryCallingCode: string) => void;
+  backButtonText?: string;
+  headerTitle?: string;
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
