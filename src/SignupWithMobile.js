@@ -5,6 +5,10 @@ import type { Props as ViewProps } from "react-native/Libraries/Components/View/
 import StyleSheetPropType from "react-native/Libraries/StyleSheet/StyleSheetPropType";
 import ViewStylePropTypes from "react-native/Libraries/Components/View/ViewStylePropTypes";
 import TextStylePropTypes from "react-native/Libraries/Text/TextStylePropTypes";
+import {
+  parseIncompletePhoneNumber,
+  parsePhoneNumber,
+} from "libphonenumber-js";
 
 import Text from "./Text";
 import type { Props as TextProps } from "./Text";
@@ -12,6 +16,7 @@ import TextInput from "./TextInput";
 import type { Props as TextInputProps } from "./TextInput";
 import CountryPicker from "./CountryPicker";
 import type { Props as CountryPickerProps } from "./CountryPicker";
+import { ViewStyle, TextStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
   header: {
@@ -96,9 +101,6 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-const ViewStyle = StyleSheetPropType(ViewStylePropTypes);
-const TextStyle = StyleSheetPropType(TextStylePropTypes);
-
 export type Mobile = {
   countryCallingCode: string,
   nationalNumber: string,
@@ -126,7 +128,7 @@ export type Props = {
   skipButtonText?: string,
   skipButtonTextStyle?: TextStyle,
 
-  onPressSubmitButton?: (mobile: Mobile) => void,
+  onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void,
   onPressSkipButton?: () => void,
 };
 
@@ -157,11 +159,27 @@ export default class SignupWithMobile extends React.PureComponent<
   };
 
   onPressSubmitButton = () => {
-    if (this.props.onPressSubmitButton) {
-      this.props.onPressSubmitButton({
-        countryCallingCode: this.state.countryCallingCode,
-        nationalNumber: this.state.nationalNumber,
-      });
+    const { countryCallingCode, nationalNumber } = this.state;
+    try {
+      const phoneNumber = parsePhoneNumber(
+        `${countryCallingCode} ${nationalNumber}`
+      );
+      if (this.props.onPressSubmitButton) {
+        this.props.onPressSubmitButton(
+          phoneNumber ? phoneNumber.isValid() : false,
+          {
+            countryCallingCode,
+            nationalNumber,
+          }
+        );
+      }
+    } catch (e) {
+      if (this.props.onPressSubmitButton) {
+        this.props.onPressSubmitButton(false, {
+          countryCallingCode,
+          nationalNumber,
+        });
+      }
     }
   };
 

@@ -116,7 +116,7 @@ export interface SignupWithMobileProps {
   skipButtonText?: string;
   skipButtonTextStyle?: StyleProp<TextStyle>;
 
-  onPressSubmitButton?: (mobile: Mobile) => void;
+  onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;
   onPressSkipButton?: () => void;
 }
 export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
