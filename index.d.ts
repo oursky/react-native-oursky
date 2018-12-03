@@ -96,7 +96,7 @@ export interface Mobile {
 }
 export interface SignupWithMobileProps {
   style?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
+  boxStyle?: StyleProp<ViewStyle>;
 
   headerTitle?: string;
   headerStyle?: StyleProp<TextStyle>;

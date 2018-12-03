@@ -1,10 +1,17 @@
 // @flow
 import React from "react";
-import { View, Platform, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Platform,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import type { Props as ViewProps } from "react-native/Libraries/Components/View/View";
 import StyleSheetPropType from "react-native/Libraries/StyleSheet/StyleSheetPropType";
 import ViewStylePropTypes from "react-native/Libraries/Components/View/ViewStylePropTypes";
 import TextStylePropTypes from "react-native/Libraries/Text/TextStylePropTypes";
+import type { LayoutEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import {
   parseIncompletePhoneNumber,
   parsePhoneNumber,
@@ -19,24 +26,29 @@ import type { Props as CountryPickerProps } from "./CountryPicker";
 import { ViewStyle, TextStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 18,
+  },
   header: {
     color: "white",
     fontSize: 32,
-    marginBottom: 30,
+    paddingBottom: 30,
   },
-  container: {
+  box: {
     borderRadius: 24,
     backgroundColor: "white",
-    shadowColor: "rgba(0, 0, 0, .2)",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
+    shadowColor: "rgb(0, 0, 0)",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    elevation: 15,
     paddingHorizontal: 21,
     paddingVertical: 31,
   },
   description: {
     fontSize: 18,
+    lineHeight: 24,
     color: "rgb(51, 51, 51)",
   },
   flexRow: {
@@ -108,7 +120,7 @@ export type Mobile = {
 
 export type Props = {
   style?: ViewStyle,
-  containerStyle?: ViewStyle,
+  boxStyle?: ViewStyle,
 
   headerTitle?: string,
   headerStyle?: TextStyle,
@@ -135,6 +147,7 @@ export type Props = {
 type State = {
   countryCallingCode: string,
   nationalNumber: string,
+  marginTop: number,
 };
 
 export default class SignupWithMobile extends React.PureComponent<
@@ -144,6 +157,7 @@ export default class SignupWithMobile extends React.PureComponent<
   state = {
     countryCallingCode: "",
     nationalNumber: "",
+    marginTop: 0,
   };
 
   onChangeText = (text: string) => {
@@ -183,6 +197,17 @@ export default class SignupWithMobile extends React.PureComponent<
     }
   };
 
+  // The box should be middle of the screen, so we need to raise this component.
+  adjustLayout = (event: LayoutEvent) => {
+    // If currect height less than iPhone SE height, then don't adjust layout.
+    this.setState({
+      marginTop:
+        Dimensions.get("window").height > 568
+          ? -event.nativeEvent.layout.height
+          : 0,
+    });
+  };
+
   render() {
     const {
       headerTitle,
@@ -193,7 +218,7 @@ export default class SignupWithMobile extends React.PureComponent<
 
       style,
       headerStyle,
-      containerStyle,
+      boxStyle,
       descriptionStyle,
       titleStyle,
       submitButtonStyle,
@@ -205,12 +230,17 @@ export default class SignupWithMobile extends React.PureComponent<
 
       onPressSkipButton,
     } = this.props;
-    const { nationalNumber, countryCallingCode } = this.state;
+    const { nationalNumber, countryCallingCode, marginTop } = this.state;
 
     return (
-      <View style={[style]}>
-        <Text style={[defaultStyles.header, headerStyle]}>{headerTitle}</Text>
-        <View style={[defaultStyles.container, containerStyle]}>
+      <View style={[defaultStyles.container, style, { marginTop }]}>
+        <Text
+          style={[defaultStyles.header, headerStyle]}
+          onLayout={this.adjustLayout}
+        >
+          {headerTitle}
+        </Text>
+        <View style={[defaultStyles.box, boxStyle]}>
           <Text style={[defaultStyles.description, descriptionStyle]}>
             {description}
           </Text>
