@@ -179,7 +179,7 @@ export default class SignupWithMobile extends React.PureComponent<
     const { countryCallingCode, nationalNumber } = this.state;
     try {
       const phoneNumber = parsePhoneNumber(
-        `${countryCallingCode} ${nationalNumber}`
+        `+${countryCallingCode} ${nationalNumber}`
       );
       if (this.props.onPressSubmitButton) {
         this.props.onPressSubmitButton(
@@ -296,13 +296,9 @@ export default class SignupWithMobile extends React.PureComponent<
             style={[defaultStyles.submitButton, submitButtonStyle]}
             onPress={this.onPressSubmitButton}
           >
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
-                {submitButtonText}
-              </Text>
-            )}
+            <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
+              {submitButtonText}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[defaultStyles.skipButton, skipButtonStyle]}
