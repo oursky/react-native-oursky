@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import type { Props as ViewProps } from "react-native/Libraries/Components/View/View";
 import StyleSheetPropType from "react-native/Libraries/StyleSheet/StyleSheetPropType";
@@ -140,6 +141,8 @@ export type Props = {
   skipButtonText?: React.Node,
   skipButtonTextStyle?: TextStyle,
 
+  loading?: boolean,
+
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void,
   onPressSkipButton?: () => void,
 };
@@ -215,6 +218,7 @@ export default class SignupWithMobile extends React.PureComponent<
       title,
       submitButtonText,
       skipButtonText,
+      loading,
 
       style,
       headerStyle,
@@ -288,12 +292,17 @@ export default class SignupWithMobile extends React.PureComponent<
             />
           </View>
           <TouchableOpacity
+            disabled={loading}
             style={[defaultStyles.submitButton, submitButtonStyle]}
             onPress={this.onPressSubmitButton}
           >
-            <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
-              {submitButtonText}
-            </Text>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
+                {submitButtonText}
+              </Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={[defaultStyles.skipButton, skipButtonStyle]}

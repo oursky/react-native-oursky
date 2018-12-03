@@ -112,6 +112,8 @@ export interface SignupWithMobileProps {
   submitButtonText?: React.ReactNode;
   submitButtonTextStyle?: StyleProp<TextStyle>;
 
+  loading?: boolean;
+
   skipButtonStyle?: StyleProp<ViewStyle>;
   skipButtonText?: React.ReactNode;
   skipButtonTextStyle?: StyleProp<TextStyle>;
