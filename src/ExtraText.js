@@ -16,9 +16,9 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = {
-  error?: string | null,
+  error?: React.Node | null,
   errorStyle?: TextStyle,
-  option?: string,
+  option?: React.Node,
   optionStyle?: TextStyle,
 };
 

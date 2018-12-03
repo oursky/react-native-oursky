@@ -1,5 +1,5 @@
 // @flow
-import React from "react";
+import * as React from "react";
 import {
   View,
   Platform,
@@ -122,22 +122,22 @@ export type Props = {
   style?: ViewStyle,
   boxStyle?: ViewStyle,
 
-  headerTitle?: string,
+  headerTitle?: React.Node,
   headerStyle?: TextStyle,
-  description?: string,
+  description?: React.Node,
   descriptionStyle?: TextStyle,
-  title?: string,
+  title?: React.Node,
   titleStyle?: TextStyle,
 
   countryPickerProps?: CountryPickerProps,
   mobileNumberProps?: TextInputProps,
 
   submitButtonStyle?: ViewStyle,
-  submitButtonText?: string,
+  submitButtonText?: React.Node,
   submitButtonTextStyle?: TextStyle,
 
   skipButtonStyle?: ViewStyle,
-  skipButtonText?: string,
+  skipButtonText?: React.Node,
   skipButtonTextStyle?: TextStyle,
 
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void,

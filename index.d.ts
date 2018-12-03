@@ -66,9 +66,9 @@ export class KeyboardAvoidingView extends React.Component<
 export interface TextProps extends NativeTextProps {}
 export function Text(props: NativeTextProps): NativeText;
 interface ExtraTextProps {
-  error?: string | null;
+  error?: React.ReactNode | null;
   errorStyle?: StyleProp<TextStyle>;
-  option?: string;
+  option?: React.ReactNode;
   optionStyle?: StyleProp<TextStyle>;
 }
 export interface TextInputProps extends NativeTextInputProps, ExtraTextProps {
@@ -82,8 +82,8 @@ export interface CountryPickerProps extends ExtraTextProps {
   placeholderTextColor?: string;
   selectedValue?: string;
   onValueChange?: (countryCallingCode: string) => void;
-  backButtonText?: string;
-  headerTitle?: string;
+  backButtonText?: React.ReactNode;
+  headerTitle?: React.ReactNode;
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -98,22 +98,22 @@ export interface SignupWithMobileProps {
   style?: StyleProp<ViewStyle>;
   boxStyle?: StyleProp<ViewStyle>;
 
-  headerTitle?: string;
+  headerTitle?: React.ReactNode;
   headerStyle?: StyleProp<TextStyle>;
-  description?: string;
+  description?: React.ReactNode;
   descriptionStyle?: StyleProp<TextStyle>;
-  title?: string;
+  title?: React.ReactNode;
   titleStyle?: StyleProp<TextStyle>;
 
   countryPickerProps?: CountryPickerProps;
   mobileNumberProps?: TextInputProps;
 
   submitButtonStyle?: StyleProp<ViewStyle>;
-  submitButtonText?: string;
+  submitButtonText?: React.ReactNode;
   submitButtonTextStyle?: StyleProp<TextStyle>;
 
   skipButtonStyle?: StyleProp<ViewStyle>;
-  skipButtonText?: string;
+  skipButtonText?: React.ReactNode;
   skipButtonTextStyle?: StyleProp<TextStyle>;
 
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;

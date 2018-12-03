@@ -1,5 +1,5 @@
 // @flow
-import React from "react";
+import * as React from "react";
 import {
   FlatList,
   Image,
@@ -81,8 +81,8 @@ export type Props = ExtraTextProps & {
   placeholderTextColor?: string,
   selectedValue?: string,
   onValueChange?: (countryCode: string) => void,
-  backButtonText?: string,
-  headerTitle?: string,
+  backButtonText?: React.Node,
+  headerTitle?: React.Node,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
