@@ -130,3 +130,19 @@ export interface SignupWithMobileProps {
   onPressSkipButton?: () => void;
 }
 export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
+export interface VerifyOTPProps extends ExtraTextProps {
+  headerTitle?: React.ReactNode;
+  description?: React.ReactNode;
+  resendText?: React.ReactNode;
+  resending?: boolean;
+
+  containerStyle?: ViewStyle;
+  headerStyle?: ViewStyle;
+  boxStyle?: ViewStyle;
+  resendContainerStyle?: ViewStyle;
+  resendTextStyle?: TextStyle;
+
+  onEnterCode?: (code: string) => void;
+  onPressResend?: () => void;
+}
+export class VerifyOTP extends React.Component<VerifyOTPProps> {}
