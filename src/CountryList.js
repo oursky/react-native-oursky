@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Platform,
 } from "react-native";
 
 import type { ListRenderItemInfo } from "./types";
@@ -146,6 +147,10 @@ export default class CountryList extends React.PureComponent<Props, State> {
   };
 
   renderItem = ({ item }: ListRenderItemInfo<Country>) => {
+    const text = Platform.select({
+      ios: `${item.flag} ${item.name} +${item.callingCode}`,
+      android: `${item.name} +${item.callingCode}`,
+    });
     return (
       <TouchableOpacity
         key={item.isoCountryCode}
@@ -157,9 +162,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
             : null,
         ]}
       >
-        <Text key={item.isoCountryCode}>{`${item.flag} ${item.name} +${
-          item.callingCode
-        }`}</Text>
+        <Text key={item.isoCountryCode}>{text}</Text>
       </TouchableOpacity>
     );
   };
