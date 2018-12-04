@@ -40,7 +40,7 @@ const defaultStyles = StyleSheet.create({
   box: {
     borderRadius: 24,
     backgroundColor: "white",
-    shadowColor: "rgb(0, 0, 0)",
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     elevation: 15,
