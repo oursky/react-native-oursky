@@ -77,17 +77,28 @@ export interface TextInputProps extends NativeTextInputProps, ExtraTextProps {
 export function TextInput(
   props: TextInputProps
 ): React.Component<TextInputProps>;
+export interface Country {
+  isoCountryCode: string;
+  callingCode: string;
+  flag: string;
+  name: string;
+}
 export interface CountryPickerProps extends ExtraTextProps {
   placeholder?: string;
   placeholderTextColor?: string;
   selectedValue?: string;
-  onValueChange?: (countryCallingCode: string) => void;
   backButtonText?: React.ReactNode;
   headerTitle?: React.ReactNode;
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+
+  onValueChange?: (countryCallingCode: string) => void;
+  openAlternativeCountryList?: (
+    countryCodes: Country[],
+    onSelectCountry: (country: Country) => void
+  ) => void;
 }
 export class CountryPicker extends React.Component<CountryPickerProps> {}
 export interface Mobile {

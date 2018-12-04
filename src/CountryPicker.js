@@ -80,18 +80,23 @@ export type Props = ExtraTextProps & {
   placeholder?: string,
   placeholderTextColor?: string,
   selectedValue?: string,
-  onValueChange?: (countryCode: string) => void,
   backButtonText?: React.Node,
   headerTitle?: React.Node,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
   containerStyle?: ViewStyle,
+
+  onValueChange?: (countryCode: string) => void,
+  openAlternativeCountryList?: (
+    countryCodes: Country[],
+    onSelectCountry: (country: Country) => void
+  ) => void,
 };
 
 type State = {
   selectedValue: string,
-  showPicker: boolean,
+  showCountryList: boolean,
 };
 
 const dropdownArrowIcon = require("../images/dropdown-arrow.png");
@@ -101,18 +106,22 @@ class CountryPicker extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       selectedValue: this.props.selectedValue || "",
-      showPicker: false,
+      showCountryList: false,
     };
   }
 
-  openPicker = () => {
-    this.setState({ showPicker: true });
+  openCountryList = () => {
+    if (this.props.openAlternativeCountryList) {
+      this.props.openAlternativeCountryList(countryCodes, this.onSelectCountry);
+    } else {
+      this.setState({ showCountryList: true });
+    }
   };
 
   onSelectCountry = (item: Country) => {
     this.setState({
       selectedValue: item.callingCode,
-      showPicker: false,
+      showCountryList: false,
     });
     if (this.props.onValueChange) {
       this.props.onValueChange(item.callingCode);
@@ -121,7 +130,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
 
   closePicker = () => {
     this.setState({
-      showPicker: false,
+      showCountryList: false,
     });
   };
 
@@ -136,16 +145,16 @@ class CountryPicker extends React.PureComponent<Props, State> {
       headerTitle,
       ...rest
     } = this.props;
-    const { selectedValue, showPicker } = this.state;
+    const { selectedValue, showCountryList } = this.state;
 
     return (
       <View style={containerStyle}>
         <TouchableOpacity
-          onPress={this.openPicker}
+          onPress={this.openCountryList}
           style={[defaultStyles.style, style]}
         >
           <Text
-            onFocus={this.openPicker}
+            onFocus={this.openCountryList}
             style={[
               defaultStyles.textStyle,
               textStyle,
@@ -158,7 +167,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
         </TouchableOpacity>
         <ExtraText {...rest} />
         <CountryList
-          visible={showPicker}
+          visible={showCountryList}
           backButtonText={backButtonText}
           headerTitle={headerTitle}
           selectedValue={selectedValue}
