@@ -74,7 +74,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
 
   state = {
     value: "",
-    countDownSecond: 30,
+    countDownSecond: 59,
   };
 
   timerId: IntervalID | null = null;
@@ -90,7 +90,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
   }
 
   countDown = () => {
-    this.setState({ countDownSecond: 30 });
+    this.setState({ countDownSecond: 59 });
     this.timerId = setInterval(() => {
       this.setState(
         prevState => ({
