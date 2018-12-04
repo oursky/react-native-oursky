@@ -107,10 +107,7 @@ export interface Mobile {
 }
 export interface SignupWithMobileProps {
   style?: StyleProp<ViewStyle>;
-  boxStyle?: StyleProp<ViewStyle>;
 
-  headerTitle?: React.ReactNode;
-  headerStyle?: StyleProp<TextStyle>;
   description?: React.ReactNode;
   descriptionStyle?: StyleProp<TextStyle>;
   title?: React.ReactNode;
@@ -123,11 +120,11 @@ export interface SignupWithMobileProps {
   submitButtonText?: React.ReactNode;
   submitButtonTextStyle?: StyleProp<TextStyle>;
 
-  loading?: boolean;
-
   skipButtonStyle?: StyleProp<ViewStyle>;
   skipButtonText?: React.ReactNode;
   skipButtonTextStyle?: StyleProp<TextStyle>;
+
+  loading?: boolean;
 
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;
   onPressSkipButton?: () => void;
