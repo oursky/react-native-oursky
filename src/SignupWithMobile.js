@@ -66,9 +66,11 @@ const defaultStyles = StyleSheet.create({
   countryPicker: {
     borderBottomColor: "rgb(170, 170, 170)",
     borderBottomWidth: 1,
+    alignSelf: "center",
+    height: 52,
   },
   countryPickerText: {
-    paddingVertical: 11,
+    alignSelf: "center",
     fontSize: 16,
   },
   mobileNumberContainer: {
@@ -76,11 +78,7 @@ const defaultStyles = StyleSheet.create({
     flex: 1,
   },
   mobileNumberText: {
-    // TextInput will have default padding on Android, and it can't be remove.
-    paddingVertical: Platform.select({
-      android: 8,
-      ios: 11,
-    }),
+    height: 52,
     borderBottomColor: "rgb(170, 170, 170)",
     borderBottomWidth: 1,
     fontSize: 16,
