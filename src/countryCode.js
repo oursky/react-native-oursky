@@ -1,12 +1,12 @@
 // @flow
-export type CountryCode = {
+export type Country = {
   isoCountryCode: string,
   callingCode: string,
   flag: string,
   name: string,
 };
 
-export const countryCode: CountryCode[] = [
+const countryCodes: Country[] = [
   {
     isoCountryCode: "AD",
     callingCode: "376",
@@ -1484,3 +1484,4 @@ export const countryCode: CountryCode[] = [
     name: "Zimbabwe",
   },
 ];
+export default countryCodes;

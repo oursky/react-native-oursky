@@ -13,8 +13,8 @@ import {
 import Text from "./Text";
 import TextInput from "./TextInput";
 import { TextStyle, ViewStyle } from "./styles";
-import { countryCode } from "./countryCode";
-import type { CountryCode } from "./countryCode";
+import countryCodes from "./countryCode";
+import type { Country } from "./countryCode";
 import type { ListRenderItemInfo } from "./types";
 import ExtraText from "./ExtraText";
 import type { Props as ExtraTextProps } from "./ExtraText";
@@ -92,7 +92,7 @@ export type Props = ExtraTextProps & {
 type State = {
   selectedValue: string | null,
   showPicker: boolean,
-  countriesCode: CountryCode[],
+  countryCodes: Country[],
 };
 
 const ITEM_HEIGHT = 34;
@@ -105,7 +105,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
     this.state = {
       selectedValue: this.props.selectedValue || null,
       showPicker: false,
-      countriesCode: countryCode.sort((a, b) => {
+      countryCodes: countryCodes.sort((a, b) => {
         if (a.callingCode == b.callingCode) {
           return a.name > b.name ? 1 : -1;
         } else {
@@ -119,7 +119,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
     this.setState({ showPicker: true });
   };
 
-  onPressCountry = (item: CountryCode) => () => {
+  onPressCountry = (item: Country) => () => {
     this.setState({
       selectedValue: item.callingCode,
       showPicker: false,
@@ -131,7 +131,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
 
   search = (text: string) => {
     this.setState({
-      countriesCode: countryCode
+      countryCodes: countryCodes
         .filter(
           item =>
             text
@@ -148,11 +148,11 @@ class CountryPicker extends React.PureComponent<Props, State> {
     });
   };
 
-  keyExtractor = (item: CountryCode) => {
+  keyExtractor = (item: Country) => {
     return item.isoCountryCode;
   };
 
-  getItemLayout = (data?: CountryCode[] | null, index: number) => {
+  getItemLayout = (data?: Country[] | null, index: number) => {
     return {
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * index,
@@ -160,7 +160,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
     };
   };
 
-  renderItem = ({ item }: ListRenderItemInfo<CountryCode>) => {
+  renderItem = ({ item }: ListRenderItemInfo<Country>) => {
     return (
       <TouchableOpacity
         key={item.isoCountryCode}
@@ -190,9 +190,9 @@ class CountryPicker extends React.PureComponent<Props, State> {
       headerTitle,
       ...rest
     } = this.props;
-    const { selectedValue, showPicker, countriesCode } = this.state;
+    const { selectedValue, showPicker, countryCodes } = this.state;
 
-    const selectedValueIndex = countriesCode.findIndex(
+    const selectedValueIndex = countryCodes.findIndex(
       item => item.callingCode === selectedValue
     );
     return (
@@ -239,7 +239,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
               />
             </View>
             <FlatList
-              data={countriesCode}
+              data={countryCodes}
               keyExtractor={this.keyExtractor}
               extraData={this.state}
               renderItem={this.renderItem}
