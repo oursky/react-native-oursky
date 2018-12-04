@@ -38,8 +38,10 @@ const defaultStyles = StyleSheet.create({
   },
   resendContainer: {
     marginTop: 33,
+    alignItems: "center",
   },
   resendText: {
+    fontSize: 13,
     color: "rgb(170, 170, 170)",
   },
   hiddenTextInput: {
@@ -127,7 +129,12 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
         {Array(4)
           .fill("")
           .map((_, idx) => {
-            return <CodeBox value={this.state.value.charAt(idx)} />;
+            return (
+              <CodeBox
+                value={this.state.value.charAt(idx)}
+                isError={!!this.props.error}
+              />
+            );
           })}
       </View>
     );
