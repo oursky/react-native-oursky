@@ -15,9 +15,9 @@ import TextInput from "./TextInput";
 import { TextStyle, ViewStyle } from "./styles";
 import countryCodes from "./countryCode";
 import type { Country } from "./countryCode";
-import type { ListRenderItemInfo } from "./types";
 import ExtraText from "./ExtraText";
 import type { Props as ExtraTextProps } from "./ExtraText";
+import CountryList from "./CountryList";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -90,28 +90,18 @@ export type Props = ExtraTextProps & {
 };
 
 type State = {
-  selectedValue: string | null,
+  selectedValue: string,
   showPicker: boolean,
-  countryCodes: Country[],
 };
 
-const ITEM_HEIGHT = 34;
 const dropdownArrowIcon = require("../images/dropdown-arrow.png");
-const backIcon = require("../images/back-icon.png");
 
 class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedValue: this.props.selectedValue || null,
+      selectedValue: this.props.selectedValue || "",
       showPicker: false,
-      countryCodes: countryCodes.sort((a, b) => {
-        if (a.callingCode == b.callingCode) {
-          return a.name > b.name ? 1 : -1;
-        } else {
-          return a.callingCode > b.callingCode ? 1 : -1;
-        }
-      }),
     };
   }
 
@@ -119,7 +109,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
     this.setState({ showPicker: true });
   };
 
-  onPressCountry = (item: Country) => () => {
+  onSelectCountry = (item: Country) => {
     this.setState({
       selectedValue: item.callingCode,
       showPicker: false,
@@ -129,54 +119,10 @@ class CountryPicker extends React.PureComponent<Props, State> {
     }
   };
 
-  search = (text: string) => {
-    this.setState({
-      countryCodes: countryCodes
-        .filter(
-          item =>
-            text
-              ? item.name.includes(text) || item.callingCode.includes(text)
-              : true
-        )
-        .sort((a, b) => (a.callingCode > b.callingCode ? 1 : -1)),
-    });
-  };
-
   closePicker = () => {
     this.setState({
       showPicker: false,
     });
-  };
-
-  keyExtractor = (item: Country) => {
-    return item.isoCountryCode;
-  };
-
-  getItemLayout = (data?: Country[] | null, index: number) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
-
-  renderItem = ({ item }: ListRenderItemInfo<Country>) => {
-    return (
-      <TouchableOpacity
-        key={item.isoCountryCode}
-        onPress={this.onPressCountry(item)}
-        style={[
-          defaultStyles.item,
-          item.callingCode === this.state.selectedValue
-            ? defaultStyles.selectedItem
-            : null,
-        ]}
-      >
-        <Text key={item.isoCountryCode}>{`${item.flag} ${item.name} +${
-          item.callingCode
-        }`}</Text>
-      </TouchableOpacity>
-    );
   };
 
   render() {
@@ -190,11 +136,8 @@ class CountryPicker extends React.PureComponent<Props, State> {
       headerTitle,
       ...rest
     } = this.props;
-    const { selectedValue, showPicker, countryCodes } = this.state;
+    const { selectedValue, showPicker } = this.state;
 
-    const selectedValueIndex = countryCodes.findIndex(
-      item => item.callingCode === selectedValue
-    );
     return (
       <View style={containerStyle}>
         <TouchableOpacity
@@ -214,41 +157,14 @@ class CountryPicker extends React.PureComponent<Props, State> {
           <Image source={dropdownArrowIcon} />
         </TouchableOpacity>
         <ExtraText {...rest} />
-        <Modal visible={showPicker} animationType="slide">
-          <SafeAreaView style={defaultStyles.container}>
-            <View style={defaultStyles.header}>
-              <TouchableOpacity
-                style={defaultStyles.backButton}
-                onPress={this.closePicker}
-              >
-                <Image source={backIcon} />
-                <Text style={defaultStyles.backButtonText}>
-                  {backButtonText || "Back"}
-                </Text>
-              </TouchableOpacity>
-              <Text style={defaultStyles.headerTitle}>
-                {headerTitle || "Select Country"}
-              </Text>
-            </View>
-            <View style={defaultStyles.searchbarContainer}>
-              <TextInput
-                placeholder="Search"
-                onChangeText={this.search}
-                style={defaultStyles.searchbar}
-                autoFocus={true}
-              />
-            </View>
-            <FlatList
-              data={countryCodes}
-              keyExtractor={this.keyExtractor}
-              extraData={this.state}
-              renderItem={this.renderItem}
-              initialScrollIndex={selectedValueIndex}
-              initialNumToRender={25}
-              getItemLayout={this.getItemLayout}
-            />
-          </SafeAreaView>
-        </Modal>
+        <CountryList
+          visible={showPicker}
+          backButtonText={backButtonText}
+          headerTitle={headerTitle}
+          selectedValue={selectedValue}
+          onPressBackButton={this.closePicker}
+          onSelectCountry={this.onSelectCountry}
+        />
       </View>
     );
   }
