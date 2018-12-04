@@ -27,16 +27,6 @@ import type { Props as CountryPickerProps } from "./CountryPicker";
 import { ViewStyle, TextStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 18,
-  },
-  header: {
-    color: "white",
-    fontSize: 32,
-    paddingBottom: 30,
-  },
   box: {
     borderRadius: 24,
     backgroundColor: "white",
@@ -119,10 +109,7 @@ export type Mobile = {
 
 export type Props = {
   style?: ViewStyle,
-  boxStyle?: ViewStyle,
 
-  headerTitle?: React.Node,
-  headerStyle?: TextStyle,
   description?: React.Node,
   descriptionStyle?: TextStyle,
   title?: React.Node,
@@ -198,20 +185,62 @@ export default class SignupWithMobile extends React.PureComponent<
     }
   };
 
-  // The box should be middle of the screen, so we need to raise this component.
-  adjustLayout = (event: LayoutEvent) => {
-    // If currect height less than iPhone SE height, then don't adjust layout.
-    this.setState({
-      marginTop:
-        Dimensions.get("window").height > 568
-          ? -event.nativeEvent.layout.height
-          : 0,
-    });
+  renderCountryPicker = () => {
+    const { countryPickerProps } = this.props;
+    const { countryCallingCode } = this.state;
+    return (
+      <CountryPicker
+        {...countryPickerProps}
+        style={[
+          defaultStyles.countryPicker,
+          countryPickerProps && countryPickerProps.style,
+        ]}
+        containerStyle={[
+          defaultStyles.countryPickerContainer,
+          countryPickerProps && countryPickerProps.containerStyle,
+        ]}
+        textStyle={[
+          defaultStyles.countryPickerText,
+          countryPickerProps && countryPickerProps.textStyle,
+        ]}
+        errorStyle={[
+          defaultStyles.error,
+          countryPickerProps && countryPickerProps.errorStyle,
+        ]}
+        onValueChange={this.onCountryCodeChange}
+        selectedValue={countryCallingCode}
+      />
+    );
+  };
+
+  renderTextInput = () => {
+    const { mobileNumberProps } = this.props;
+    const { nationalNumber } = this.state;
+    return (
+      <TextInput
+        {...mobileNumberProps}
+        containerStyle={[
+          defaultStyles.mobileNumberContainer,
+          mobileNumberProps && mobileNumberProps.containerStyle,
+        ]}
+        style={[
+          defaultStyles.mobileNumberText,
+          mobileNumberProps && mobileNumberProps.style,
+        ]}
+        errorStyle={[
+          defaultStyles.error,
+          mobileNumberProps && mobileNumberProps.errorStyle,
+        ]}
+        keyboardType="phone-pad"
+        value={nationalNumber}
+        onChangeText={this.onChangeText}
+        autoFocus={true}
+      />
+    );
   };
 
   render() {
     const {
-      headerTitle,
       description,
       title,
       submitButtonText,
@@ -219,94 +248,43 @@ export default class SignupWithMobile extends React.PureComponent<
       loading,
 
       style,
-      headerStyle,
-      boxStyle,
       descriptionStyle,
       titleStyle,
       submitButtonStyle,
       submitButtonTextStyle,
       skipButtonStyle,
       skipButtonTextStyle,
-      countryPickerProps,
-      mobileNumberProps,
 
       onPressSkipButton,
     } = this.props;
-    const { nationalNumber, countryCallingCode, marginTop } = this.state;
 
     return (
-      <View style={[defaultStyles.container, style, { marginTop }]}>
-        <Text
-          style={[defaultStyles.header, headerStyle]}
-          onLayout={this.adjustLayout}
-        >
-          {headerTitle}
+      <View style={[defaultStyles.box, style]}>
+        <Text style={[defaultStyles.description, descriptionStyle]}>
+          {description}
         </Text>
-        <View style={[defaultStyles.box, boxStyle]}>
-          <Text style={[defaultStyles.description, descriptionStyle]}>
-            {description}
-          </Text>
-          <Text style={[defaultStyles.title, titleStyle]}>{title}</Text>
-          <View style={defaultStyles.flexRow}>
-            <CountryPicker
-              {...countryPickerProps}
-              style={[
-                defaultStyles.countryPicker,
-                countryPickerProps && countryPickerProps.style,
-              ]}
-              containerStyle={[
-                defaultStyles.countryPickerContainer,
-                countryPickerProps && countryPickerProps.containerStyle,
-              ]}
-              textStyle={[
-                defaultStyles.countryPickerText,
-                countryPickerProps && countryPickerProps.textStyle,
-              ]}
-              errorStyle={[
-                defaultStyles.error,
-                countryPickerProps && countryPickerProps.errorStyle,
-              ]}
-              onValueChange={this.onCountryCodeChange}
-              selectedValue={countryCallingCode}
-            />
-            <TextInput
-              {...mobileNumberProps}
-              containerStyle={[
-                defaultStyles.mobileNumberContainer,
-                mobileNumberProps && mobileNumberProps.containerStyle,
-              ]}
-              style={[
-                defaultStyles.mobileNumberText,
-                mobileNumberProps && mobileNumberProps.style,
-              ]}
-              errorStyle={[
-                defaultStyles.error,
-                mobileNumberProps && mobileNumberProps.errorStyle,
-              ]}
-              keyboardType="phone-pad"
-              value={nationalNumber}
-              onChangeText={this.onChangeText}
-              autoFocus={true}
-            />
-          </View>
-          <TouchableOpacity
-            disabled={loading}
-            style={[defaultStyles.submitButton, submitButtonStyle]}
-            onPress={this.onPressSubmitButton}
-          >
-            <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
-              {submitButtonText}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[defaultStyles.skipButton, skipButtonStyle]}
-            onPress={onPressSkipButton}
-          >
-            <Text style={[defaultStyles.skipText, skipButtonTextStyle]}>
-              {skipButtonText}
-            </Text>
-          </TouchableOpacity>
+        <Text style={[defaultStyles.title, titleStyle]}>{title}</Text>
+        <View style={defaultStyles.flexRow}>
+          {this.renderCountryPicker()}
+          {this.renderTextInput()}
         </View>
+        <TouchableOpacity
+          disabled={loading}
+          style={[defaultStyles.submitButton, submitButtonStyle]}
+          onPress={this.onPressSubmitButton}
+        >
+          <Text style={[defaultStyles.submitText, submitButtonTextStyle]}>
+            {submitButtonText}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[defaultStyles.skipButton, skipButtonStyle]}
+          onPress={onPressSkipButton}
+        >
+          <Text style={[defaultStyles.skipText, skipButtonTextStyle]}>
+            {skipButtonText}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
