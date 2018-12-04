@@ -48,6 +48,9 @@ const defaultStyles = StyleSheet.create({
   resendContainer: {
     marginTop: 33,
   },
+  resendText: {
+    color: "rgb(170, 170, 170)",
+  },
   hiddenTextInput: {
     width: 0,
     height: 0,
@@ -59,7 +62,7 @@ export type Props = ExtraTextProps & {
   headerTitle?: React.Node,
   description?: React.Node,
   resendText?: React.Node,
-  resending?: boolean, // show ActivityIndicator if resending
+  resending?: boolean, // disabled resend button
 
   containerStyle?: ViewStyle,
   headerStyle?: ViewStyle,
@@ -68,11 +71,12 @@ export type Props = ExtraTextProps & {
   resendTextStyle?: TextStyle,
 
   onEnterCode?: (code: string) => void,
-  onPressResend?: () => void,
+  onPressResend?: (restartTimer: () => void) => void,
 };
 
 type State = {
   value: string,
+  countDownSecond: number,
 };
 
 export default class VerifyOTP extends React.PureComponent<Props, State> {
@@ -80,6 +84,37 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
 
   state = {
     value: "",
+    countDownSecond: 30,
+  };
+
+  timerId: IntervalID | null = null;
+
+  componentDidMount() {
+    this.countDown();
+  }
+
+  componentWillUnmount() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+    }
+  }
+
+  countDown = () => {
+    this.setState({ countDownSecond: 30 });
+    this.timerId = setInterval(() => {
+      this.setState(
+        prevState => ({
+          ...prevState,
+          countDownSecond: prevState.countDownSecond - 1,
+        }),
+        () => {
+          if (this.state.countDownSecond === 0 && this.timerId) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+          }
+        }
+      );
+    }, 1000);
   };
 
   onChangeText = (value: string) => {
@@ -89,6 +124,12 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           this.props.onEnterCode(value);
         }
       });
+    }
+  };
+
+  onPressResend = () => {
+    if (this.props.onPressResend) {
+      this.props.onPressResend(this.countDown);
     }
   };
 
@@ -110,20 +151,19 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
       description,
       resendText,
       resending,
+      error,
 
       containerStyle,
       headerStyle,
       boxStyle,
       resendContainerStyle,
       resendTextStyle,
-      error,
       errorStyle,
 
       onEnterCode,
-      onPressResend,
     } = this.props;
 
-    const { value } = this.state;
+    const { value, countDownSecond } = this.state;
     return (
       <View style={[defaultStyles.container, containerStyle]}>
         <Text style={[defaultStyles.header, headerStyle]}>{headerTitle}</Text>
@@ -144,10 +184,14 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
             errorStyle={[defaultStyles.error, errorStyle]}
           />
           <TouchableOpacity
+            disabled={resending || countDownSecond !== 0}
             style={[defaultStyles.resendContainer, resendContainerStyle]}
-            onPress={onPressResend}
+            onPress={this.onPressResend}
           >
-            <Text style={[resendTextStyle]}>{resendText}</Text>
+            <Text style={[defaultStyles.resendText, resendTextStyle]}>
+              {resendText} ({countDownSecond}
+              s)
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
