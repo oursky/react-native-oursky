@@ -139,7 +139,7 @@ export interface VerifyOTPProps extends ExtraTextProps {
   resendContainerStyle?: ViewStyle;
   resendTextStyle?: TextStyle;
 
-  onEnterCode?: (code: string) => void;
+  onEnterCode?: (code: string, clearCode: () => void) => void;
   onPressResend?: (restartTimer: () => void) => void;
 }
 export class VerifyOTP extends React.Component<VerifyOTPProps> {}
