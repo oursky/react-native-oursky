@@ -11,16 +11,6 @@ import type { Props as CodeBoxProps } from "./CodeBox";
 import TextInput from "./TextInput";
 
 const defaultStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 18,
-  },
-  header: {
-    color: "white",
-    fontSize: 32,
-    paddingBottom: 30,
-  },
   box: {
     borderRadius: 24,
     backgroundColor: "white",
@@ -42,8 +32,9 @@ const defaultStyles = StyleSheet.create({
     marginHorizontal: -4.5,
   },
   error: {
-    color: "rgb(208, 2, 27)",
+    color: "rgb(238, 0, 0)",
     alignSelf: "center",
+    marginTop: 12,
   },
   resendContainer: {
     marginTop: 33,
@@ -59,14 +50,11 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = ExtraTextProps & {
-  headerTitle?: React.Node,
   description?: React.Node,
   resendText?: React.Node,
   resending?: boolean, // disabled resend button
 
-  containerStyle?: ViewStyle,
-  headerStyle?: ViewStyle,
-  boxStyle?: ViewStyle,
+  style?: ViewStyle,
   resendContainerStyle?: ViewStyle,
   resendTextStyle?: TextStyle,
 
@@ -147,15 +135,12 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      headerTitle,
       description,
       resendText,
       resending,
       error,
 
-      containerStyle,
-      headerStyle,
-      boxStyle,
+      style,
       resendContainerStyle,
       resendTextStyle,
       errorStyle,
@@ -165,35 +150,32 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
 
     const { value, countDownSecond } = this.state;
     return (
-      <View style={[defaultStyles.container, containerStyle]}>
-        <Text style={[defaultStyles.header, headerStyle]}>{headerTitle}</Text>
-        <View style={[defaultStyles.box, boxStyle]}>
-          <Text style={[defaultStyles.description]}>{description}</Text>
-          {this.renderCodeBox()}
-          <TextInput
-            ref={this.textInputRef}
-            value={value}
-            onChangeText={this.onChangeText}
-            autoFocus={true}
-            style={defaultStyles.hiddenTextInput}
-            keyboardType="numeric"
-            maxLength={4}
-          />
-          <ExtraText
-            error={error}
-            errorStyle={[defaultStyles.error, errorStyle]}
-          />
-          <TouchableOpacity
-            disabled={resending || countDownSecond !== 0}
-            style={[defaultStyles.resendContainer, resendContainerStyle]}
-            onPress={this.onPressResend}
-          >
-            <Text style={[defaultStyles.resendText, resendTextStyle]}>
-              {resendText} ({countDownSecond}
-              s)
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <View style={[defaultStyles.box, style]}>
+        <Text style={[defaultStyles.description]}>{description}</Text>
+        {this.renderCodeBox()}
+        <TextInput
+          ref={this.textInputRef}
+          value={value}
+          onChangeText={this.onChangeText}
+          autoFocus={true}
+          style={defaultStyles.hiddenTextInput}
+          keyboardType="numeric"
+          maxLength={4}
+        />
+        <TouchableOpacity
+          disabled={resending || countDownSecond !== 0}
+          style={[defaultStyles.resendContainer, resendContainerStyle]}
+          onPress={this.onPressResend}
+        >
+          <Text style={[defaultStyles.resendText, resendTextStyle]}>
+            {resendText} ({countDownSecond}
+            s)
+          </Text>
+        </TouchableOpacity>
+        <ExtraText
+          error={error}
+          errorStyle={[defaultStyles.error, errorStyle]}
+        />
       </View>
     );
   }
