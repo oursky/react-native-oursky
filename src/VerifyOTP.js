@@ -60,7 +60,7 @@ export type Props = ExtraTextProps & {
   resendContainerStyle?: ViewStyle,
   resendTextStyle?: TextStyle,
 
-  onEnterCode?: (code: string) => void,
+  onEnterCode?: (code: string, clearCode: () => void) => void,
   onPressResend?: (restartTimer: () => void) => void,
 };
 
@@ -107,11 +107,15 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     }, 1000);
   };
 
+  clearCode = () => {
+    this.setState({ value: "" });
+  };
+
   onChangeText = (value: string) => {
     if (/^\d*$/.test(value)) {
       this.setState({ value }, () => {
         if (this.props.onEnterCode) {
-          this.props.onEnterCode(value);
+          this.props.onEnterCode(value, this.clearCode);
         }
       });
     }
