@@ -8,7 +8,6 @@ import { ViewStyle } from "./styles";
 export type Props = {
   style?: ViewStyle,
   value: string,
-  isFocus?: boolean,
   isError?: boolean,
 };
 
@@ -23,20 +22,24 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   text: {
-    fontSize: 38,
+    fontSize: 42,
+    color: "black",
+  },
+  error: {
+    borderColor: "rgb(238, 0, 0)",
+    borderWidth: 1,
   },
 });
 
 export default class CodeBox extends React.PureComponent<Props> {
   static defaultProps = {
-    isFocus: false,
     isError: false,
   };
 
   render() {
-    const { isFocus, isError, value, style } = this.props;
+    const { isError, value, style } = this.props;
     return (
-      <View style={[styles.defaultStyle, style]}>
+      <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
         <Text style={styles.text}>{value}</Text>
       </View>
     );
