@@ -131,14 +131,11 @@ export interface SignupWithMobileProps {
 }
 export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
 export interface VerifyOTPProps extends ExtraTextProps {
-  headerTitle?: React.ReactNode;
   description?: React.ReactNode;
   resendText?: React.ReactNode;
   resending?: boolean;
 
-  containerStyle?: ViewStyle;
-  headerStyle?: ViewStyle;
-  boxStyle?: ViewStyle;
+  style?: ViewStyle;
   resendContainerStyle?: ViewStyle;
   resendTextStyle?: TextStyle;
 
