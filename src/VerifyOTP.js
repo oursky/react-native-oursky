@@ -57,6 +57,9 @@ export type Props = ExtraTextProps & {
   resending?: boolean, // disabled resend button
 
   style?: ViewStyle,
+  descriptionStyle?: TextStyle,
+  codeBoxStyle?: ViewStyle,
+  codeBoxTextStyle?: TextStyle,
   resendContainerStyle?: ViewStyle,
   resendTextStyle?: TextStyle,
 
@@ -128,6 +131,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
   };
 
   renderCodeBox = () => {
+    const { codeBoxStyle, codeBoxTextStyle } = this.props;
     return (
       <View style={defaultStyles.codeBoxContainer}>
         {Array(4)
@@ -135,6 +139,8 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           .map((_, idx) => {
             return (
               <CodeBox
+                style={codeBoxStyle}
+                textStyle={codeBoxTextStyle}
                 value={this.state.value.charAt(idx)}
                 isError={!!this.props.error}
               />
@@ -152,6 +158,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
       error,
 
       style,
+      descriptionStyle,
       resendContainerStyle,
       resendTextStyle,
       errorStyle,
@@ -162,7 +169,9 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     const { value, countDownSecond } = this.state;
     return (
       <View style={[defaultStyles.box, style]}>
-        <Text style={[defaultStyles.description]}>{description}</Text>
+        <Text style={[defaultStyles.description, descriptionStyle]}>
+          {description}
+        </Text>
         {this.renderCodeBox()}
         <TextInput
           ref={this.textInputRef}
