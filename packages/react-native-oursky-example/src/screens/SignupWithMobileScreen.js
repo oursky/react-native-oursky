@@ -81,7 +81,7 @@ export default class SignupWithMobileScreen extends React.PureComponent<
           skipButtonText="Skip for now"
           loading={this.state.loading}
           onPressSubmitButton={(isValid: boolean, mobile: Mobile) => {
-            this.props.navigation.push("VerifyOTP");
+            this.props.navigation.navigate("VerifyOTP");
           }}
           onPressSkipButton={() => {
             this.setState({
