@@ -135,12 +135,12 @@ export interface VerifyOTPProps extends ExtraTextProps {
   resendText?: React.ReactNode;
   resending?: boolean;
 
-  style?: ViewStyle;
-  descriptionStyle?: TextStyle;
-  codeBoxStyle?: ViewStyle;
-  codeBoxTextStyle?: TextStyle;
-  resendContainerStyle?: ViewStyle;
-  resendTextStyle?: TextStyle;
+  style?: StyleProp<ViewStyle>;
+  descriptionStyle?: StyleProp<TextStyle>;
+  codeBoxStyle?: StyleProp<ViewStyle>;
+  codeBoxTextStyle?: StyleProp<TextStyle>;
+  resendContainerStyle?: StyleProp<ViewStyle>;
+  resendTextStyle?: StyleProp<TextStyle>;
 
   onEnterCode?: (code: string, clearCode: () => void) => void;
   onPressResend?: (restartTimer: () => void) => void;
