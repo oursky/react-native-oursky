@@ -21,3 +21,5 @@ export type {
 } from "./SignupWithMobile";
 export { default as VerifyOTP } from "./VerifyOTP";
 export type { Props as VerifyOTPProps } from "./VerifyOTP";
+export { default as Dialog } from "./Dialog";
+export type { Props as DialogProps } from "./Dialog";
