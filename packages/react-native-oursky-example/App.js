@@ -20,7 +20,7 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container}>
+      <View style={styles.container}>
         <SignupWithMobile
           description="Sign up with Mobile"
           title="Sign up Now"
@@ -33,7 +33,7 @@ export default class App extends Component<Props> {
           submitButtonText="Submit"
           skipButtonText="Skip"
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
