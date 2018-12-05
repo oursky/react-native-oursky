@@ -25,6 +25,7 @@ import type { Props as TextInputProps } from "./TextInput";
 import CountryPicker from "./CountryPicker";
 import type { Props as CountryPickerProps } from "./CountryPicker";
 import { ViewStyle, TextStyle } from "./styles";
+import type { RefObject } from "./types";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -132,14 +133,18 @@ export type Props = {
   onPressSkipButton?: () => void,
 };
 
+type InnerRefProps = {
+  innerRef: RefObject<TextInput>,
+};
+
 type State = {
   countryCallingCode: string,
   nationalNumber: string,
   marginTop: number,
 };
 
-export default class SignupWithMobile extends React.PureComponent<
-  Props,
+class SignupWithMobile extends React.PureComponent<
+  Props & InnerRefProps,
   State
 > {
   state = {
@@ -214,11 +219,12 @@ export default class SignupWithMobile extends React.PureComponent<
   };
 
   renderTextInput = () => {
-    const { mobileNumberProps } = this.props;
+    const { mobileNumberProps, innerRef } = this.props;
     const { nationalNumber } = this.state;
     return (
       <TextInput
         {...mobileNumberProps}
+        ref={innerRef}
         containerStyle={[
           defaultStyles.mobileNumberContainer,
           mobileNumberProps && mobileNumberProps.containerStyle,
@@ -289,3 +295,8 @@ export default class SignupWithMobile extends React.PureComponent<
     );
   }
 }
+
+// $FlowFixMe
+export default React.forwardRef((props: Props, ref?: RefObject<TextInput>) => (
+  <SignupWithMobile {...props} innerRef={ref} />
+));
