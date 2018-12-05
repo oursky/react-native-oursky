@@ -19,7 +19,7 @@
   "devDependencies": {
     "flow-bin": "0.75.0",
     "prettier": "1.14.2",
-    "react": "16.4.2",
-    "react-native": "0.56.0"
+    "react": "16.6.1",
+    "react-native": "0.57.7"
   }
 }

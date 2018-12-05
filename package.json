@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+  },
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/react-native-oursky-example",
+      "**/react-native-oursky-example/**"
+    ]
+  }
+}

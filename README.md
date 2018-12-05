@@ -8,7 +8,7 @@ yarn add --exact @oursky/react-native-oursky
 
 ## How to use
 
-Read source code or `index.d.ts`
+Read source code or (index.d.ts)[./packages/react-native-oursky/index.d.ts]
 
 ## Principle
 
@@ -16,7 +16,3 @@ Read source code or `index.d.ts`
 - Hand-written high quality TypeScript type definitions
 
 So both Flow and TypeScript projects can benefit.
-
-## Road map
-
-- Add a companion example project to ease development
