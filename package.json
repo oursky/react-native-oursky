@@ -12,6 +12,7 @@
     "format": "prettier --write 'src/**/*.js' index.d.ts"
   },
   "peerDependencies": {
+    "libphonenumber-js": "^1.6.8",
     "react": ">=16.3",
     "react-native": ">=0.50"
   },
