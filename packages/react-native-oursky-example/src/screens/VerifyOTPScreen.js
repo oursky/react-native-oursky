@@ -53,6 +53,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
           Get Started
         </Text>
         <VerifyOTP
+          ref={ref => ref && ref.focus()}
           description="We have sent you a 4 digit code to +852 9124 2442, please enter the code below"
           resendText="Didn't receive any code? Request resend"
           error={this.state.error}
