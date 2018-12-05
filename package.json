@@ -1,5 +1,9 @@
 {
   "private": true,
+  "scripts": {
+    "flow": "yarn workspaces run flow",
+    "format": "yarn workspaces run format"
+  },
   "workspaces": {
     "packages": ["packages/*"],
     "nohoist": [

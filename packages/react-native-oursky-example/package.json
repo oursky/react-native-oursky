@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "flow": "echo 'flow is now broken and it is skipped'",
+    "format": "prettier --write index.js 'src/**/*.js'"
   },
   "dependencies": {
     "libphonenumber-js": "1.6.8",

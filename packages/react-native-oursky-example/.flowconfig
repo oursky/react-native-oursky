@@ -20,6 +20,7 @@
 .*/node_modules/metro/.*
 
 [include]
+<PROJECT_ROOT>/../react-native-oursky
 
 [libs]
 node_modules/react-native/Libraries/react-native/react-native-interface.js
@@ -46,6 +47,8 @@ module.system.haste.paths.blacklist=.*/__tests__/.*
 module.system.haste.paths.blacklist=.*/__mocks__/.*
 module.system.haste.paths.blacklist=<PROJECT_ROOT>/node_modules/react-native/Libraries/Animated/src/polyfills/.*
 module.system.haste.paths.whitelist=<PROJECT_ROOT>/node_modules/react-native/Libraries/.*
+
+module.name_mapper='@oursky/react-native-oursky' -> '<PROJECT_ROOT>/../react-native-oursky'
 
 munge_underscores=true
 
