@@ -157,6 +157,10 @@ export default class SignupWithMobile extends React.PureComponent<
   };
 
   onCountryCodeChange = (countryCallingCode: string) => {
+    const { countryPickerProps } = this.props;
+    if (countryPickerProps && countryPickerProps.onValueChange) {
+      countryPickerProps.onValueChange(countryCallingCode);
+    }
     this.setState({ countryCallingCode });
   };
 
