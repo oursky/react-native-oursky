@@ -1,12 +1,14 @@
 {
   "private": true,
-  "scripts": {
-  },
   "workspaces": {
     "packages": ["packages/*"],
     "nohoist": [
       "**/react-native-oursky-example",
       "**/react-native-oursky-example/**"
     ]
+  },
+  "devDependencies": {
+    "flow-bin": "0.78.0",
+    "prettier": "1.15.3"
   }
 }
