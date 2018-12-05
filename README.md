@@ -8,7 +8,7 @@ yarn add --exact @oursky/react-native-oursky
 
 ## How to use
 
-Read source code or (index.d.ts)[./packages/react-native-oursky/index.d.ts]
+Read source code or [index.d.ts](./packages/react-native-oursky/index.d.ts)
 
 ## Principle
 
