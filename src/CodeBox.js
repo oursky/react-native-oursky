@@ -3,10 +3,11 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import Text from "./Text";
-import { ViewStyle } from "./styles";
+import { ViewStyle, TextStyle } from "./styles";
 
 export type Props = {
   style?: ViewStyle,
+  textStyle?: TextStyle,
   value: string,
   isError?: boolean,
 };
@@ -37,10 +38,10 @@ export default class CodeBox extends React.PureComponent<Props> {
   };
 
   render() {
-    const { isError, value, style } = this.props;
+    const { isError, value, style, textStyle } = this.props;
     return (
       <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
-        <Text style={styles.text}>{value}</Text>
+        <Text style={[styles.text, textStyle]}>{value}</Text>
       </View>
     );
   }

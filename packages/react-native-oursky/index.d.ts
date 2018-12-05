@@ -136,6 +136,9 @@ export interface VerifyOTPProps extends ExtraTextProps {
   resending?: boolean;
 
   style?: ViewStyle;
+  descriptionStyle?: TextStyle;
+  codeBoxStyle?: ViewStyle;
+  codeBoxTextStyle?: TextStyle;
   resendContainerStyle?: ViewStyle;
   resendTextStyle?: TextStyle;
 
