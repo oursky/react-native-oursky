@@ -150,6 +150,10 @@ export default class SignupWithMobile extends React.PureComponent<
 
   onChangeText = (text: string) => {
     if (/^\d*$/.test(text)) {
+      const { mobileNumberProps } = this.props;
+      if (mobileNumberProps && mobileNumberProps.onChangeText) {
+        mobileNumberProps.onChangeText(text);
+      }
       this.setState({
         nationalNumber: text,
       });
