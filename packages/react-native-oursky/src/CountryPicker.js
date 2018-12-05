@@ -24,6 +24,14 @@ const defaultStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(249, 249, 249)",
   },
+  style: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textStyle: {
+    flex: 1,
+  },
+
   header: {
     flexDirection: "row",
     justifyContent: "center",
@@ -31,6 +39,9 @@ const defaultStyles = StyleSheet.create({
     paddingHorizontal: 9,
     borderBottomColor: "#CACACA",
     borderBottomWidth: 1,
+  },
+  headerTitle: {
+    fontSize: 17,
   },
   backButton: {
     flexDirection: "row",
@@ -43,25 +54,6 @@ const defaultStyles = StyleSheet.create({
     color: "#007AFF",
     marginLeft: 5,
   },
-  headerTitle: {
-    fontSize: 17,
-  },
-  item: {
-    paddingHorizontal: 19,
-    paddingVertical: 8,
-    borderBottomColor: "#CACACA",
-    borderBottomWidth: 1,
-  },
-  selectedItem: {
-    backgroundColor: "#F3F3F3",
-  },
-  style: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  textStyle: {
-    flex: 1,
-  },
   searchbarContainer: {
     paddingHorizontal: 17,
     paddingVertical: 10,
@@ -73,6 +65,15 @@ const defaultStyles = StyleSheet.create({
     paddingHorizontal: 9,
     borderRadius: 10,
     height: 36,
+  },
+  item: {
+    paddingHorizontal: 19,
+    paddingVertical: 8,
+    borderBottomColor: "#CACACA",
+    borderBottomWidth: 1,
+  },
+  selectedItem: {
+    backgroundColor: "#F3F3F3",
   },
 });
 
@@ -143,15 +144,22 @@ class CountryPicker extends React.PureComponent<Props, State> {
       containerStyle,
       backButtonText,
       headerTitle,
+      error,
+      errorStyle,
       ...rest
     } = this.props;
     const { selectedValue, showCountryList } = this.state;
 
+    const errorColor = StyleSheet.flatten(errorStyle).color;
     return (
       <View style={containerStyle}>
         <TouchableOpacity
           onPress={this.openCountryList}
-          style={[defaultStyles.style, style]}
+          style={[
+            defaultStyles.style,
+            style,
+            error ? { borderBottomColor: errorColor } : null,
+          ]}
         >
           <Text
             onFocus={this.openCountryList}
@@ -165,7 +173,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
           </Text>
           <Image source={dropdownArrowIcon} />
         </TouchableOpacity>
-        <ExtraText {...rest} />
+        <ExtraText {...rest} error={error} errorStyle={errorStyle} />
         <CountryList
           visible={showCountryList}
           backButtonText={backButtonText}

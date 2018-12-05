@@ -31,12 +31,17 @@ function TextInput(props: Props, ref?) {
     ...rest
   } = props;
 
+  const errorColor = StyleSheet.flatten(errorStyle).color;
   return (
     <View style={containerStyle}>
       <NativeTextInput
         {...rest}
         ref={ref}
-        style={[defaultStyles.textInput, style]}
+        style={[
+          defaultStyles.textInput,
+          style,
+          error ? { borderBottomColor: errorColor } : null,
+        ]}
         underlineColorAndroid="transparent"
       />
       <ExtraText
