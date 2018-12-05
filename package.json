@@ -1,25 +1,12 @@
 {
-  "name": "@oursky/react-native-oursky",
-  "version": "0.3.0",
-  "main": "src/index.js",
-  "files": [
-    "src/**/*",
-    "index.d.ts"
-  ],
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "flow": "flow",
-    "format": "prettier --write 'src/**/*.js' index.d.ts"
   },
-  "peerDependencies": {
-    "libphonenumber-js": "^1.6.8",
-    "react": ">=16.3",
-    "react-native": ">=0.50"
-  },
-  "devDependencies": {
-    "flow-bin": "0.75.0",
-    "prettier": "1.14.2",
-    "react": "16.4.2",
-    "react-native": "0.56.0"
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/react-native-oursky-example",
+      "**/react-native-oursky-example/**"
+    ]
   }
 }

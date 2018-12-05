@@ -99,7 +99,7 @@ type State = {
   showCountryList: boolean,
 };
 
-const dropdownArrowIcon = require("../images/dropdown-arrow.png");
+const dropdownArrowIcon = require("./images/dropdown-arrow.png");
 
 class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
