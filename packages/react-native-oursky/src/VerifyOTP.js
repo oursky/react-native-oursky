@@ -9,6 +9,7 @@ import { ViewStyle, TextStyle } from "./styles";
 import CodeBox from "./CodeBox";
 import type { Props as CodeBoxProps } from "./CodeBox";
 import TextInput from "./TextInput";
+import type { RefObject } from "./types";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -72,9 +73,11 @@ type State = {
   countDownSecond: number,
 };
 
-export default class VerifyOTP extends React.PureComponent<Props, State> {
-  textInputRef = React.createRef();
+type TextInputRefProps = {
+  textInputRef: RefObject<TextInput>,
+};
 
+class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
   state = {
     value: "",
     countDownSecond: 59,
@@ -139,6 +142,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           .map((_, idx) => {
             return (
               <CodeBox
+                key={idx}
                 style={codeBoxStyle}
                 textStyle={codeBoxTextStyle}
                 value={this.state.value.charAt(idx)}
@@ -164,6 +168,8 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
       errorStyle,
 
       onEnterCode,
+
+      textInputRef,
     } = this.props;
 
     const { value, countDownSecond } = this.state;
@@ -174,7 +180,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
         </Text>
         {this.renderCodeBox()}
         <TextInput
-          ref={this.textInputRef}
+          ref={textInputRef}
           value={value}
           onChangeText={this.onChangeText}
           autoFocus={true}
@@ -200,3 +206,8 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     );
   }
 }
+
+// $FlowFixMe
+export default React.forwardRef((props: Props, ref?: RefObject<TextInput>) => (
+  <VerifyOTP {...props} textInputRef={ref} />
+));

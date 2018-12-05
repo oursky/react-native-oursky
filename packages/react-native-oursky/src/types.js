@@ -6,3 +6,5 @@ export type ListRenderItemInfo<itemT> = {
   item: itemT,
   separators: SeparatorsObj,
 };
+
+export type RefObject<T> = { current: null | T };
