@@ -25,7 +25,6 @@ import type { Props as TextInputProps } from "./TextInput";
 import CountryPicker from "./CountryPicker";
 import type { Props as CountryPickerProps } from "./CountryPicker";
 import { ViewStyle, TextStyle } from "./styles";
-import type { RefObject } from "./types";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -134,7 +133,7 @@ export type Props = {
 };
 
 type TextInputRefProps = {
-  textInputRef: RefObject<TextInput>,
+  textInputRef: React$Ref<TextInput>,
 };
 
 type State = {
@@ -297,6 +296,6 @@ class SignupWithMobile extends React.PureComponent<
 }
 
 // $FlowFixMe
-export default React.forwardRef((props: Props, ref?: RefObject<TextInput>) => (
+export default React.forwardRef((props: Props, ref?: React$Ref<TextInput>) => (
   <SignupWithMobile {...props} textInputRef={ref} />
 ));
