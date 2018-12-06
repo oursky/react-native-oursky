@@ -20,6 +20,7 @@ import type { Country } from "./countryCode";
 import ExtraText from "./ExtraText";
 import type { Props as ExtraTextProps } from "./ExtraText";
 import CountryList from "./CountryList";
+import RNSimInfo from "rn-sim-info";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -85,7 +86,7 @@ export type Props = ExtraTextProps & {
   selectedValue?: string,
   backButtonText?: React.Node,
   headerTitle?: React.Node,
-  defaultByDeviceCountry?: boolean,
+  defaultBySimcardCountry: boolean,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -107,21 +108,16 @@ type State = {
 const dropdownArrowIcon = require("./images/dropdown-arrow.png");
 
 class CountryPicker extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    defaultBySimcardCountry: false,
+  };
+
   constructor(props: Props) {
     super(props);
 
     let selectedValue = this.props.selectedValue || "";
-    if (this.props.defaultByDeviceCountry) {
-      const locale = Platform.select({
-        android:
-          NativeModules.I18nManager &&
-          NativeModules.I18nManager.localeIdentifier,
-        ios:
-          NativeModules.SettingsManager &&
-          NativeModules.SettingsManager.settings.AppleLocale,
-      });
-
-      const upperCountryCode = locale.toUpperCase().substr(-2);
+    if (this.props.defaultBySimcardCountry) {
+      const upperCountryCode = RNSimInfo.getCountryCode().toUpperCase();
       const country = countryCodes.find(code => {
         return code.isoCountryCode === upperCountryCode;
       });

@@ -74,6 +74,8 @@ export default class SignupWithMobileScreen extends React.PureComponent<
             error: this.state.error,
             headerTitle: "Select Country",
             backButtonText: "Back",
+            defaultBySimcardCountry: true,
+            selectedValue: "1",
           }}
           mobileNumberProps={{
             placeholder: "Mobile Number",
