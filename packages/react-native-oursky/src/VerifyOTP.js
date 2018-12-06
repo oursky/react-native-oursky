@@ -193,8 +193,7 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
           onPress={this.onPressResend}
         >
           <Text style={[defaultStyles.resendText, resendTextStyle]}>
-            {resendText} ({countDownSecond}
-            s)
+            {resendText} {`(${countDownSecond}s)`}
           </Text>
         </TouchableOpacity>
         <ExtraText
