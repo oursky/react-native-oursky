@@ -1,6 +1,7 @@
 // @flow
-import React from "react";
+import * as React from "react";
 import { StyleSheet, Dimensions } from "react-native";
+import type { LayoutEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import {
   Text,
   VerifyOTP,
@@ -34,7 +35,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
     marginTop: 0,
   };
 
-  adjustLayout = event => {
+  adjustLayout = (event: LayoutEvent) => {
     const marginTop =
       Dimensions.get("window").height > 568
         ? -event.nativeEvent.layout.height

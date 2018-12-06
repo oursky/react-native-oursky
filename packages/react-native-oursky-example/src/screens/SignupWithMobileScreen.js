@@ -1,12 +1,14 @@
 // @flow
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
+import type { LayoutEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import {
   KeyboardAvoidingView,
   SignupWithMobile,
   Text,
 } from "@oursky/react-native-oursky";
 import type { Mobile } from "@oursky/react-native-oursky";
+import { NavigationScreenProps } from "react-navigation";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {};
+type Props = NavigationScreenProps & {};
 
 type State = {
   error: string | React.Node | null,
@@ -44,7 +46,7 @@ export default class SignupWithMobileScreen extends React.PureComponent<
     marginTop: 0,
   };
 
-  adjustLayout = (event: LayoutChangeEvent) => {
+  adjustLayout = (event: LayoutEvent) => {
     const marginTop =
       Dimensions.get("window").height > 568
         ? -event.nativeEvent.layout.height
