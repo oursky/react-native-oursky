@@ -96,20 +96,22 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
 
   countDown = () => {
     this.setState({ countDownSecond: 59 });
-    this.timerId = setInterval(() => {
-      this.setState(
-        prevState => ({
-          ...prevState,
-          countDownSecond: prevState.countDownSecond - 1,
-        }),
-        () => {
-          if (this.state.countDownSecond === 0 && this.timerId) {
-            clearInterval(this.timerId);
-            this.timerId = null;
-          }
+    this.timerId = setInterval(this.countDownUntilZero, 1000);
+  };
+
+  countDownUntilZero = () => {
+    this.setState(
+      prevState => ({
+        ...prevState,
+        countDownSecond: prevState.countDownSecond - 1,
+      }),
+      () => {
+        if (this.state.countDownSecond === 0 && this.timerId) {
+          clearInterval(this.timerId);
+          this.timerId = null;
         }
-      );
-    }, 1000);
+      }
+    );
   };
 
   clearCode = () => {
