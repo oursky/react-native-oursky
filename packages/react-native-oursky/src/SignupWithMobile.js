@@ -115,8 +115,8 @@ export type Props = {
   title?: React.Node,
   titleStyle?: TextStyle,
 
-  countryPickerProps?: CountryPickerProps,
-  mobileNumberProps?: TextInputProps,
+  countryPickerProps: CountryPickerProps,
+  mobileNumberProps: TextInputProps,
 
   submitButtonStyle?: ViewStyle,
   submitButtonText?: React.Node,
@@ -146,6 +146,11 @@ class SignupWithMobile extends React.PureComponent<
   Props & TextInputRefProps,
   State
 > {
+  static defaultProps = {
+    countryPickerProps: {},
+    mobileNumberProps: {},
+  };
+
   state = {
     countryCallingCode: "",
     nationalNumber: "",
@@ -154,6 +159,10 @@ class SignupWithMobile extends React.PureComponent<
 
   onChangeText = (text: string) => {
     if (/^\d*$/.test(text)) {
+      const { mobileNumberProps } = this.props;
+      if (mobileNumberProps.onChangeText) {
+        mobileNumberProps.onChangeText(text);
+      }
       this.setState({
         nationalNumber: text,
       });
@@ -161,6 +170,10 @@ class SignupWithMobile extends React.PureComponent<
   };
 
   onCountryCodeChange = (countryCallingCode: string) => {
+    const { countryPickerProps } = this.props;
+    if (countryPickerProps.onValueChange) {
+      countryPickerProps.onValueChange(countryCallingCode);
+    }
     this.setState({ countryCallingCode });
   };
 
@@ -195,22 +208,16 @@ class SignupWithMobile extends React.PureComponent<
     return (
       <CountryPicker
         {...countryPickerProps}
-        style={[
-          defaultStyles.countryPicker,
-          countryPickerProps && countryPickerProps.style,
-        ]}
+        style={[defaultStyles.countryPicker, countryPickerProps.style]}
         containerStyle={[
           defaultStyles.countryPickerContainer,
-          countryPickerProps && countryPickerProps.containerStyle,
+          countryPickerProps.containerStyle,
         ]}
         textStyle={[
           defaultStyles.countryPickerText,
-          countryPickerProps && countryPickerProps.textStyle,
+          countryPickerProps.textStyle,
         ]}
-        errorStyle={[
-          defaultStyles.error,
-          countryPickerProps && countryPickerProps.errorStyle,
-        ]}
+        errorStyle={[defaultStyles.error, countryPickerProps.errorStyle]}
         onValueChange={this.onCountryCodeChange}
         selectedValue={countryCallingCode}
       />
@@ -226,16 +233,10 @@ class SignupWithMobile extends React.PureComponent<
         ref={textInputRef}
         containerStyle={[
           defaultStyles.mobileNumberContainer,
-          mobileNumberProps && mobileNumberProps.containerStyle,
+          mobileNumberProps.containerStyle,
         ]}
-        style={[
-          defaultStyles.mobileNumberText,
-          mobileNumberProps && mobileNumberProps.style,
-        ]}
-        errorStyle={[
-          defaultStyles.error,
-          mobileNumberProps && mobileNumberProps.errorStyle,
-        ]}
+        style={[defaultStyles.mobileNumberText, mobileNumberProps.style]}
+        errorStyle={[defaultStyles.error, mobileNumberProps.errorStyle]}
         keyboardType="phone-pad"
         value={nationalNumber}
         onChangeText={this.onChangeText}
