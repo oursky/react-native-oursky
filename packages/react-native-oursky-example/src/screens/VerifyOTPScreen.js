@@ -58,6 +58,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
           description="We have sent you a 4 digit code to +852 9124 2442, please enter the code below"
           resendText="Didn't receive any code? Request resend"
           error={this.state.error}
+          timerStartFrom={5}
           onEnterCode={(code: string, clearCode: () => void) => {
             if (code !== "8964" && code.length === 4) {
               this.setState({

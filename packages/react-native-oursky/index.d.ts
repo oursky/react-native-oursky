@@ -131,9 +131,10 @@ export interface SignupWithMobileProps {
 }
 export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
 export interface VerifyOTPProps extends ExtraTextProps {
-  description?: React.ReactNode;
-  resendText?: React.ReactNode;
-  resending?: boolean;
+  description: React.ReactNode;
+  resendText: React.ReactNode;
+  resending: boolean;
+  timerStartFrom: number;
 
   style?: StyleProp<ViewStyle>;
   descriptionStyle?: StyleProp<TextStyle>;

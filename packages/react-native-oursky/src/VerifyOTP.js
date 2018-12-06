@@ -9,6 +9,7 @@ import { ViewStyle, TextStyle } from "./styles";
 import CodeBox from "./CodeBox";
 import type { Props as CodeBoxProps } from "./CodeBox";
 import TextInput from "./TextInput";
+import Timer from "./Timer";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -52,9 +53,10 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = ExtraTextProps & {
-  description?: React.Node,
-  resendText?: React.Node,
+  description: React.Node,
+  resendText: React.Node,
   resending?: boolean, // disabled resend button
+  timerStartFrom: number,
 
   style?: ViewStyle,
   descriptionStyle?: TextStyle,
@@ -69,7 +71,6 @@ export type Props = ExtraTextProps & {
 
 type State = {
   value: string,
-  countDownSecond: number,
 };
 
 type TextInputRefProps = {
@@ -77,42 +78,14 @@ type TextInputRefProps = {
 };
 
 class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
-  state = {
-    value: "",
-    countDownSecond: 59,
-  };
+  timer = React.createRef();
 
-  timerId: IntervalID | null = null;
-
-  componentDidMount() {
-    this.countDown();
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+    };
   }
-
-  componentWillUnmount() {
-    if (this.timerId) {
-      clearInterval(this.timerId);
-    }
-  }
-
-  countDown = () => {
-    this.setState({ countDownSecond: 59 });
-    this.timerId = setInterval(this.countDownUntilZero, 1000);
-  };
-
-  countDownUntilZero = () => {
-    this.setState(
-      prevState => ({
-        ...prevState,
-        countDownSecond: prevState.countDownSecond - 1,
-      }),
-      () => {
-        if (this.state.countDownSecond === 0 && this.timerId) {
-          clearInterval(this.timerId);
-          this.timerId = null;
-        }
-      }
-    );
-  };
 
   clearCode = () => {
     this.setState({ value: "" });
@@ -130,7 +103,11 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
 
   onPressResend = () => {
     if (this.props.onPressResend) {
-      this.props.onPressResend(this.countDown);
+      this.props.onPressResend(() => {
+        if (this.timer.current) {
+          this.timer.current.countDown();
+        }
+      });
     }
   };
 
@@ -161,6 +138,7 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
       resendText,
       resending,
       error,
+      timerStartFrom,
 
       style,
       descriptionStyle,
@@ -173,7 +151,7 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
       textInputRef,
     } = this.props;
 
-    const { value, countDownSecond } = this.state;
+    const { value } = this.state;
     return (
       <View style={[defaultStyles.box, style]}>
         <Text style={[defaultStyles.description, descriptionStyle]}>
@@ -190,12 +168,19 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
           maxLength={4}
         />
         <TouchableOpacity
-          disabled={resending || countDownSecond !== 0}
+          disabled={resending}
           style={[defaultStyles.resendContainer, resendContainerStyle]}
           onPress={this.onPressResend}
         >
           <Text style={[defaultStyles.resendText, resendTextStyle]}>
-            {resendText} {`(${countDownSecond}s)`}
+            {resendText}
+            (
+            <Timer
+              ref={this.timer}
+              start={timerStartFrom}
+              onClockTicking={() => {}}
+            />
+            s)
           </Text>
         </TouchableOpacity>
         <ExtraText
