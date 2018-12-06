@@ -8,6 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  NativeModules,
+  Platform,
 } from "react-native";
 
 import Text from "./Text";
@@ -83,6 +85,7 @@ export type Props = ExtraTextProps & {
   selectedValue?: string,
   backButtonText?: React.Node,
   headerTitle?: React.Node,
+  defaultByDeviceCountry?: boolean,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -106,8 +109,27 @@ const dropdownArrowIcon = require("./images/dropdown-arrow.png");
 class CountryPicker extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    let selectedValue = this.props.selectedValue || "";
+    if (this.props.defaultByDeviceCountry) {
+      const locale = Platform.select({
+        android:
+          NativeModules.I18nManager &&
+          NativeModules.I18nManager.localeIdentifier,
+        ios:
+          NativeModules.SettingsManager &&
+          NativeModules.SettingsManager.settings.AppleLocale,
+      });
+
+      const upperCountryCode = locale.toUpperCase().substr(-2);
+      const country = countryCodes.find(code => {
+        return code.isoCountryCode === upperCountryCode;
+      });
+      selectedValue = (country && country.callingCode) || selectedValue;
+    }
+
     this.state = {
-      selectedValue: this.props.selectedValue || "",
+      selectedValue,
       showCountryList: false,
     };
   }
