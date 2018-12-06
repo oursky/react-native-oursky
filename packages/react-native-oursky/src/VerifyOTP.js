@@ -9,7 +9,6 @@ import { ViewStyle, TextStyle } from "./styles";
 import CodeBox from "./CodeBox";
 import type { Props as CodeBoxProps } from "./CodeBox";
 import TextInput from "./TextInput";
-import type { RefObject } from "./types";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -74,7 +73,7 @@ type State = {
 };
 
 type TextInputRefProps = {
-  textInputRef: RefObject<TextInput>,
+  textInputRef: React$Ref<TextInput>,
 };
 
 class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
@@ -208,6 +207,6 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
 }
 
 // $FlowFixMe
-export default React.forwardRef((props: Props, ref?: RefObject<TextInput>) => (
+export default React.forwardRef((props: Props, ref?: React$Ref<TextInput>) => (
   <VerifyOTP {...props} textInputRef={ref} />
 ));
