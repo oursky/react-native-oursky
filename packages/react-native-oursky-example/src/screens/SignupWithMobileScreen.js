@@ -6,6 +6,7 @@ import {
   SignupWithMobile,
   Text,
 } from "@oursky/react-native-oursky";
+import type { Mobile } from "@oursky/react-native-oursky";
 
 const styles = StyleSheet.create({
   container: {
