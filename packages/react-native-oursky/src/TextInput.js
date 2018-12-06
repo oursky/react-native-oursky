@@ -18,6 +18,8 @@ const defaultStyles = StyleSheet.create({
 export type Props = ExtraTextProps & {
   style?: TextStyle,
   containerStyle?: ViewStyle,
+
+  onChangeText?: (text: string) => void,
 };
 
 function TextInput(props: Props, ref?) {
