@@ -32,17 +32,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class CodeBox extends React.PureComponent<Props> {
-  static defaultProps = {
-    isError: false,
-  };
-
-  render() {
-    const { isError, value, style, textStyle } = this.props;
-    return (
-      <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
-        <Text style={[styles.text, textStyle]}>{value}</Text>
-      </View>
-    );
-  }
+export default function CodeBox(props: Props) {
+  const { isError, value, style, textStyle } = props;
+  return (
+    <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
+      <Text style={[styles.text, textStyle]}>{value}</Text>
+    </View>
+  );
 }
