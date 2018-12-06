@@ -132,14 +132,18 @@ export type Props = {
   onPressSkipButton?: () => void,
 };
 
+type TextInputRefProps = {
+  textInputRef: React$Ref<TextInput>,
+};
+
 type State = {
   countryCallingCode: string,
   nationalNumber: string,
   marginTop: number,
 };
 
-export default class SignupWithMobile extends React.PureComponent<
-  Props,
+class SignupWithMobile extends React.PureComponent<
+  Props & TextInputRefProps,
   State
 > {
   state = {
@@ -214,11 +218,12 @@ export default class SignupWithMobile extends React.PureComponent<
   };
 
   renderTextInput = () => {
-    const { mobileNumberProps } = this.props;
+    const { mobileNumberProps, textInputRef } = this.props;
     const { nationalNumber } = this.state;
     return (
       <TextInput
         {...mobileNumberProps}
+        ref={textInputRef}
         containerStyle={[
           defaultStyles.mobileNumberContainer,
           mobileNumberProps && mobileNumberProps.containerStyle,
@@ -289,3 +294,8 @@ export default class SignupWithMobile extends React.PureComponent<
     );
   }
 }
+
+// $FlowFixMe
+export default React.forwardRef((props: Props, ref?: React$Ref<TextInput>) => (
+  <SignupWithMobile {...props} textInputRef={ref} />
+));
