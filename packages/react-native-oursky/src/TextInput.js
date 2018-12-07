@@ -33,7 +33,8 @@ function TextInput(props: Props, ref?) {
     ...rest
   } = props;
 
-  const errorColor = StyleSheet.flatten(errorStyle).color;
+  const flattedErrorStyle = StyleSheet.flatten(errorStyle);
+  const errorColor = flattedErrorStyle && flattedErrorStyle.color;
   return (
     <View style={containerStyle}>
       <NativeTextInput
@@ -42,7 +43,7 @@ function TextInput(props: Props, ref?) {
         style={[
           defaultStyles.textInput,
           style,
-          error ? { borderBottomColor: errorColor } : null,
+          error && errorColor ? { borderBottomColor: errorColor } : null,
         ]}
         underlineColorAndroid="transparent"
       />

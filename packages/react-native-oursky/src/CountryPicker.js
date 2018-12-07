@@ -150,7 +150,8 @@ class CountryPicker extends React.PureComponent<Props, State> {
     } = this.props;
     const { selectedValue, showCountryList } = this.state;
 
-    const errorColor = StyleSheet.flatten(errorStyle).color;
+    const flattedErrorStyle = StyleSheet.flatten(errorStyle);
+    const errorColor = flattedErrorStyle && flattedErrorStyle.color;
     return (
       <View style={containerStyle}>
         <TouchableOpacity
@@ -158,7 +159,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
           style={[
             defaultStyles.style,
             style,
-            error ? { borderBottomColor: errorColor } : null,
+            error && errorColor ? { borderBottomColor: errorColor } : null,
           ]}
         >
           <Text
