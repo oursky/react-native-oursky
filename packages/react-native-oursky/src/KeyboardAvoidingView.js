@@ -1,10 +1,11 @@
 // @flow
 import React from "react";
 import { View, Platform, Keyboard } from "react-native";
-import type { Props as ViewProps } from "react-native/Libraries/Components/View/View";
+import type { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
 import type EmitterSubscription from "react-native/Libraries/vendor/emitter/EmitterSubscription";
 
-export type Props = ViewProps & {
+export type Props = {
+  ...ViewProps,
   behavior: "margin",
   androidSoftInputMode: "adjustResize",
 };
@@ -102,7 +103,7 @@ export default class KeyboardAvoidingView extends React.PureComponent<
   };
 
   render() {
-    const { style, androidSoftInputMode, ...rest } = this.props;
+    const { style, androidSoftInputMode, behavior, ...rest } = this.props;
     const { keyboardHeight } = this.state;
     let marginBottom = 0;
     if (
