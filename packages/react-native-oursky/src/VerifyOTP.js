@@ -52,9 +52,10 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = ExtraTextProps & {
-  description?: React.Node,
-  resendText?: React.Node,
-  resending?: boolean, // disabled resend button
+  description: React.Node,
+  resendText: React.Node,
+  resending: boolean, // disabled resend button
+  countDownFrom: number,
 
   style?: ViewStyle,
   descriptionStyle?: TextStyle,
@@ -77,10 +78,13 @@ type TextInputRefProps = {
 };
 
 class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
-  state = {
-    value: "",
-    countDownSecond: 59,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      countDownSecond: props.countDownFrom,
+    };
+  }
 
   timerId: IntervalID | null = null;
 
@@ -95,14 +99,16 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
   }
 
   countDown = () => {
-    this.setState({ countDownSecond: 59 });
+    this.setState({ countDownSecond: this.props.countDownFrom });
+    if (this.timerId) {
+      clearInterval(this.timerId);
+    }
     this.timerId = setInterval(this.countDownUntilZero, 1000);
   };
 
   countDownUntilZero = () => {
     this.setState(
       prevState => ({
-        ...prevState,
         countDownSecond: prevState.countDownSecond - 1,
       }),
       () => {
