@@ -146,4 +146,6 @@ export interface VerifyOTPProps extends ExtraTextProps {
   onEnterCode?: (code: string, clearCode: () => void) => void;
   onPressResend?: (restartTimer: () => void) => void;
 }
-export class VerifyOTP extends React.Component<VerifyOTPProps> {}
+export class VerifyOTP extends React.Component<VerifyOTPProps> {
+  focus() {}
+}
