@@ -118,11 +118,10 @@ export default class CountryList extends React.PureComponent<Props, State> {
   search = (text: string) => {
     this.setState({
       countryCodes: countryCodes
-        .filter(
-          item =>
-            text
-              ? item.name.includes(text) || item.callingCode.includes(text)
-              : true
+        .filter(item =>
+          text
+            ? item.name.includes(text) || item.callingCode.includes(text)
+            : true
         )
         .sort((a, b) => (a.callingCode > b.callingCode ? 1 : -1)),
     });
