@@ -93,6 +93,7 @@ export type Props = ExtraTextProps & {
     countryCodes: Country[],
     onSelectCountry: (country: Country) => void
   ) => void,
+  onClosePicker?: () => void,
 };
 
 type State = {
@@ -130,9 +131,16 @@ class CountryPicker extends React.PureComponent<Props, State> {
   };
 
   closePicker = () => {
-    this.setState({
-      showCountryList: false,
-    });
+    this.setState(
+      {
+        showCountryList: false,
+      },
+      () => {
+        if (this.props.onClosePicker) {
+          this.props.onClosePicker();
+        }
+      }
+    );
   };
 
   render() {
