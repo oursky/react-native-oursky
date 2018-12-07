@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Platform } from "react-native";
 import Permissions from "react-native-permissions";
+import OpenSettings from "react-native-open-settings";
 
 import Dialog from "./Dialog";
 import type { LayoutProps as DialogLayoutProps } from "./Dialog";
@@ -93,7 +94,7 @@ export default class RequirePermission extends React.PureComponent<
   };
 
   onSubmitDeniedDialog = () => {
-    // TODO: open setting
+    OpenSettings.openSettings();
     this.props.onReject();
     this.setState({
       showDeniedDialog: false,
