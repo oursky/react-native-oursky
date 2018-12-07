@@ -139,7 +139,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
   };
 
   focus = () => {
-    if (this.textInputRef && this.textInputRef.current) {
+    if (this.textInputRef.current) {
       this.textInputRef.current.focus();
     }
   };
@@ -147,16 +147,14 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
   renderCodeBox = () => {
     const { codeBoxStyle, codeBoxTextStyle } = this.props;
     return (
-      <TouchableOpacity
-        style={defaultStyles.codeBoxContainer}
-        onPress={this.focus}
-      >
+      <View style={defaultStyles.codeBoxContainer}>
         {Array(4)
           .fill("")
           .map((_, idx) => {
             return (
               <CodeBox
                 key={idx}
+                onPress={this.focus}
                 style={codeBoxStyle}
                 textStyle={codeBoxTextStyle}
                 value={this.state.value.charAt(idx)}
@@ -164,7 +162,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
               />
             );
           })}
-      </TouchableOpacity>
+      </View>
     );
   };
 

@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 
 import Text from "./Text";
 import { ViewStyle, TextStyle } from "./styles";
@@ -10,6 +10,7 @@ export type Props = {
   textStyle?: TextStyle,
   value: string,
   isError?: boolean,
+  onPress?: () => void,
 };
 
 const styles = StyleSheet.create({
@@ -33,10 +34,12 @@ const styles = StyleSheet.create({
 });
 
 export default function CodeBox(props: Props) {
-  const { isError, value, style, textStyle } = props;
+  const { isError, value, style, textStyle, onPress } = props;
   return (
-    <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
-      <Text style={[styles.text, textStyle]}>{value}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.defaultStyle, style, isError ? styles.error : null]}>
+        <Text style={[styles.text, textStyle]}>{value}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
