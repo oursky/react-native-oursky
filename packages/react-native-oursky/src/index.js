@@ -23,3 +23,5 @@ export { default as VerifyOTP } from "./VerifyOTP";
 export type { Props as VerifyOTPProps } from "./VerifyOTP";
 export { default as Dialog } from "./Dialog";
 export type { Props as DialogProps } from "./Dialog";
+export { default as RequirePermission } from "./RequirePermission";
+export type { Props as RequirePermissionProps } from "./RequirePermission";

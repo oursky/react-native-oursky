@@ -54,8 +54,7 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type Props = {
-  visible: boolean,
+export type LayoutProps = {
   title: React.Node,
   description: React.Node,
   submitText: React.Node,
@@ -69,12 +68,27 @@ export type Props = {
   submitTextStyle?: TextStyle,
   cancelButtonStyle?: ViewStyle,
   cancelTextStyle?: TextStyle,
+};
+
+type ActivityProps = {
+  visible: boolean,
 
   onSubmit: () => void,
   onCancel: () => void,
 };
 
+export type Props = LayoutProps & ActivityProps;
+
 export default class Dialog extends React.PureComponent<Props> {
+  static defaultProps = {
+    visible: false,
+  };
+
+  // hardware back button will trigger this.
+  onRequestClose = () => {
+    this.props.onCancel();
+  };
+
   render() {
     const {
       visible,
@@ -96,7 +110,11 @@ export default class Dialog extends React.PureComponent<Props> {
       onCancel,
     } = this.props;
     return (
-      <Modal visible={visible} transparent={true}>
+      <Modal
+        visible={visible}
+        transparent={true}
+        onRequestClose={this.onRequestClose}
+      >
         <View style={[defaultStyles.background, backgroundStyle]}>
           <View style={[defaultStyles.box, style]}>
             <Text style={[defaultStyles.title, titleStyle]}>{title}</Text>
