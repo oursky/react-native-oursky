@@ -298,5 +298,6 @@ class SignupWithMobile extends React.PureComponent<
 
 // $FlowFixMe
 export default React.forwardRef((props: Props, ref?: React$Ref<TextInput>) => (
+  // $FlowFixMe
   <SignupWithMobile {...props} textInputRef={ref} />
 ));
