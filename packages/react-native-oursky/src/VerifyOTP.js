@@ -54,8 +54,8 @@ const defaultStyles = StyleSheet.create({
 export type Props = ExtraTextProps & {
   description: React.Node,
   resendText: React.Node,
-  resending: boolean, // disabled resend button
   countDownFrom: number,
+  resending?: boolean, // disabled resend button
 
   style?: ViewStyle,
   descriptionStyle?: TextStyle,
@@ -73,12 +73,10 @@ type State = {
   countDownSecond: number,
 };
 
-type TextInputRefProps = {
-  textInputRef: React$Ref<TextInput>,
-};
+export default class VerifyOTP extends React.PureComponent<Props, State> {
+  textInputRef = React.createRef<TextInput>();
 
-class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       value: "",
@@ -140,10 +138,19 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
     }
   };
 
+  focus = () => {
+    if (this.textInputRef && this.textInputRef.current) {
+      this.textInputRef.current.focus();
+    }
+  };
+
   renderCodeBox = () => {
     const { codeBoxStyle, codeBoxTextStyle } = this.props;
     return (
-      <View style={defaultStyles.codeBoxContainer}>
+      <TouchableOpacity
+        style={defaultStyles.codeBoxContainer}
+        onPress={this.focus}
+      >
         {Array(4)
           .fill("")
           .map((_, idx) => {
@@ -157,7 +164,7 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
               />
             );
           })}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -175,8 +182,6 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
       errorStyle,
 
       onEnterCode,
-
-      textInputRef,
     } = this.props;
 
     const { value, countDownSecond } = this.state;
@@ -187,7 +192,7 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
         </Text>
         {this.renderCodeBox()}
         <TextInput
-          ref={textInputRef}
+          ref={this.textInputRef}
           value={value}
           onChangeText={this.onChangeText}
           autoFocus={true}
@@ -212,8 +217,3 @@ class VerifyOTP extends React.PureComponent<Props & TextInputRefProps, State> {
     );
   }
 }
-
-// $FlowFixMe
-export default React.forwardRef((props: Props, ref?: React$Ref<TextInput>) => (
-  <VerifyOTP {...props} textInputRef={ref} />
-));
