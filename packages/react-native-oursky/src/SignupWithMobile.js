@@ -135,11 +135,6 @@ type TextInputRefProps = {
   textInputRef?: React$Ref<TextInput>,
 };
 
-type State = {
-  countryCallingCode: string,
-  nationalNumber: string,
-};
-
 export default function SignupWithMobile(props: Props & TextInputRefProps) {
   const onChangeText = (text: string) => {
     if (/^\d*$/.test(text)) {
