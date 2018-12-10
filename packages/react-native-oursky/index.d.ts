@@ -106,6 +106,8 @@ export interface Mobile {
   nationalNumber: string;
 }
 export interface SignupWithMobileProps {
+  textInputRef?: React.Ref<TextInput>;
+
   style?: StyleProp<ViewStyle>;
 
   description?: React.ReactNode;
