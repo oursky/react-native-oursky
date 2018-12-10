@@ -122,6 +122,9 @@ class CountryPicker extends React.PureComponent<Props, State> {
         return code.isoCountryCode === upperCountryCode;
       });
       selectedValue = (country && country.callingCode) || selectedValue;
+      if (props.onValueChange) {
+        props.onValueChange(selectedValue);
+      }
     }
 
     this.state = {
