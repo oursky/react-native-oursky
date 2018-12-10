@@ -99,6 +99,7 @@ export interface CountryPickerProps extends ExtraTextProps {
     countryCodes: Country[],
     onSelectCountry: (country: Country) => void
   ) => void;
+  onClosePicker?: () => void;
 }
 export class CountryPicker extends React.Component<CountryPickerProps> {}
 export interface Mobile {
