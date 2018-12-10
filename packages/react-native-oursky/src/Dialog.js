@@ -15,7 +15,7 @@ const defaultStyles = StyleSheet.create({
   box: {
     paddingTop: 36,
     paddingBottom: 23,
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
     backgroundColor: "white",
     borderRadius: 6,
   },
@@ -31,6 +31,7 @@ const defaultStyles = StyleSheet.create({
     fontSize: 14,
     color: "rgb(51, 51, 51)",
     marginTop: 18,
+    paddingHorizontal: 16,
   },
   submitButton: {
     marginTop: 25,
