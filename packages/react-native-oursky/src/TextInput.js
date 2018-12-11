@@ -19,6 +19,7 @@ export type Props = ExtraTextProps & {
   style?: TextStyle,
   containerStyle?: ViewStyle,
 
+  value?: string,
   onChangeText?: (text: string) => void,
 };
 

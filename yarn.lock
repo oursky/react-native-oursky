@@ -5130,6 +5130,11 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
+rn-sim-info@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/rn-sim-info/-/rn-sim-info-1.0.2.tgz#1dbdd9dfad7f71808abf1d65161f6140cd63a4c5"
+  integrity sha512-i2jK7sHW47+voD6JrDdl4taCBeGIyHt4WEmG+xlq/iHZawskymxg8GF0XFG1WXVNx6FqPM/T5ZzfQT2N8h8dCg==
+
 rsvp@^3.3.3:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"

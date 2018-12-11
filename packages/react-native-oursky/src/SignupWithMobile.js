@@ -139,7 +139,6 @@ type TextInputRefProps = {
 type State = {
   countryCallingCode: string,
   nationalNumber: string,
-  marginTop: number,
 };
 
 class SignupWithMobile extends React.PureComponent<
@@ -151,11 +150,15 @@ class SignupWithMobile extends React.PureComponent<
     mobileNumberProps: {},
   };
 
-  state = {
-    countryCallingCode: "",
-    nationalNumber: "",
-    marginTop: 0,
-  };
+  constructor(props: Props & TextInputRefProps) {
+    super(props);
+    const { countryPickerProps, mobileNumberProps } = this.props;
+    this.state = {
+      countryCallingCode:
+        (countryPickerProps && countryPickerProps.selectedValue) || "",
+      nationalNumber: (mobileNumberProps && mobileNumberProps.value) || "",
+    };
+  }
 
   onChangeText = (text: string) => {
     if (/^\d*$/.test(text)) {

@@ -8,6 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  NativeModules,
+  Platform,
 } from "react-native";
 
 import Text from "./Text";
@@ -18,6 +20,7 @@ import type { Country } from "./countryCode";
 import ExtraText from "./ExtraText";
 import type { Props as ExtraTextProps } from "./ExtraText";
 import CountryList from "./CountryList";
+import RNSimInfo from "rn-sim-info";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -83,6 +86,7 @@ export type Props = ExtraTextProps & {
   selectedValue?: string,
   backButtonText?: React.Node,
   headerTitle?: React.Node,
+  defaultBySimcardCountry: boolean,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -104,10 +108,27 @@ type State = {
 const dropdownArrowIcon = require("./images/dropdown-arrow.png");
 
 class CountryPicker extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    defaultBySimcardCountry: false,
+  };
+
   constructor(props: Props) {
     super(props);
+
+    let selectedValue = this.props.selectedValue || "";
+    if (this.props.defaultBySimcardCountry) {
+      const upperCountryCode = RNSimInfo.getCountryCode().toUpperCase();
+      const country = countryCodes.find(code => {
+        return code.isoCountryCode === upperCountryCode;
+      });
+      selectedValue = (country && country.callingCode) || selectedValue;
+      if (props.onValueChange) {
+        props.onValueChange(selectedValue);
+      }
+    }
+
     this.state = {
-      selectedValue: this.props.selectedValue || "",
+      selectedValue,
       showCountryList: false,
     };
   }
