@@ -107,7 +107,7 @@ export interface Mobile {
   nationalNumber: string;
 }
 export interface SignupWithMobileProps {
-  textInputRef?: React.Ref<TextInput>;
+  textInputRef?: React.Ref<NativeTextInput>;
 
   style?: StyleProp<ViewStyle>;
 
@@ -150,5 +150,5 @@ export interface VerifyOTPProps extends ExtraTextProps {
   onPressResend?: (restartTimer: () => void) => void;
 }
 export class VerifyOTP extends React.Component<VerifyOTPProps> {
-  focus() {}
+  focus: () => void;
 }
