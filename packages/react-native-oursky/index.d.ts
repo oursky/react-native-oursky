@@ -133,7 +133,9 @@ export interface SignupWithMobileProps {
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;
   onPressSkipButton?: () => void;
 }
-export class SignupWithMobile extends React.Component<SignupWithMobileProps> {}
+export function SignupWithMobile(
+  props: SignupWithMobileProps
+): React.Component<SignupWithMobileProps>;
 export interface VerifyOTPProps extends ExtraTextProps {
   description: React.ReactNode;
   resendText: React.ReactNode;
