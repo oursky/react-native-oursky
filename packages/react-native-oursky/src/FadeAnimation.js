@@ -5,8 +5,8 @@ import { ViewStyle } from "./styles";
 
 type Props = {
   visible: boolean,
-
   children: React.Node,
+  duration?: number,
   style?: ViewStyle,
 };
 
@@ -23,10 +23,10 @@ export default class FadeAnimation extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate() {
-    const { visible } = this.props;
+    const { visible, duration } = this.props;
     Animated.timing(this.state.animatedVisibleValue, {
       toValue: visible ? 1 : 0,
-      duration: 400,
+      duration: duration || 400,
     }).start();
   }
 

@@ -2,6 +2,7 @@
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View, Image, NetInfo } from "react-native";
 import Text from "./Text";
+import { TextStyle, ViewStyle } from "./styles";
 import FadeAnimation from "./FadeAnimation";
 
 const styles = StyleSheet.create({
@@ -36,18 +37,36 @@ const styles = StyleSheet.create({
     paddingRight: 14,
   },
 });
+const defaultIcon = require("./images/toast_offline_icon.png");
+const defaultText =
+  "Cannot reach internet. Please check your device internet connections.";
+
+type Props = {
+  style?: ViewStyle,
+  errorText?: React.Node,
+  textStyle?: TextStyle,
+  imageIcon?: any, // FIXME: Change it to ImageSourcePropType after adapting to ts
+  iconStyle?: ViewStyle,
+  animationDuration?: number,
+};
 
 type State = {
   isNetworkConnected: boolean,
 };
 
 export default class NetworkFailureToast extends React.PureComponent<
-  {},
+  Props,
   State
 > {
   state = {
     isNetworkConnected: true,
   };
+
+  timer = new Promise((resolve, _reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener(
@@ -69,23 +88,43 @@ export default class NetworkFailureToast extends React.PureComponent<
     });
   };
 
+  renderErrorText = (
+    errorText?: React.Node,
+    textStyle?: TextStyle
+  ): React.Node => {
+    if (typeof errorText == "string" || errorText == null) {
+      const textValue = errorText || defaultText;
+      return <Text style={[styles.text, textStyle]}>{textValue}</Text>;
+    }
+
+    return errorText;
+  };
+
   render() {
     const { isNetworkConnected } = this.state;
+    const {
+      style,
+      errorText,
+      textStyle,
+      imageIcon,
+      iconStyle,
+      animationDuration,
+    } = this.props;
 
     return (
       <SafeAreaView style={styles.safeArea} pointerEvents={"box-none"}>
-        <FadeAnimation visible={!isNetworkConnected}>
-          <View style={styles.toastContainer}>
+        <FadeAnimation
+          visible={!isNetworkConnected}
+          duration={animationDuration}
+        >
+          <View style={[styles.toastContainer, style]}>
             <Image
-              style={styles.icon}
-              source={require("./images/toast_offline_icon.png")}
+              style={[styles.icon, iconStyle]}
+              source={imageIcon || defaultIcon}
               resizeMode="center"
             />
             <View style={styles.textContainer}>
-              <Text style={styles.text}>
-                Cannot reach internet. Please check your device internet
-                connections.
-              </Text>
+              {this.renderErrorText(errorText, textStyle)}
             </View>
           </View>
         </FadeAnimation>
