@@ -8,6 +8,7 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  ImageSourcePropType,
 } from "react-native";
 
 export function createControlGroup(): {
@@ -134,9 +135,7 @@ export interface SignupWithMobileProps {
   onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;
   onPressSkipButton?: () => void;
 }
-export function SignupWithMobile(
-  props: SignupWithMobileProps
-): JSX.Element
+export function SignupWithMobile(props: SignupWithMobileProps): JSX.Element;
 export interface VerifyOTPProps extends ExtraTextProps {
   description: React.ReactNode;
   resendText: React.ReactNode;
@@ -158,6 +157,7 @@ export interface VerifyOTPProps extends ExtraTextProps {
 export class VerifyOTP extends React.Component<VerifyOTPProps> {
   focus: () => void;
 }
+
 interface DialogLayoutProps {
   title: React.ReactNode;
   description: React.ReactNode;
@@ -190,3 +190,23 @@ export interface RequirePermissionProps {
   onReject: () => void;
 }
 export class RequirePermission extends React.Component {}
+
+export interface NetworkFailureToastProps {
+  style?: StyleProp<ViewStyle>;
+  errorText?: React.ReactNode;
+  textStyle?: StyleProp<TextStyle>;
+  imageIcon?: ImageSourcePropType;
+  iconStyle?: StyleProp<ViewStyle>;
+  animationDuration?: number;
+}
+export class NetworkFailureToast extends React.Component<
+  NetworkFailureToastProps
+> {}
+
+export interface FadeAnimationProps {
+  visible: boolean;
+  children: React.ReactNode;
+  duration?: number;
+  style?: StyleProp<ViewStyle>;
+}
+export class FadeAnimation extends React.Component<FadeAnimationProps> {}
