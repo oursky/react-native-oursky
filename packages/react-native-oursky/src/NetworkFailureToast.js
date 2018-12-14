@@ -64,7 +64,6 @@ export default class NetworkFailureToast extends React.PureComponent<
   }
 
   handleConnectivityChange = (isConnected: boolean) => {
-    console.log("Then, is " + (isConnected ? "online" : "offline"));
     this.setState({
       isNetworkConnected: isConnected,
     });
