@@ -87,7 +87,7 @@ export type Props = ExtraTextProps & {
   backButtonText?: React.Node,
   headerTitle?: React.Node,
   defaultBySimcardCountry: boolean,
-  listEmptyComponent?: React.ComponentType<any>,
+  ListEmptyComponent?: React.ComponentType<any>,
 
   style?: ViewStyle,
   textStyle?: TextStyle,
@@ -174,7 +174,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
       containerStyle,
       backButtonText,
       headerTitle,
-      listEmptyComponent,
+      ListEmptyComponent,
       error,
       errorStyle,
       ...rest
@@ -213,7 +213,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
           selectedValue={selectedValue}
           onPressBackButton={this.closePicker}
           onSelectCountry={this.onSelectCountry}
-          listEmptyComponent={listEmptyComponent}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </View>
     );

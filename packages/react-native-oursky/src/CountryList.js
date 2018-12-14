@@ -82,7 +82,7 @@ export type Props = {
   backButtonText?: React.Node,
   headerTitle?: React.Node,
   selectedValue?: string,
-  listEmptyComponent?: React.ComponentType<any>,
+  ListEmptyComponent?: React.ComponentType<any>,
 
   onPressBackButton?: () => void,
   onSelectCountry?: Country => void,
@@ -173,7 +173,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
       visible,
       backButtonText,
       headerTitle,
-      listEmptyComponent,
+      ListEmptyComponent,
 
       onPressBackButton,
     } = this.props;
@@ -221,7 +221,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
             data={renderCountryCodes}
             keyExtractor={this.keyExtractor}
             extraData={this.state}
-            ListEmptyComponent={listEmptyComponent}
+            ListEmptyComponent={ListEmptyComponent}
             renderItem={this.renderItem}
             initialScrollIndex={scrollIndex}
             initialNumToRender={25}

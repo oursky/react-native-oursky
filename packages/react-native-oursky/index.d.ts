@@ -90,7 +90,7 @@ export interface CountryPickerProps extends ExtraTextProps {
   backButtonText?: React.ReactNode;
   headerTitle?: React.ReactNode;
   defaultBySimcardCountry: boolean;
-  listEmptyComponent?: React.Component;
+  ListEmptyComponent?: React.Component;
 
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
