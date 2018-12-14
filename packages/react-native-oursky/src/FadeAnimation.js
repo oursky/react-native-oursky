@@ -1,12 +1,13 @@
 // @flow
 import * as React from "react";
-import { Animated, StyleProp, ViewStyle } from "react-native";
+import { Animated } from "react-native";
+import { ViewStyle } from "./styles";
 
 type Props = {
   visible: boolean,
 
-  children: React.ReactNode,
-  style?: StyleProp<ViewStyle>,
+  children: React.Node,
+  style?: ViewStyle,
 };
 
 type State = {
