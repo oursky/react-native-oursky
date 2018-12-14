@@ -2,6 +2,7 @@
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View, Image, NetInfo } from "react-native";
 import Text from "./Text";
+import FadeAnimation from "./FadeAnimation";
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -70,21 +71,25 @@ export default class NetworkFailureToast extends React.PureComponent<
   };
 
   render() {
+    const { isNetworkConnected } = this.state;
+
     return (
       <SafeAreaView style={styles.safeArea} pointerEvents={"box-none"}>
-        <View style={styles.toastContainer}>
-          <Image
-            style={styles.icon}
-            source={require("./images/toast_offline_icon.png")}
-            resizeMode="center"
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>
-              Cannot reach internet. Please check your device internet
-              connections.
-            </Text>
+        <FadeAnimation visible={!isNetworkConnected}>
+          <View style={styles.toastContainer}>
+            <Image
+              style={styles.icon}
+              source={require("./images/toast_offline_icon.png")}
+              resizeMode="center"
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>
+                Cannot reach internet. Please check your device internet
+                connections.
+              </Text>
+            </View>
           </View>
-        </View>
+        </FadeAnimation>
       </SafeAreaView>
     );
   }
