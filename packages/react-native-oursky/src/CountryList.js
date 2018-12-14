@@ -78,7 +78,7 @@ const backIcon = require("./images/back-icon.png");
 const ITEM_HEIGHT = 34;
 
 export type Props = {
-  visible?: boolean,
+  visible: boolean,
   backButtonText?: React.Node,
   headerTitle?: React.Node,
   selectedValue?: string,
@@ -88,22 +88,26 @@ export type Props = {
 };
 
 type State = {
+  keyword: string,
   selectedValue: string,
-  countryCodes: Country[],
 };
 
+function orderByCallingCodeAndName(a, b) {
+  if (a.callingCode == b.callingCode) {
+    return a.name > b.name ? 1 : -1;
+  } else {
+    return a.callingCode > b.callingCode ? 1 : -1;
+  }
+}
+
 export default class CountryList extends React.PureComponent<Props, State> {
+  visible: boolean = false;
+
   constructor(props: Props) {
     super(props);
     this.state = {
+      keyword: "",
       selectedValue: props.selectedValue || "",
-      countryCodes: countryCodes.sort((a, b) => {
-        if (a.callingCode == b.callingCode) {
-          return a.name > b.name ? 1 : -1;
-        } else {
-          return a.callingCode > b.callingCode ? 1 : -1;
-        }
-      }),
     };
   }
 
@@ -113,17 +117,20 @@ export default class CountryList extends React.PureComponent<Props, State> {
         selectedValue: this.props.selectedValue,
       });
     }
+    // when close
+    if (this.visible && !this.props.visible) {
+      this.setState({
+        keyword: "",
+      });
+    }
+    if (this.visible != this.props.visible) {
+      this.visible = this.props.visible;
+    }
   }
 
   search = (text: string) => {
     this.setState({
-      countryCodes: countryCodes
-        .filter(item =>
-          text
-            ? item.name.includes(text) || item.callingCode.includes(text)
-            : true
-        )
-        .sort((a, b) => (a.callingCode > b.callingCode ? 1 : -1)),
+      keyword: text,
     });
   };
 
@@ -175,10 +182,19 @@ export default class CountryList extends React.PureComponent<Props, State> {
       onPressBackButton,
     } = this.props;
 
-    const { countryCodes, selectedValue } = this.state;
-    const selectedValueIndex = countryCodes.findIndex(
-      item => item.callingCode === selectedValue
+    const { selectedValue, keyword } = this.state;
+    const renderCountryCodes = countryCodes
+      .filter(item =>
+        keyword
+          ? item.name.includes(keyword) || item.callingCode.includes(keyword)
+          : true
+      )
+      .sort(orderByCallingCodeAndName);
+    const selectedValueIndex = renderCountryCodes.findIndex(
+      item => item.callingCode === this.props.selectedValue
     );
+    // If scrollIndex not 0 then FlatList aren't rendered new item until scroll, but it will re-render old item :|
+    const scrollIndex = keyword ? 0 : selectedValueIndex;
     return (
       <Modal visible={visible} animationType="slide">
         <SafeAreaView style={defaultStyles.container}>
@@ -201,15 +217,16 @@ export default class CountryList extends React.PureComponent<Props, State> {
               placeholder="Search"
               onChangeText={this.search}
               style={defaultStyles.searchbar}
+              value={keyword}
               autoFocus={true}
             />
           </View>
           <FlatList
-            data={countryCodes}
+            data={renderCountryCodes}
             keyExtractor={this.keyExtractor}
             extraData={this.state}
             renderItem={this.renderItem}
-            initialScrollIndex={selectedValueIndex}
+            initialScrollIndex={scrollIndex}
             initialNumToRender={25}
             getItemLayout={this.getItemLayout}
           />
