@@ -102,8 +102,6 @@ function orderByCallingCodeAndName(a, b) {
 }
 
 export default class CountryList extends React.PureComponent<Props, State> {
-  visible: boolean = false;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -112,20 +110,16 @@ export default class CountryList extends React.PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: Props) {
     if (this.state.selectedValue != this.props.selectedValue) {
       this.setState({
         selectedValue: this.props.selectedValue,
       });
     }
-    // when close
-    if (this.visible && !this.props.visible) {
+    if (prevProps.visible && !this.props.visible) {
       this.setState({
         keyword: "",
       });
-    }
-    if (this.visible != this.props.visible) {
-      this.visible = this.props.visible;
     }
   }
 
