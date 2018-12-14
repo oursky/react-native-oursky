@@ -22,8 +22,11 @@ export default class FadeAnimation extends React.PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: Props) {
     const { visible, duration } = this.props;
+    if (prevProps.visible == visible) {
+      return;
+    }
     Animated.timing(this.state.animatedVisibleValue, {
       toValue: visible ? 1 : 0,
       duration: duration || 400,
