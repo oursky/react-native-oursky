@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View, Image } from "react-native";
+import { SafeAreaView, StyleSheet, View, Image, NetInfo } from "react-native";
 import Text from "./Text";
 
 const styles = StyleSheet.create({
@@ -36,7 +36,39 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class NetworkFailureToast extends React.PureComponent {
+type State = {
+  isNetworkConnected: boolean,
+};
+
+export default class NetworkFailureToast extends React.PureComponent<
+  {},
+  State
+> {
+  state = {
+    isNetworkConnected: true,
+  };
+
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+      "connectionChange",
+      this.handleConnectivityChange
+    );
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener(
+      "connectionChange",
+      this.handleConnectivityChange
+    );
+  }
+
+  handleConnectivityChange = (isConnected: boolean) => {
+    console.log("Then, is " + (isConnected ? "online" : "offline"));
+    this.setState({
+      isNetworkConnected: isConnected,
+    });
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.safeArea} pointerEvents={"box-none"}>
