@@ -136,7 +136,7 @@ export interface SignupWithMobileProps {
 }
 export function SignupWithMobile(
   props: SignupWithMobileProps
-): React.Component<SignupWithMobileProps>;
+): JSX.Element
 export interface VerifyOTPProps extends ExtraTextProps {
   description: React.ReactNode;
   resendText: React.ReactNode;
