@@ -57,6 +57,8 @@ export type Props = ExtraTextProps & {
   countDownFrom: number,
   resending?: boolean, // disabled resend button
 
+  autoFocus?: boolean,
+
   style?: ViewStyle,
   descriptionStyle?: TextStyle,
   codeBoxStyle?: ViewStyle,
@@ -173,6 +175,8 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
       resending,
       error,
 
+      autoFocus,
+
       style,
       descriptionStyle,
       resendContainerStyle,
@@ -183,6 +187,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     } = this.props;
 
     const { value, countDownSecond } = this.state;
+    const autoFocus_ = autoFocus == null ? true : autoFocus;
     return (
       <View style={[defaultStyles.box, style]}>
         <Text style={[defaultStyles.description, descriptionStyle]}>
@@ -193,7 +198,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           ref={this.textInputRef}
           value={value}
           onChangeText={this.onChangeText}
-          autoFocus={true}
+          autoFocus={autoFocus_}
           style={defaultStyles.hiddenTextInput}
           keyboardType="numeric"
           maxLength={4}

@@ -143,6 +143,8 @@ export interface VerifyOTPProps extends ExtraTextProps {
   resending: boolean;
   countDownFrom: number;
 
+  autoFocus?: boolean;
+
   style?: StyleProp<ViewStyle>;
   descriptionStyle?: StyleProp<TextStyle>;
   codeBoxStyle?: StyleProp<ViewStyle>;
