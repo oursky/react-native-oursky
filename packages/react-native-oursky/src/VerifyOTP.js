@@ -197,6 +197,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           style={defaultStyles.hiddenTextInput}
           keyboardType="numeric"
           maxLength={4}
+          textContentType="oneTimeCode"
         />
         <TouchableOpacity
           disabled={resending || countDownSecond !== 0}
