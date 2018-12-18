@@ -1,6 +1,6 @@
 {
   "name": "@oursky/react-native-oursky",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "main": "src/index.js",
   "files": [
     "src/**/*",
