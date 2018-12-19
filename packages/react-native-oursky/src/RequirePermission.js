@@ -31,47 +31,39 @@ export default class RequirePermission extends React.PureComponent<
   Props,
   State
 > {
-  state = {
-    showUndeterminedDialog: false,
-    showDeniedDialog: false,
-  };
-
+  state = { showUndeterminedDialog: false, showDeniedDialog: false };
   componentDidMount() {
     const validPermission = Platform.select({
       ios: IOSPermission,
       android: AndroidPermission,
     });
-    const requestPermission = this.props.permission;
+    const permission = this.props.permission;
 
-    if (validPermission.includes(requestPermission)) {
-      this.requestPermission(requestPermission);
+    if (validPermission.includes(permission)) {
+      this.checkPermission(permission);
     }
   }
-
-  requestPermission = async (permission: string) => {
+  checkPermission = async (permission: string) => {
     try {
       const granted: Status = await Permissions.check(permission);
       switch (granted) {
         case "undetermined":
-          this.setState({
-            showUndeterminedDialog: true,
-          });
+          this.setState({ showUndeterminedDialog: true });
           break;
+
         case "authorized":
           this.props.onAccept();
           break;
+
         case "denied":
         case "restricted":
-          this.setState({
-            showDeniedDialog: true,
-          });
+          this.setState({ showDeniedDialog: true });
           break;
       }
     } catch (e) {
       this.props.onReject();
     }
   };
-
   onSubmitUndeterminedDialog = () => {
     const { permission } = this.props;
     Permissions.request(permission).then((granted: Status) => {
@@ -80,34 +72,22 @@ export default class RequirePermission extends React.PureComponent<
       } else {
         this.props.onReject();
       }
-      this.setState({
-        showUndeterminedDialog: false,
-      });
+      this.setState({ showUndeterminedDialog: false });
     });
   };
-
   onCancelUndterminedDialog = () => {
     this.props.onReject();
-    this.setState({
-      showUndeterminedDialog: false,
-    });
+    this.setState({ showUndeterminedDialog: false });
   };
-
   onSubmitDeniedDialog = () => {
     OpenSettings.openSettings();
     this.props.onReject();
-    this.setState({
-      showDeniedDialog: false,
-    });
+    this.setState({ showDeniedDialog: false });
   };
-
   onCancelDeniedDialog = () => {
     this.props.onReject();
-    this.setState({
-      showDeniedDialog: false,
-    });
+    this.setState({ showDeniedDialog: false });
   };
-
   render() {
     const { undeterminedDialogProps, deniedDialogProps } = this.props;
     const { showUndeterminedDialog, showDeniedDialog } = this.state;
