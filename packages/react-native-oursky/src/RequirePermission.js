@@ -74,15 +74,14 @@ export type Props = {
 type Status = "authorized" | "denied" | "restricted" | "undetermined";
 
 type State = {
-  showUndeterminedDialog: boolean,
-  showDeniedDialog: boolean,
+  shownDialog: "undeterminedDialog" | "deniedDialog" | null,
 };
 
 export default class RequirePermission extends React.PureComponent<
   Props,
   State
 > {
-  state = { showUndeterminedDialog: false, showDeniedDialog: false };
+  state = { shownDialog: null };
   componentDidMount() {
     const validPermissions = Platform.select({
       ios: IOSPermissions,
@@ -99,7 +98,7 @@ export default class RequirePermission extends React.PureComponent<
       const granted: Status = await Permissions.check(permission);
       switch (granted) {
         case "undetermined":
-          this.setState({ showUndeterminedDialog: true });
+          this.setState({ shownDialog: "undeterminedDialog" });
           break;
 
         case "authorized":
@@ -108,7 +107,7 @@ export default class RequirePermission extends React.PureComponent<
 
         case "denied":
         case "restricted":
-          this.setState({ showDeniedDialog: true });
+          this.setState({ shownDialog: "deniedDialog" });
           break;
       }
     } catch (e) {
@@ -123,40 +122,48 @@ export default class RequirePermission extends React.PureComponent<
       } else {
         this.props.onReject();
       }
-      this.setState({ showUndeterminedDialog: false });
+      this.setState({ shownDialog: null });
     });
   };
   onCancelUndterminedDialog = () => {
     this.props.onReject();
-    this.setState({ showUndeterminedDialog: false });
+    this.setState({ shownDialog: null });
   };
   onSubmitDeniedDialog = () => {
     OpenSettings.openSettings();
     this.props.onReject();
-    this.setState({ showDeniedDialog: false });
+    this.setState({ shownDialog: null });
   };
   onCancelDeniedDialog = () => {
     this.props.onReject();
-    this.setState({ showDeniedDialog: false });
+    this.setState({ shownDialog: null });
   };
   render() {
     const { undeterminedDialogProps, deniedDialogProps } = this.props;
-    const { showUndeterminedDialog, showDeniedDialog } = this.state;
-    return (
-      <>
-        <Dialog
-          {...undeterminedDialogProps}
-          visible={showUndeterminedDialog}
-          onSubmit={this.onSubmitUndeterminedDialog}
-          onCancel={this.onCancelUndterminedDialog}
-        />
-        <Dialog
-          {...deniedDialogProps}
-          visible={showDeniedDialog}
-          onSubmit={this.onSubmitDeniedDialog}
-          onCancel={this.onCancelDeniedDialog}
-        />
-      </>
-    );
+    const { shownDialog } = this.state;
+    switch (shownDialog) {
+      case "undeterminedDialog":
+        return (
+          <Dialog
+            {...undeterminedDialogProps}
+            visible={true}
+            onSubmit={this.onSubmitUndeterminedDialog}
+            onCancel={this.onCancelUndterminedDialog}
+          />
+        );
+
+      case "deniedDialog":
+        return (
+          <Dialog
+            {...deniedDialogProps}
+            visible={true}
+            onSubmit={this.onSubmitDeniedDialog}
+            onCancel={this.onCancelDeniedDialog}
+          />
+        );
+
+      case null:
+        return null;
+    }
   }
 }
