@@ -7,12 +7,63 @@ import OpenSettings from "react-native-open-settings";
 import Dialog from "./Dialog";
 import type { LayoutProps as DialogLayoutProps } from "./Dialog";
 
-const AndroidPermission = ["photo"];
-const IOSPermission = ["notification", "photo"];
+type AndroidPermission =
+  | "photo"
+  | "location"
+  | "camera"
+  | "microphone"
+  | "contacts"
+  | "event"
+  | "storage"
+  | "callPhone"
+  | "readSms"
+  | "receiveSms";
+
+type IOSPermission =
+  | "notification"
+  | "photo"
+  | "location"
+  | "camera"
+  | "microphone"
+  | "contacts"
+  | "event"
+  | "bluetooth"
+  | "reminder"
+  | "backgroundRefresh"
+  | "speechRecognition"
+  | "mediaLibrary"
+  | "motion";
+
+const AndroidPermissions: AndroidPermission[] = [
+  "photo",
+  "location",
+  "camera",
+  "microphone",
+  "contacts",
+  "event",
+  "storage",
+  "callPhone",
+  "readSms",
+  "receiveSms",
+];
+const IOSPermissions: IOSPermission[] = [
+  "notification",
+  "photo",
+  "location",
+  "camera",
+  "microphone",
+  "contacts",
+  "event",
+  "bluetooth",
+  "reminder",
+  "backgroundRefresh",
+  "speechRecognition",
+  "mediaLibrary",
+  "motion",
+];
 
 export type Props = {
-  permission: "notification" | "photo",
-
+  permission: AndroidPermission & IOSPermission,
   undeterminedDialogProps: DialogLayoutProps,
   deniedDialogProps: DialogLayoutProps,
 
@@ -33,13 +84,13 @@ export default class RequirePermission extends React.PureComponent<
 > {
   state = { showUndeterminedDialog: false, showDeniedDialog: false };
   componentDidMount() {
-    const validPermission = Platform.select({
-      ios: IOSPermission,
-      android: AndroidPermission,
+    const validPermissions = Platform.select({
+      ios: IOSPermissions,
+      android: AndroidPermissions,
     });
     const permission = this.props.permission;
 
-    if (validPermission.includes(permission)) {
+    if (validPermissions.includes(permission)) {
       this.checkPermission(permission);
     }
   }
