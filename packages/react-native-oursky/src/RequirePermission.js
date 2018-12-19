@@ -125,7 +125,7 @@ export default class RequirePermission extends React.PureComponent<
       this.setState({ shownDialog: null });
     });
   };
-  onCancelUndterminedDialog = () => {
+  onCancelUndeterminedDialog = () => {
     this.props.onReject();
     this.setState({ shownDialog: null });
   };
@@ -148,7 +148,7 @@ export default class RequirePermission extends React.PureComponent<
             {...undeterminedDialogProps}
             visible={true}
             onSubmit={this.onSubmitUndeterminedDialog}
-            onCancel={this.onCancelUndterminedDialog}
+            onCancel={this.onCancelUndeterminedDialog}
           />
         );
 
