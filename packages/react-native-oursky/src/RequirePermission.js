@@ -13,8 +13,8 @@ const IOSPermission = ["notification", "photo"];
 export type Props = {
   permission: "notification" | "photo",
 
-  UndeterminedDialogProps: DialogLayoutProps,
-  DeniedDialogProps: DialogLayoutProps,
+  undeterminedDialogProps: DialogLayoutProps,
+  deniedDialogProps: DialogLayoutProps,
 
   onAccept: () => void,
   onReject: () => void,
@@ -109,18 +109,18 @@ export default class RequirePermission extends React.PureComponent<
   };
 
   render() {
-    const { UndeterminedDialogProps, DeniedDialogProps } = this.props;
+    const { undeterminedDialogProps, deniedDialogProps } = this.props;
     const { showUndeterminedDialog, showDeniedDialog } = this.state;
     return (
       <>
         <Dialog
-          {...UndeterminedDialogProps}
+          {...undeterminedDialogProps}
           visible={showUndeterminedDialog}
           onSubmit={this.onSubmitUndeterminedDialog}
           onCancel={this.onCancelUndterminedDialog}
         />
         <Dialog
-          {...DeniedDialogProps}
+          {...deniedDialogProps}
           visible={showDeniedDialog}
           onSubmit={this.onSubmitDeniedDialog}
           onCancel={this.onCancelDeniedDialog}

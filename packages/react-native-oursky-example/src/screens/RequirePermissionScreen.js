@@ -47,14 +47,14 @@ export default class RequirePermissionScreen extends React.PureComponent<
           permission="photo"
           onAccept={this.onAccept}
           onReject={this.onReject}
-          UndeterminedDialogProps={{
+          undeterminedDialogProps={{
             title: "Enable Image Library Access",
             description:
               "In order to choose and upload image please allow the image library access permission.",
             submitText: "Allow Access",
             cancelText: "Maybe Later",
           }}
-          DeniedDialogProps={{
+          deniedDialogProps={{
             title: "Image Library Access Disabled",
             description:
               "Please tap the button below to go to the privacy settings and activate the image library permission manually.",
