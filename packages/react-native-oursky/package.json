@@ -15,7 +15,9 @@
     "libphonenumber-js": "^1.6.8",
     "react": ">=16.3",
     "react-native": ">=0.50",
-    "rn-sim-info": "^1.0.2"
+    "rn-sim-info": "^1.0.2",
+    "react-native-open-settings": "^1.0.1",
+    "react-native-permissions": "^1.1.1"
   },
   "devDependencies": {
     "react": "16.6.1",

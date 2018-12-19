@@ -8,6 +8,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.jojonarte.RNSimInfo.RNSimInfoPackage;
+import com.opensettings.OpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 
 import java.util.Arrays;
@@ -26,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new RNGestureHandlerPackage(),
-          new RNSimInfoPackage()
+          new RNSimInfoPackage(),
+          new OpenSettingsPackage()
       );
     }
 

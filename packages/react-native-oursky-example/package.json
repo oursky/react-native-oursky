@@ -14,7 +14,9 @@
     "react-native": "0.57.7",
     "react-native-gesture-handler": "1.0.10",
     "react-navigation": "3.0.5",
-    "rn-sim-info": "1.0.2"
+    "rn-sim-info": "1.0.2",
+    "react-native-permissions": "1.1.1",
+    "react-native-open-settings": "1.0.1"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",

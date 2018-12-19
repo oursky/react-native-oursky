@@ -158,3 +158,35 @@ export interface VerifyOTPProps extends ExtraTextProps {
 export class VerifyOTP extends React.Component<VerifyOTPProps> {
   focus: () => void;
 }
+interface DialogLayoutProps {
+  title: React.ReactNode;
+  description: React.ReactNode;
+  submitText: React.ReactNode;
+  cancelText: React.ReactNode;
+
+  backgroundStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+  descriptionStyle?: StyleProp<TextStyle>;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  cancelButtonStyle?: StyleProp<ViewStyle>;
+  cancelTextStyle?: StyleProp<TextStyle>;
+}
+export interface DialogProps extends DialogLayoutProps {
+  visible: boolean;
+
+  onSubmit: () => void;
+  onCancel: () => void;
+}
+export class Dialog extends React.Component<DialogProps> {}
+export interface RequirePermissionProps {
+  permission: "notification" | "photo";
+
+  UndeterminedDialogProps: DialogLayoutProps;
+  DeniedDialogProps: DialogLayoutProps;
+
+  onAccept: () => void;
+  onReject: () => void;
+}
+export class RequirePermission extends React.Component {}
