@@ -26,6 +26,8 @@ type State = {
 export const PortalContext = React.createContext<PortalMethods>((null: any));
 
 class PortalHost extends React.Component<Props, State> {
+  nextPortalKey: PortalKey;
+
   constructor(props: Props) {
     super(props);
     this.nextPortalKey = 0;

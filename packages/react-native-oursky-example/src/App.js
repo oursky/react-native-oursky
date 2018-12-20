@@ -44,7 +44,7 @@ const AppNavigator = createDrawerNavigator(
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class App extends React.Component {
+export default class App extends React.Component<{}> {
   render() {
     return (
       <PortalHost>
