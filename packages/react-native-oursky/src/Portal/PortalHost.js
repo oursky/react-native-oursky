@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 type PortalKey = number;
-type PortalMethods = {
+export type PortalMethods = {
   mount: (children: React.Node) => PortalKey,
   update: (key: PortalKey, children: React.Node) => void,
   unmount: (key: PortalKey) => void,
@@ -73,7 +73,7 @@ class PortalHost extends React.Component<Props, State> {
   renderPortals() {
     return this.state.portals.map(portal => (
       <View
-        key={key}
+        key={portal.key}
         style={StyleSheet.absoluteFill}
         collapsable={false}
         pointerEvents="box-none"
