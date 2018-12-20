@@ -1,5 +1,6 @@
 // @flow
 import * as React from "react";
+import { StyleSheet, View } from "react-native";
 
 type PortalKey = number;
 type PortalMethods = {
@@ -69,10 +70,24 @@ class PortalHost extends React.Component<Props, State> {
     }));
   };
 
+  renderPortals() {
+    return this.state.portals.map(portal => (
+      <View
+        key={key}
+        style={StyleSheet.absoluteFill}
+        collapsable={false}
+        pointerEvents="box-none"
+      >
+        {portal.children}
+      </View>
+    ));
+  }
+
   render() {
     return (
       <PortalContext.Provider value={this.state.portalMethods}>
         {this.props.children}
+        {this.renderPortals()}
       </PortalContext.Provider>
     );
   }
