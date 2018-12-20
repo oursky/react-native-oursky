@@ -25,3 +25,5 @@ export { default as Dialog } from "./Dialog";
 export type { Props as DialogProps } from "./Dialog";
 export { default as RequirePermission } from "./RequirePermission";
 export type { Props as RequirePermissionProps } from "./RequirePermission";
+
+export { Portal, PortalHost } from "./Portal";
