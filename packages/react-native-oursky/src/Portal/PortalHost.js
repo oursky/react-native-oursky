@@ -26,15 +26,18 @@ type State = {
 export const PortalContext = React.createContext<PortalMethods>((null: any));
 
 class PortalHost extends React.Component<Props, State> {
-  nextPortalKey = 0;
-  state = {
-    portals: [],
-    portalMethods: {
-      mount: this.mount,
-      update: this.update,
-      unmount: this.unmount,
-    },
-  };
+  constructor(props: Props) {
+    super(props);
+    this.nextPortalKey = 0;
+    this.state = {
+      portals: [],
+      portalMethods: {
+        mount: this.mount,
+        update: this.update,
+        unmount: this.unmount,
+      },
+    };
+  }
 
   mount = (children: React.Node): PortalKey => {
     const portalKey = this.nextPortalKey++;
