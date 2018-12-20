@@ -65,6 +65,7 @@ export default class PortalScreen extends React.PureComponent<{}, State> {
               >
                 <Text>Add 1</Text>
               </TouchableOpacity>
+              <Text>Count in portla: {this.state.count}</Text>
               <TouchableOpacity style={styles.button} onPress={this.hidePortal}>
                 <Text>Close</Text>
               </TouchableOpacity>
