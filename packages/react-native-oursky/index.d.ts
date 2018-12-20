@@ -210,3 +210,7 @@ export interface FadeAnimationProps {
   style?: StyleProp<ViewStyle>;
 }
 export class FadeAnimation extends React.Component<FadeAnimationProps> {}
+
+export class PortalHost extends React.Component {}
+export class Portal extends React.Component {}
+
