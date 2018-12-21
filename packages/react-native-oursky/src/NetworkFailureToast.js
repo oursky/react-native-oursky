@@ -62,12 +62,6 @@ export default class NetworkFailureToast extends React.PureComponent<
     isNetworkConnected: true,
   };
 
-  timer = new Promise((resolve, _reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 1000);
-  });
-
   componentDidMount() {
     NetInfo.isConnected.addEventListener(
       "connectionChange",
