@@ -1,9 +1,23 @@
 // @flow
-import { createAppContainer, createDrawerNavigator } from "react-navigation";
+import * as React from "react";
+import {
+  createAppContainer,
+  createDrawerNavigator,
+  createStackNavigator,
+} from "react-navigation";
+import { PortalHost } from "@oursky/react-native-oursky";
+
 import SignupWithMobileScreen from "./screens/SignupWithMobileScreen";
 import VerifyOTPScreen from "./screens/VerifyOTPScreen";
 import DialogScreen from "./screens/DialogScreen";
 import RequirePermissionScreen from "./screens/RequirePermissionScreen";
+import PortalScreen from "./screens/PortalScreen";
+
+const PortalScreenStackNavigator = createStackNavigator({
+  PortalScreen: {
+    screen: PortalScreen,
+  },
+});
 
 const AppNavigator = createDrawerNavigator(
   {
@@ -19,10 +33,23 @@ const AppNavigator = createDrawerNavigator(
     RequirePermission: {
       screen: RequirePermissionScreen,
     },
+    PortalScreenStackNavigator: {
+      screen: PortalScreenStackNavigator,
+    },
   },
   {
     initialRouteName: "SignupWithMobile",
   }
 );
 
-export default createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component<{}> {
+  render() {
+    return (
+      <PortalHost>
+        <AppContainer />
+      </PortalHost>
+    );
+  }
+}
