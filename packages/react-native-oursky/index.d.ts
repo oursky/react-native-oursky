@@ -211,8 +211,8 @@ type IOSPermission =
 export interface RequirePermissionProps {
   permission: AndroidPermission & IOSPermission;
 
-  UndeterminedDialogProps: DialogLayoutProps;
-  DeniedDialogProps: DialogLayoutProps;
+  undeterminedDialogProps: DialogLayoutProps;
+  deniedDialogProps: DialogLayoutProps;
 
   onAccept: () => void;
   onReject: () => void;
