@@ -162,7 +162,7 @@ export default class RequirePermission extends React.PureComponent<
           />
         );
 
-      case null:
+      default:
         return null;
     }
   }

@@ -180,8 +180,36 @@ export interface DialogProps extends DialogLayoutProps {
   onCancel: () => void;
 }
 export class Dialog extends React.Component<DialogProps> {}
+
+type AndroidPermission =
+  | "photo"
+  | "location"
+  | "camera"
+  | "microphone"
+  | "contacts"
+  | "event"
+  | "storage"
+  | "callPhone"
+  | "readSms"
+  | "receiveSms";
+
+type IOSPermission =
+  | "notification"
+  | "photo"
+  | "location"
+  | "camera"
+  | "microphone"
+  | "contacts"
+  | "event"
+  | "bluetooth"
+  | "reminder"
+  | "backgroundRefresh"
+  | "speechRecognition"
+  | "mediaLibrary"
+  | "motion";
+
 export interface RequirePermissionProps {
-  permission: "notification" | "photo";
+  permission: AndroidPermission & IOSPermission;
 
   UndeterminedDialogProps: DialogLayoutProps;
   DeniedDialogProps: DialogLayoutProps;
@@ -189,7 +217,9 @@ export interface RequirePermissionProps {
   onAccept: () => void;
   onReject: () => void;
 }
-export class RequirePermission extends React.Component {}
+export class RequirePermission extends React.Component<
+  RequirePermissionProps
+> {}
 
 export interface NetworkFailureToastProps {
   style?: StyleProp<ViewStyle>;
@@ -213,4 +243,3 @@ export class FadeAnimation extends React.Component<FadeAnimationProps> {}
 
 export class PortalHost extends React.Component {}
 export class Portal extends React.Component {}
-
