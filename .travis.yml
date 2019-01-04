@@ -20,3 +20,4 @@ matrix:
       script:
         - yarn format
         - yarn typecheck
+        - yarn build
