@@ -89,7 +89,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     };
   }
 
-  timerId: number | null = null;
+  timerId: ReturnType<typeof setInterval> | null = null;
 
   componentDidMount() {
     this.countDown();
