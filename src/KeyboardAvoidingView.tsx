@@ -1,46 +1,48 @@
-// @flow
 import React from "react";
-import { View, Platform, Keyboard } from "react-native";
-import type { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
-import type EmitterSubscription from "react-native/Libraries/vendor/emitter/EmitterSubscription";
+import {
+  View,
+  Platform,
+  Keyboard,
+  ViewProps,
+  EmitterSubscription,
+} from "react-native";
 
-export type Props = {
-  ...ViewProps,
-  behavior: "margin",
-  androidSoftInputMode: "adjustResize",
+export type Props = ViewProps & {
+  behavior: "margin";
+  androidSoftInputMode: "adjustResize";
 };
 
-type State = {
-  keyboardHeight: number,
-};
+interface State {
+  keyboardHeight: number;
+}
 
-export type AndroidKeyboardDidHideEvent = null | typeof undefined;
+export type AndroidKeyboardDidHideEvent = null | undefined;
 
-export type AndroidKeyboardDidShowEvent = {
+export interface AndroidKeyboardDidShowEvent {
   endCoordinates: {
-    screenX: number,
-    screenY: number,
-    width: number,
-    height: number,
-  },
-};
+    screenX: number;
+    screenY: number;
+    width: number;
+    height: number;
+  };
+}
 
-export type IOSKeyboardEvent = {
+export interface IOSKeyboardEvent {
   startCoordinates: {
-    screenX: number,
-    screenY: number,
-    width: number,
-    height: number,
-  },
+    screenX: number;
+    screenY: number;
+    width: number;
+    height: number;
+  };
   endCoordinates: {
-    screenX: number,
-    screenY: number,
-    width: number,
-    height: number,
-  },
-  duration: number,
-  easing: "easeIn" | "easeInEaseOut" | "easeOut" | "linear" | "keyboard",
-};
+    screenX: number;
+    screenY: number;
+    width: number;
+    height: number;
+  };
+  duration: number;
+  easing: "easeIn" | "easeInEaseOut" | "easeOut" | "linear" | "keyboard";
+}
 
 export type KeyboardEvent =
   | AndroidKeyboardDidHideEvent

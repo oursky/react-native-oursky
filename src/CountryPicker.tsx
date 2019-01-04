@@ -1,26 +1,18 @@
-// @flow
-import * as React from "react";
+import React from "react";
 import {
-  FlatList,
   Image,
-  Modal,
-  SafeAreaView,
+  StyleProp,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   View,
-  NativeModules,
-  Platform,
+  ViewStyle,
 } from "react-native";
-
-import Text from "./Text";
-import TextInput from "./TextInput";
-import { TextStyle, ViewStyle } from "./styles";
-import countryCodes from "./countryCode";
-import type { Country } from "./countryCode";
-import ExtraText from "./ExtraText";
-import type { Props as ExtraTextProps } from "./ExtraText";
-import CountryList from "./CountryList";
 import RNSimInfo from "rn-sim-info";
+import Text from "./Text";
+import countryCodes, { Country } from "./countryCode";
+import ExtraText, { Props as ExtraTextProps } from "./ExtraText";
+import CountryList from "./CountryList";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -81,29 +73,29 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = ExtraTextProps & {
-  placeholder?: string,
-  placeholderTextColor?: string,
-  selectedValue?: string,
-  backButtonText?: React.Node,
-  headerTitle?: React.Node,
-  defaultBySimcardCountry: boolean,
-  ListEmptyComponent?: React.ComponentType<any>,
+  placeholder?: string;
+  placeholderTextColor?: string;
+  selectedValue?: string;
+  backButtonText?: React.ReactNode;
+  headerTitle?: React.ReactNode;
+  defaultBySimcardCountry: boolean;
+  ListEmptyComponent?: React.ComponentType<any>;
 
-  style?: ViewStyle,
-  textStyle?: TextStyle,
-  containerStyle?: ViewStyle,
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 
-  onValueChange?: (countryCode: string) => void,
+  onValueChange?: (countryCode: string) => void;
   openAlternativeCountryList?: (
     countryCodes: Country[],
     onSelectCountry: (country: Country) => void
-  ) => void,
-  onClosePicker?: () => void,
+  ) => void;
+  onClosePicker?: () => void;
 };
 
 type State = {
-  selectedValue: string,
-  showCountryList: boolean,
+  selectedValue: string;
+  showCountryList: boolean;
 };
 
 const dropdownArrowIcon = require("./images/dropdown-arrow.png");
@@ -194,7 +186,6 @@ class CountryPicker extends React.PureComponent<Props, State> {
           ]}
         >
           <Text
-            onFocus={this.openCountryList}
             style={[
               defaultStyles.textStyle,
               textStyle,

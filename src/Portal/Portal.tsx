@@ -1,15 +1,13 @@
-// @flow
-import * as React from "react";
-import { PortalContext } from "./PortalHost";
-import type { PortalMethods } from "./PortalHost";
+import React from "react";
+import { PortalContext, PortalMethods, PortalKey } from "./PortalHost";
 
-type Props = {
-  portalMethods: PortalMethods,
-  children: React.Node,
-};
+interface Props {
+  portalMethods: PortalMethods;
+  children: React.ReactNode;
+}
 
 class Portal_ extends React.Component<Props> {
-  key: any;
+  key: PortalKey = 0;
 
   componentDidMount() {
     this.key = this.props.portalMethods.mount(this.props.children);
@@ -28,7 +26,7 @@ class Portal_ extends React.Component<Props> {
   }
 }
 
-export default function Portal(props: { children: React.Node }) {
+export default function Portal(props: { children: React.ReactNode }) {
   return (
     <PortalContext.Consumer>
       {methods => <Portal_ {...props} portalMethods={methods} />}

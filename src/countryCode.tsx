@@ -1,10 +1,9 @@
-// @flow
-export type Country = {
-  isoCountryCode: string,
-  callingCode: string,
-  flag: string,
-  name: string,
-};
+export interface Country {
+  isoCountryCode: string;
+  callingCode: string;
+  flag: string;
+  name: string;
+}
 
 const countryCodes: Country[] = [
   {

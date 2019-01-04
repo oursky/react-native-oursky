@@ -1,21 +1,18 @@
-// @flow
-import * as React from "react";
+import React from "react";
 import {
   FlatList,
-  Modal,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
   Image,
-  StyleSheet,
+  ListRenderItemInfo,
+  Modal,
   Platform,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from "react-native";
-
-import type { ListRenderItemInfo } from "./types";
 import Text from "./Text";
-import type { Country } from "./countryCode";
+import countryCodes, { Country } from "./countryCode";
 import TextInput from "./TextInput";
-import countryCodes from "./countryCode";
 
 const defaultStyles = StyleSheet.create({
   container: {
@@ -77,23 +74,23 @@ const defaultStyles = StyleSheet.create({
 const backIcon = require("./images/back-icon.png");
 const ITEM_HEIGHT = 34;
 
-export type Props = {
-  visible: boolean,
-  backButtonText?: React.Node,
-  headerTitle?: React.Node,
-  selectedValue?: string,
-  ListEmptyComponent?: React.ComponentType<any>,
+export interface Props {
+  visible: boolean;
+  backButtonText?: React.ReactNode;
+  headerTitle?: React.ReactNode;
+  selectedValue?: string;
+  ListEmptyComponent?: React.ComponentType<any>;
 
-  onPressBackButton?: () => void,
-  onSelectCountry?: Country => void,
-};
+  onPressBackButton?: () => void;
+  onSelectCountry?: (country: Country) => void;
+}
 
-type State = {
-  keyword: string,
-  selectedValue: string,
-};
+interface State {
+  keyword: string;
+  selectedValue: string;
+}
 
-function orderByCallingCodeAndName(a, b) {
+function orderByCallingCodeAndName(a: Country, b: Country) {
   if (a.callingCode == b.callingCode) {
     return a.name > b.name ? 1 : -1;
   } else {
@@ -111,7 +108,10 @@ export default class CountryList extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (this.state.selectedValue != this.props.selectedValue) {
+    if (
+      this.state.selectedValue != this.props.selectedValue &&
+      this.props.selectedValue != null
+    ) {
       this.setState({
         selectedValue: this.props.selectedValue,
       });
@@ -139,7 +139,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
     return item.isoCountryCode;
   };
 
-  getItemLayout = (data?: Country[] | null, index: number) => {
+  getItemLayout = (_data: Country[] | null | undefined, index: number) => {
     return {
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * index,
@@ -178,7 +178,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
       onPressBackButton,
     } = this.props;
 
-    const { selectedValue, keyword } = this.state;
+    const { keyword } = this.state;
     const renderCountryCodes = countryCodes
       .filter(item =>
         keyword

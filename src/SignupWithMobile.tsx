@@ -1,30 +1,17 @@
-// @flow
-import * as React from "react";
+import React from "react";
 import {
   View,
-  Platform,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
-  ActivityIndicator,
+  TextInput as RNTextInput,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
 } from "react-native";
-import type { Props as ViewProps } from "react-native/Libraries/Components/View/View";
-import StyleSheetPropType from "react-native/Libraries/StyleSheet/StyleSheetPropType";
-import ViewStylePropTypes from "react-native/Libraries/Components/View/ViewStylePropTypes";
-import TextStylePropTypes from "react-native/Libraries/Text/TextStylePropTypes";
-import type { LayoutEvent } from "react-native/Libraries/Types/CoreEventTypes";
-import {
-  parseIncompletePhoneNumber,
-  parsePhoneNumber,
-} from "libphonenumber-js";
-
+import { parsePhoneNumber } from "libphonenumber-js";
 import Text from "./Text";
-import type { Props as TextProps } from "./Text";
-import TextInput from "./TextInput";
-import type { Props as TextInputProps } from "./TextInput";
-import CountryPicker from "./CountryPicker";
-import type { Props as CountryPickerProps } from "./CountryPicker";
-import { ViewStyle, TextStyle } from "./styles";
+import TextInput, { Props as TextInputProps } from "./TextInput";
+import CountryPicker, { Props as CountryPickerProps } from "./CountryPicker";
 
 const defaultStyles = StyleSheet.create({
   box: {
@@ -103,36 +90,36 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Mobile = {
-  countryCallingCode: string,
-  nationalNumber: string,
+  countryCallingCode: string;
+  nationalNumber: string;
 };
 
 export type Props = {
-  style?: ViewStyle,
-  description?: React.Node,
-  descriptionStyle?: TextStyle,
-  title?: React.Node,
-  titleStyle?: TextStyle,
+  style?: StyleProp<ViewStyle>;
+  description?: React.ReactNode;
+  descriptionStyle?: StyleProp<TextStyle>;
+  title?: React.ReactNode;
+  titleStyle?: StyleProp<TextStyle>;
 
-  countryPickerProps: CountryPickerProps,
-  mobileNumberProps: TextInputProps,
+  countryPickerProps: CountryPickerProps;
+  mobileNumberProps: TextInputProps;
 
-  submitButtonStyle?: ViewStyle,
-  submitButtonText?: React.Node,
-  submitButtonTextStyle?: TextStyle,
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitButtonText?: React.ReactNode;
+  submitButtonTextStyle?: StyleProp<TextStyle>;
 
-  skipButtonStyle?: ViewStyle,
-  skipButtonText?: React.Node,
-  skipButtonTextStyle?: TextStyle,
+  skipButtonStyle?: StyleProp<ViewStyle>;
+  skipButtonText?: React.ReactNode;
+  skipButtonTextStyle?: StyleProp<TextStyle>;
 
-  loading?: boolean,
+  loading?: boolean;
 
-  onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void,
-  onPressSkipButton?: () => void,
+  onPressSubmitButton?: (isValid: boolean, mobile: Mobile) => void;
+  onPressSkipButton?: () => void;
 };
 
 type TextInputRefProps = {
-  textInputRef?: React$Ref<TextInput>,
+  textInputRef?: React.Ref<RNTextInput>;
 };
 
 export default function SignupWithMobile(props: Props & TextInputRefProps) {

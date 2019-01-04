@@ -1,29 +1,29 @@
-// @flow
-import * as React from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 
-type PortalKey = number;
-export type PortalMethods = {
-  mount: (children: React.Node) => PortalKey,
-  update: (key: PortalKey, children: React.Node) => void,
-  unmount: (key: PortalKey) => void,
-};
+export type PortalKey = number;
 
-type RenderedPortal = {
-  key: PortalKey,
-  children: React.Node,
-};
+export interface PortalMethods {
+  mount: (children: React.ReactNode) => PortalKey;
+  update: (key: PortalKey, children: React.ReactNode) => void;
+  unmount: (key: PortalKey) => void;
+}
 
-type Props = {
-  children: React.Node,
-};
+interface RenderedPortal {
+  key: PortalKey;
+  children: React.ReactNode;
+}
 
-type State = {
-  portalMethods: PortalMethods,
-  portals: RenderedPortal[],
-};
+interface Props {
+  children: React.ReactNode;
+}
 
-export const PortalContext = React.createContext<PortalMethods>((null: any));
+interface State {
+  portalMethods: PortalMethods;
+  portals: RenderedPortal[];
+}
+
+export const PortalContext = React.createContext<PortalMethods>(null as any);
 
 class PortalHost extends React.Component<Props, State> {
   nextPortalKey: PortalKey;
@@ -41,7 +41,7 @@ class PortalHost extends React.Component<Props, State> {
     };
   }
 
-  mount = (children: React.Node): PortalKey => {
+  mount = (children: React.ReactNode): PortalKey => {
     const portalKey = this.nextPortalKey++;
     this.setState(prevState => ({
       portals: [
@@ -55,7 +55,7 @@ class PortalHost extends React.Component<Props, State> {
     return portalKey;
   };
 
-  update = (key: PortalKey, children: React.Node) => {
+  update = (key: PortalKey, children: React.ReactNode) => {
     this.setState(prevState => ({
       portals: prevState.portals.map(portal => {
         if (portal.key === key) {

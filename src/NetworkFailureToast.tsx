@@ -1,8 +1,16 @@
-// @flow
-import * as React from "react";
-import { SafeAreaView, StyleSheet, View, Image, NetInfo } from "react-native";
+import React from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Image,
+  ImageStyle,
+  NetInfo,
+  ViewStyle,
+  TextStyle,
+  StyleProp,
+} from "react-native";
 import Text from "./Text";
-import { TextStyle, ViewStyle } from "./styles";
 import FadeAnimation from "./FadeAnimation";
 
 const styles = StyleSheet.create({
@@ -41,18 +49,18 @@ const defaultIcon = require("./images/toast_offline_icon.png");
 const defaultText =
   "Cannot reach internet. Please check your device internet connections.";
 
-type Props = {
-  style?: ViewStyle,
-  errorText?: React.Node,
-  textStyle?: TextStyle,
-  imageIcon?: any, // FIXME: Change it to ImageSourcePropType after adapting to ts
-  iconStyle?: ViewStyle,
-  animationDuration?: number,
-};
+interface Props {
+  style?: StyleProp<ViewStyle>;
+  errorText?: React.ReactNode;
+  textStyle?: StyleProp<TextStyle>;
+  imageIcon?: any; // FIXME: Change it to ImageSourcePropType after adapting to ts
+  iconStyle?: StyleProp<ImageStyle>;
+  animationDuration?: number;
+}
 
-type State = {
-  isNetworkConnected: boolean,
-};
+interface State {
+  isNetworkConnected: boolean;
+}
 
 export default class NetworkFailureToast extends React.PureComponent<
   Props,
@@ -83,9 +91,9 @@ export default class NetworkFailureToast extends React.PureComponent<
   };
 
   renderErrorText = (
-    errorText?: React.Node,
-    textStyle?: TextStyle
-  ): React.Node => {
+    errorText?: React.ReactNode,
+    textStyle?: StyleProp<TextStyle>
+  ): React.ReactNode => {
     if (typeof errorText == "string" || errorText == null) {
       const textValue = errorText || defaultText;
       return <Text style={[styles.text, textStyle]}>{textValue}</Text>;

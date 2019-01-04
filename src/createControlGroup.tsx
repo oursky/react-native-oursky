@@ -1,39 +1,43 @@
-// @flow
 import React from "react";
-import { Keyboard } from "react-native";
-import type { Node } from "react";
+import {
+  Keyboard,
+  TextInput,
+  TextInputProps,
+  NativeSyntheticEvent,
+  TextInputSubmitEditingEventData,
+} from "react-native";
 
-type RenderProps = {
-  ref: any,
-  onSubmitEditing: (e: any) => void,
-  blurOnSubmit: false,
-};
+interface RenderProps {
+  ref: React.RefObject<TextInput>;
+  onSubmitEditing: TextInputProps["onSubmitEditing"];
+  blurOnSubmit: false;
+}
 
-type Props = {
-  tabIndex: number,
-  children: (props: RenderProps) => Node,
-  onSubmitEditing?: (e: any) => void,
-};
+interface Props {
+  tabIndex: number;
+  children: (props: RenderProps) => React.ReactNode;
+  onSubmitEditing?: TextInputProps["onSubmitEditing"];
+}
 
-type Focusable = {
-  textInputRef: any,
-};
+interface Focusable {
+  textInputRef: React.RefObject<TextInput>;
+}
 
-type ControlRootProps = {
-  children: Node,
-};
+interface ControlRootProps {
+  children: React.ReactNode;
+}
 
-type ControlRootState = {
-  focusNext: (tabIndex: number) => void,
-  setInstance: (tabIndex: number, focusable: Focusable | null) => void,
-};
+interface ControlRootState {
+  focusNext: (tabIndex: number) => void;
+  setInstance: (tabIndex: number, focusable: Focusable | null) => void;
+}
 
 type ContextValue = ControlRootState;
 
 type ControlProps = ContextValue & {
-  tabIndex: number,
-  children: (props: RenderProps) => Node,
-  onSubmitEditing?: (e: any) => void,
+  tabIndex: number;
+  children: (props: RenderProps) => React.ReactNode;
+  onSubmitEditing?: TextInputProps["onSubmitEditing"];
 };
 
 const defaultContextValue: ContextValue = {
@@ -45,7 +49,7 @@ export default function createControlGroup() {
   const { Provider, Consumer } = React.createContext(defaultContextValue);
 
   class Control_ extends React.Component<ControlProps> {
-    textInputRef: any;
+    textInputRef: React.RefObject<TextInput>;
 
     constructor(props: ControlProps) {
       super(props);
@@ -57,7 +61,9 @@ export default function createControlGroup() {
     componentWillUnmount() {
       this.props.setInstance(this.props.tabIndex, null);
     }
-    onSubmitEditing = (e: any) => {
+    onSubmitEditing = (
+      e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    ) => {
       this.props.focusNext(this.props.tabIndex);
       if (this.props.onSubmitEditing != null) {
         this.props.onSubmitEditing(e);
@@ -77,7 +83,7 @@ export default function createControlGroup() {
     ControlRootProps,
     ControlRootState
   > {
-    instanceMap: any;
+    instanceMap: { [tabIndex: number]: Focusable | null };
 
     constructor(props: ControlRootProps) {
       super(props);

@@ -1,17 +1,21 @@
-// @flow
-import * as React from "react";
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
-
+import React from "react";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
 import Text from "./Text";
-import { ViewStyle, TextStyle } from "./styles";
 
-export type Props = {
-  style?: ViewStyle,
-  textStyle?: TextStyle,
-  value: string,
-  isError?: boolean,
-  onPress?: () => void,
-};
+export interface Props {
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  value: string;
+  isError?: boolean;
+  onPress?: () => void;
+}
 
 const styles = StyleSheet.create({
   defaultStyle: {

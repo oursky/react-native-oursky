@@ -1,18 +1,16 @@
-// @flow
-import * as React from "react";
-import { Animated } from "react-native";
-import { ViewStyle } from "./styles";
+import React from "react";
+import { Animated, StyleProp, ViewStyle } from "react-native";
 
-type Props = {
-  visible: boolean,
-  children: React.Node,
-  duration: number,
-  style?: ViewStyle,
-};
+interface Props {
+  visible: boolean;
+  children: React.ReactNode;
+  duration: number;
+  style?: StyleProp<ViewStyle>;
+}
 
-type State = {
-  animatedVisibleValue: Animated.Value,
-};
+interface State {
+  animatedVisibleValue: Animated.Value;
+}
 
 export default class FadeAnimation extends React.PureComponent<Props, State> {
   static defaultProps = {

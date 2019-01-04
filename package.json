@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "flow": "flow",
+    "typecheck": "tsc",
     "format": "prettier --write 'src/**/*.js' index.d.ts"
   },
   "peerDependencies": {
@@ -20,7 +20,12 @@
     "rn-sim-info": "^1.0.2"
   },
   "devDependencies": {
+    "@oursky/react-native-javascript-environment-typescript": "0.1.0",
+    "@types/react": "16.7.18",
+    "@types/react-native": "0.57.25",
+    "prettier": "1.15.3",
     "react": "16.6.1",
-    "react-native": "0.57.7"
+    "react-native": "0.57.7",
+    "typescript": "3.2.2"
   }
 }

@@ -1,10 +1,6 @@
-// @flow
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import type { RefObject } from "react-native/Libraries/Renderer/shims/ReactTypes";
-
+import React from "react";
+import { StyleSheet, StyleProp, TextStyle } from "react-native";
 import Text from "./Text";
-import { TextStyle, ViewStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
   extraText: {
@@ -15,12 +11,12 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type Props = {
-  error?: React.Node | null,
-  errorStyle?: TextStyle,
-  option?: React.Node,
-  optionStyle?: TextStyle,
-};
+export interface Props {
+  error?: React.ReactNode;
+  errorStyle?: StyleProp<TextStyle>;
+  option?: React.ReactNode;
+  optionStyle?: StyleProp<TextStyle>;
+}
 
 export default function ExtraText(props: Props) {
   const { error, errorStyle, option, optionStyle } = props;

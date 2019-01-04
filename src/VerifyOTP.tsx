@@ -1,13 +1,16 @@
-// @flow
-import * as React from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
-
+import React from "react";
+import {
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+  TextInput as RNTextInput,
+} from "react-native";
 import Text from "./Text";
-import type { Props as ExtraTextProps } from "./ExtraText";
-import ExtraText from "./ExtraText";
-import { ViewStyle, TextStyle } from "./styles";
+import ExtraText, { Props as ExtraTextProps } from "./ExtraText";
 import CodeBox from "./CodeBox";
-import type { Props as CodeBoxProps } from "./CodeBox";
 import TextInput from "./TextInput";
 
 const defaultStyles = StyleSheet.create({
@@ -52,31 +55,31 @@ const defaultStyles = StyleSheet.create({
 });
 
 export type Props = ExtraTextProps & {
-  description: React.Node,
-  resendText: React.Node,
-  countDownFrom: number,
-  resending?: boolean, // disabled resend button
+  description: React.ReactNode;
+  resendText: React.ReactNode;
+  countDownFrom: number;
+  resending?: boolean; // disabled resend button
 
-  autoFocus?: boolean,
+  autoFocus?: boolean;
 
-  style?: ViewStyle,
-  descriptionStyle?: TextStyle,
-  codeBoxStyle?: ViewStyle,
-  codeBoxTextStyle?: TextStyle,
-  resendContainerStyle?: ViewStyle,
-  resendTextStyle?: TextStyle,
+  style?: StyleProp<ViewStyle>;
+  descriptionStyle?: StyleProp<TextStyle>;
+  codeBoxStyle?: StyleProp<ViewStyle>;
+  codeBoxTextStyle?: StyleProp<TextStyle>;
+  resendContainerStyle?: StyleProp<ViewStyle>;
+  resendTextStyle?: StyleProp<TextStyle>;
 
-  onEnterCode?: (code: string, clearCode: () => void) => void,
-  onPressResend?: (restartTimer: () => void) => void,
+  onEnterCode?: (code: string, clearCode: () => void) => void;
+  onPressResend?: (restartTimer: () => void) => void;
 };
 
-type State = {
-  value: string,
-  countDownSecond: number,
-};
+interface State {
+  value: string;
+  countDownSecond: number;
+}
 
 export default class VerifyOTP extends React.PureComponent<Props, State> {
-  textInputRef = React.createRef<TextInput>();
+  textInputRef = React.createRef<RNTextInput>();
 
   constructor(props: Props) {
     super(props);
@@ -86,7 +89,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     };
   }
 
-  timerId: IntervalID | null = null;
+  timerId: number | null = null;
 
   componentDidMount() {
     this.countDown();
@@ -150,20 +153,18 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     const { codeBoxStyle, codeBoxTextStyle } = this.props;
     return (
       <View style={defaultStyles.codeBoxContainer}>
-        {Array(4)
-          .fill("")
-          .map((_, idx) => {
-            return (
-              <CodeBox
-                key={idx}
-                onPress={this.focus}
-                style={codeBoxStyle}
-                textStyle={codeBoxTextStyle}
-                value={this.state.value.charAt(idx)}
-                isError={!!this.props.error}
-              />
-            );
-          })}
+        {Array.from({ length: 4 }).map((_, idx) => {
+          return (
+            <CodeBox
+              key={idx}
+              onPress={this.focus}
+              style={codeBoxStyle}
+              textStyle={codeBoxTextStyle}
+              value={this.state.value.charAt(idx)}
+              isError={!!this.props.error}
+            />
+          );
+        })}
       </View>
     );
   };
@@ -174,16 +175,12 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
       resendText,
       resending,
       error,
-
       autoFocus,
-
       style,
       descriptionStyle,
       resendContainerStyle,
       resendTextStyle,
       errorStyle,
-
-      onEnterCode,
     } = this.props;
 
     const { value, countDownSecond } = this.state;
@@ -202,7 +199,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
           style={defaultStyles.hiddenTextInput}
           keyboardType="numeric"
           maxLength={4}
-          textContentType="oneTimeCode"
+          textContentType={"oneTimeCode" as any}
         />
         <TouchableOpacity
           disabled={resending || countDownSecond !== 0}

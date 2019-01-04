@@ -1,38 +1,13 @@
-// @flow
-import * as React from "react";
+import React from "react";
 import { Platform } from "react-native";
-import Permissions from "react-native-permissions";
+import Permissions, {
+  Permission,
+  AndroidPermission,
+  IOSPermission,
+  PermissionResult,
+} from "react-native-permissions";
 import OpenSettings from "react-native-open-settings";
-
-import Dialog from "./Dialog";
-import type { LayoutProps as DialogLayoutProps } from "./Dialog";
-
-type AndroidPermission =
-  | "photo"
-  | "location"
-  | "camera"
-  | "microphone"
-  | "contacts"
-  | "event"
-  | "storage"
-  | "callPhone"
-  | "readSms"
-  | "receiveSms";
-
-type IOSPermission =
-  | "notification"
-  | "photo"
-  | "location"
-  | "camera"
-  | "microphone"
-  | "contacts"
-  | "event"
-  | "bluetooth"
-  | "reminder"
-  | "backgroundRefresh"
-  | "speechRecognition"
-  | "mediaLibrary"
-  | "motion";
+import Dialog, { LayoutProps as DialogLayoutProps } from "./Dialog";
 
 const AndroidPermissions: AndroidPermission[] = [
   "photo",
@@ -62,19 +37,16 @@ const IOSPermissions: IOSPermission[] = [
   "motion",
 ];
 
-export type Props = {
-  permission: AndroidPermission & IOSPermission,
-  undeterminedDialogProps: DialogLayoutProps,
-  deniedDialogProps: DialogLayoutProps,
-
-  onAccept: () => void,
-  onReject: () => void,
-};
-
-type Status = "authorized" | "denied" | "restricted" | "undetermined";
+export interface Props {
+  permission: Permission;
+  undeterminedDialogProps: DialogLayoutProps;
+  deniedDialogProps: DialogLayoutProps;
+  onAccept: () => void;
+  onReject: () => void;
+}
 
 type State = {
-  shownDialog: "undeterminedDialog" | "deniedDialog" | null,
+  shownDialog: "undeterminedDialog" | "deniedDialog" | null;
 };
 
 export default class RequirePermission extends React.PureComponent<
@@ -83,9 +55,9 @@ export default class RequirePermission extends React.PureComponent<
 > {
   state = { shownDialog: null };
   componentDidMount() {
-    const validPermissions = Platform.select({
-      ios: IOSPermissions,
-      android: AndroidPermissions,
+    const validPermissions: Permission[] = Platform.select({
+      ios: IOSPermissions as Permission[],
+      android: AndroidPermissions as Permission[],
     });
     const permission = this.props.permission;
 
@@ -95,7 +67,7 @@ export default class RequirePermission extends React.PureComponent<
   }
   checkPermission = async (permission: string) => {
     try {
-      const granted: Status = await Permissions.check(permission);
+      const granted = await Permissions.check(permission as Permission);
       switch (granted) {
         case "undetermined":
           this.setState({ shownDialog: "undeterminedDialog" });
@@ -116,7 +88,7 @@ export default class RequirePermission extends React.PureComponent<
   };
   onSubmitUndeterminedDialog = () => {
     const { permission } = this.props;
-    Permissions.request(permission).then((granted: Status) => {
+    Permissions.request(permission).then((granted: PermissionResult) => {
       if (granted == "authorized") {
         this.props.onAccept();
       } else {
@@ -141,6 +113,9 @@ export default class RequirePermission extends React.PureComponent<
   render() {
     const { undeterminedDialogProps, deniedDialogProps } = this.props;
     const { shownDialog } = this.state;
+    if (shownDialog == null) {
+      return null;
+    }
     switch (shownDialog) {
       case "undeterminedDialog":
         return (
@@ -151,7 +126,6 @@ export default class RequirePermission extends React.PureComponent<
             onCancel={this.onCancelUndeterminedDialog}
           />
         );
-
       case "deniedDialog":
         return (
           <Dialog
@@ -161,7 +135,6 @@ export default class RequirePermission extends React.PureComponent<
             onCancel={this.onCancelDeniedDialog}
           />
         );
-
       default:
         return null;
     }

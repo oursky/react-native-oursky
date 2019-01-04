@@ -1,11 +1,13 @@
-// @flow
-import * as React from "react";
-import { View, TextInput as NativeTextInput, StyleSheet } from "react-native";
-
-import Text from "./Text";
-import { TextStyle, ViewStyle } from "./styles";
-import ExtraText from "./ExtraText";
-import type { Props as ExtraTextProps } from "./ExtraText";
+import React from "react";
+import {
+  View,
+  TextInput as NativeTextInput,
+  TextInputProps,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
+import ExtraText, { Props as ExtraTextProps } from "./ExtraText";
 
 const defaultStyles = StyleSheet.create({
   // reset default padding of android device.
@@ -15,15 +17,15 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type Props = ExtraTextProps & {
-  style?: TextStyle,
-  containerStyle?: ViewStyle,
+export type Props = TextInputProps &
+  ExtraTextProps & {
+    containerStyle?: StyleProp<ViewStyle>;
+  };
 
-  value?: string,
-  onChangeText?: (text: string) => void,
-};
-
-function TextInput(props: Props, ref?) {
+export default React.forwardRef(function TextInput(
+  props: Props,
+  ref?: React.Ref<NativeTextInput>
+) {
   const {
     style,
     containerStyle,
@@ -56,7 +58,4 @@ function TextInput(props: Props, ref?) {
       />
     </View>
   );
-}
-
-// $FlowFixMe
-export default React.forwardRef(TextInput);
+});

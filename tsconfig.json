@@ -1,0 +1,25 @@
+{
+  "include": ["src/**/*"],
+  "files": ["./node_modules/@oursky/react-native-javascript-environment-typescript/index.d.ts"],
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "lib": [
+      "ES5",
+      "ES2015.Promise",
+      "ES2015.Collection",
+      "ES2016.Array.Include"
+    ],
+    "jsx": "React",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true
+  }
+}

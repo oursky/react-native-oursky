@@ -1,9 +1,14 @@
-// @flow
-import * as React from "react";
-import { Modal, View, TouchableOpacity, StyleSheet } from "react-native";
-
+import React from "react";
+import {
+  Modal,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  StyleProp,
+} from "react-native";
 import Text from "./Text";
-import { TextStyle, ViewStyle } from "./styles";
 
 const defaultStyles = StyleSheet.create({
   background: {
@@ -55,28 +60,27 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-export type LayoutProps = {
-  title: React.Node,
-  description: React.Node,
-  submitText: React.Node,
-  cancelText: React.Node,
+export interface LayoutProps {
+  title: React.ReactNode;
+  description: React.ReactNode;
+  submitText: React.ReactNode;
+  cancelText: React.ReactNode;
 
-  backgroundStyle?: ViewStyle,
-  style?: ViewStyle,
-  titleStyle?: TextStyle,
-  descriptionStyle?: TextStyle,
-  submitButtonStyle?: ViewStyle,
-  submitTextStyle?: TextStyle,
-  cancelButtonStyle?: ViewStyle,
-  cancelTextStyle?: TextStyle,
-};
+  backgroundStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+  descriptionStyle?: StyleProp<TextStyle>;
+  submitButtonStyle?: StyleProp<ViewStyle>;
+  submitTextStyle?: StyleProp<TextStyle>;
+  cancelButtonStyle?: StyleProp<ViewStyle>;
+  cancelTextStyle?: StyleProp<TextStyle>;
+}
 
-type ActivityProps = {
-  visible: boolean,
-
-  onSubmit: () => void,
-  onCancel: () => void,
-};
+interface ActivityProps {
+  visible: boolean;
+  onSubmit: () => void;
+  onCancel: () => void;
+}
 
 export type Props = LayoutProps & ActivityProps;
 
