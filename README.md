@@ -8,11 +8,18 @@ yarn add --exact @oursky/react-native-oursky
 
 ## How to use
 
-Read source code or [index.d.ts](./packages/react-native-oursky/index.d.ts)
+Read source code or [index.d.ts](./index.d.ts)
+
+## How to install from GitHub
+
+```sh
+yarn build
+git add --force dist/
+git commit
+git push <your-remote> <your-branch>
+```
 
 ## Principle
 
-- Written with Flow annotation
+- Written in TypeScript
 - Hand-written high quality TypeScript type definitions
-
-So both Flow and TypeScript projects can benefit.

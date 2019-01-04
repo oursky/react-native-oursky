@@ -3,7 +3,10 @@
   "files": ["./node_modules/@oursky/react-native-javascript-environment-typescript/index.d.ts"],
   "compilerOptions": {
     "target": "ES5",
-    "module": "commonjs",
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "importHelpers": true,
     "lib": [
       "ES5",
       "ES2015.Promise",
@@ -11,7 +14,6 @@
       "ES2016.Array.Include"
     ],
     "jsx": "React",
-    "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
