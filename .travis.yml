@@ -19,4 +19,5 @@ matrix:
         - yarn
       script:
         - yarn format
-        - yarn flow
+        - yarn typecheck
+        - yarn build
