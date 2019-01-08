@@ -30,6 +30,7 @@ const defaultStyles = StyleSheet.create({
   backButton: {
     flexDirection: "row",
     position: "absolute",
+    alignItems: "center",
     left: 9,
     top: 12,
   },
