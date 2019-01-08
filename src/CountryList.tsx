@@ -71,7 +71,7 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-const backIcon = require("./images/back-icon.png");
+const backIcon = require("./images/ic_btn_back.png");
 const ITEM_HEIGHT = 34;
 
 export interface Props {
