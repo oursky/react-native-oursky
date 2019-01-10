@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     paddingRight: 14,
   },
 });
-const defaultIcon = require("./images/toast_offline_icon.png");
+const defaultIcon = require("./images/ic_toast_offline.png");
 const defaultText =
   "Cannot reach internet. Please check your device internet connections.";
 

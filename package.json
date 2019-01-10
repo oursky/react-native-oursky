@@ -3,12 +3,13 @@
   "version": "0.11.0",
   "main": "dist/index.cjs.js",
   "files": [
-    "dist/index.cjs.js",
+    "dist",
     "index.d.ts"
   ],
   "license": "MIT",
   "scripts": {
     "prepublish": "yarn run format && yarn run typecheck && yarn run build",
+    "prebuild": "rm -rf ./dist",
     "build": "rollup -c",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write --list-different 'src/**/*.js' index.d.ts"
@@ -30,6 +31,7 @@
     "react-native": "0.57.7",
     "rollup": "1.0.1",
     "rollup-plugin-commonjs": "9.2.0",
+    "rollup-plugin-copy-assets": "^1.1.0",
     "rollup-plugin-json": "3.1.0",
     "rollup-plugin-node-resolve": "4.0.0",
     "rollup-plugin-typescript": "1.0.0",
