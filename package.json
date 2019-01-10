@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "prepublish": "yarn run format && yarn run typecheck && yarn run build",
+    "prebuild": "rm -rf ./dist",
     "build": "rollup -c",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write --list-different 'src/**/*.js' index.d.ts"
