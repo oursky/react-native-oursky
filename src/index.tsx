@@ -7,4 +7,5 @@ export { default as SignupWithMobile } from "./SignupWithMobile";
 export { default as VerifyOTP } from "./VerifyOTP";
 export { default as Dialog } from "./Dialog";
 export { default as RequirePermission } from "./RequirePermission";
+export { default as NetworkFailureToast } from "./NetworkFailureToast";
 export { Portal, PortalHost } from "./Portal";
