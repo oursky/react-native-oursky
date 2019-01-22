@@ -140,14 +140,6 @@ export default class CountryList extends React.PureComponent<Props, State> {
     return item.isoCountryCode;
   };
 
-  getItemLayout = (_data: Country[] | null | undefined, index: number) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
-
   renderItem = ({ item }: ListRenderItemInfo<Country>) => {
     const text = Platform.select({
       ios: `${item.flag} ${item.name} +${item.callingCode}`,
@@ -187,11 +179,6 @@ export default class CountryList extends React.PureComponent<Props, State> {
           : true
       )
       .sort(orderByCallingCodeAndName);
-    const selectedValueIndex = renderCountryCodes.findIndex(
-      item => item.callingCode === this.props.selectedValue
-    );
-    // If scrollIndex not 0 then FlatList aren't rendered new item until scroll, but it will re-render old item :|
-    const scrollIndex = keyword ? 0 : selectedValueIndex;
     return (
       <Modal visible={visible} animationType="slide">
         <SafeAreaView style={defaultStyles.container}>
@@ -221,12 +208,10 @@ export default class CountryList extends React.PureComponent<Props, State> {
           <FlatList
             data={renderCountryCodes}
             keyExtractor={this.keyExtractor}
-            extraData={this.state}
+            extraData={this.state.keyword}
             ListEmptyComponent={ListEmptyComponent}
             renderItem={this.renderItem}
-            initialScrollIndex={scrollIndex}
             initialNumToRender={25}
-            getItemLayout={this.getItemLayout}
           />
         </SafeAreaView>
       </Modal>
