@@ -14,6 +14,7 @@ import Text from "./Text";
 import countryCodes, { Country } from "./countryCode";
 import TextInput from "./TextInput";
 
+const ITEM_HEIGHT = 34;
 const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,6 +46,7 @@ const defaultStyles = StyleSheet.create({
   item: {
     paddingHorizontal: 19,
     paddingVertical: 8,
+    minHeight: ITEM_HEIGHT,
     borderBottomColor: "#CACACA",
     borderBottomWidth: 1,
   },
@@ -73,7 +75,6 @@ const defaultStyles = StyleSheet.create({
 });
 
 const backIcon = require("./images/ic_btn_back.png");
-const ITEM_HEIGHT = 34;
 
 export interface Props {
   visible: boolean;
@@ -140,14 +141,6 @@ export default class CountryList extends React.PureComponent<Props, State> {
     return item.isoCountryCode;
   };
 
-  getItemLayout = (_data: Country[] | null | undefined, index: number) => {
-    return {
-      length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
-      index,
-    };
-  };
-
   renderItem = ({ item }: ListRenderItemInfo<Country>) => {
     const text = Platform.select({
       ios: `${item.flag} ${item.name} +${item.callingCode}`,
@@ -180,18 +173,15 @@ export default class CountryList extends React.PureComponent<Props, State> {
     } = this.props;
 
     const { keyword } = this.state;
+    const lowerCaseKeyword = keyword.toLowerCase();
     const renderCountryCodes = countryCodes
       .filter(item =>
         keyword
-          ? item.name.includes(keyword) || item.callingCode.includes(keyword)
+          ? item.name.toLowerCase().includes(lowerCaseKeyword) ||
+            item.callingCode.includes(lowerCaseKeyword)
           : true
       )
       .sort(orderByCallingCodeAndName);
-    const selectedValueIndex = renderCountryCodes.findIndex(
-      item => item.callingCode === this.props.selectedValue
-    );
-    // If scrollIndex not 0 then FlatList aren't rendered new item until scroll, but it will re-render old item :|
-    const scrollIndex = keyword ? 0 : selectedValueIndex;
     return (
       <Modal visible={visible} animationType="slide">
         <SafeAreaView style={defaultStyles.container}>
@@ -221,12 +211,10 @@ export default class CountryList extends React.PureComponent<Props, State> {
           <FlatList
             data={renderCountryCodes}
             keyExtractor={this.keyExtractor}
-            extraData={this.state}
+            extraData={this.state.keyword}
             ListEmptyComponent={ListEmptyComponent}
             renderItem={this.renderItem}
-            initialScrollIndex={scrollIndex}
             initialNumToRender={25}
-            getItemLayout={this.getItemLayout}
           />
         </SafeAreaView>
       </Modal>
