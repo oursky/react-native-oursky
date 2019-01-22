@@ -14,6 +14,7 @@ import Text from "./Text";
 import countryCodes, { Country } from "./countryCode";
 import TextInput from "./TextInput";
 
+const ITEM_HEIGHT = 34;
 const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,6 +46,7 @@ const defaultStyles = StyleSheet.create({
   item: {
     paddingHorizontal: 19,
     paddingVertical: 8,
+    minHeight: ITEM_HEIGHT,
     borderBottomColor: "#CACACA",
     borderBottomWidth: 1,
   },
@@ -73,7 +75,6 @@ const defaultStyles = StyleSheet.create({
 });
 
 const backIcon = require("./images/ic_btn_back.png");
-const ITEM_HEIGHT = 34;
 
 export interface Props {
   visible: boolean;
