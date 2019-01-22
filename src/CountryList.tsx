@@ -172,10 +172,12 @@ export default class CountryList extends React.PureComponent<Props, State> {
     } = this.props;
 
     const { keyword } = this.state;
+    const lowerCaseKeyword = keyword.toLowerCase();
     const renderCountryCodes = countryCodes
       .filter(item =>
         keyword
-          ? item.name.includes(keyword) || item.callingCode.includes(keyword)
+          ? item.name.toLowerCase().includes(lowerCaseKeyword) ||
+            item.callingCode.includes(lowerCaseKeyword)
           : true
       )
       .sort(orderByCallingCodeAndName);
