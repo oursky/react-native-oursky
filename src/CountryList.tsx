@@ -183,7 +183,11 @@ export default class CountryList extends React.PureComponent<Props, State> {
       )
       .sort(orderByCallingCodeAndName);
     return (
-      <Modal visible={visible} animationType="slide">
+      <Modal
+        visible={visible}
+        animationType="slide"
+        onRequestClose={onPressBackButton}
+      >
         <SafeAreaView style={defaultStyles.container}>
           <View style={defaultStyles.header}>
             <TouchableOpacity
