@@ -1,15 +1,14 @@
 // @flow
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Portal } from "@oursky/react-native-oursky";
+import { Modal } from "@oursky/react-native-oursky";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  portalContainer: {
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-    ...StyleSheet.absoluteFillObject,
+  modalContent: {
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -56,22 +55,17 @@ export default class PortalScreen extends React.PureComponent<{}, State> {
           <Text>Press me</Text>
         </TouchableOpacity>
         <Text>Count: {this.state.count}</Text>
-        {this.state.showPortal && (
-          <Portal>
-            <View style={styles.portalContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={this.changeCount}
-              >
-                <Text>Add 1</Text>
-              </TouchableOpacity>
-              <Text>Count in portal: {this.state.count}</Text>
-              <TouchableOpacity style={styles.button} onPress={this.hidePortal}>
-                <Text>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </Portal>
-        )}
+        <Modal visible={this.state.showPortal} onRequestClose={this.hidePortal}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.button} onPress={this.changeCount}>
+              <Text>Add 1</Text>
+            </TouchableOpacity>
+            <Text>Count in portal: {this.state.count}</Text>
+            <TouchableOpacity style={styles.button} onPress={this.hidePortal}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     );
   }

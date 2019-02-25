@@ -243,3 +243,13 @@ export class FadeAnimation extends React.Component<FadeAnimationProps> {}
 
 export class PortalHost extends React.Component {}
 export class Portal extends React.Component {}
+
+export interface ModalProps {
+  visible: boolean;
+  onRequestClose: () => void;
+  children: React.ReactNode;
+  onShow?: () => void;
+  onDismiss?: () => void;
+}
+
+export class Modal extends React.Component<ModalProps> {}

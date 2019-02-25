@@ -9,3 +9,4 @@ export { default as Dialog } from "./Dialog";
 export { default as RequirePermission } from "./RequirePermission";
 export { default as NetworkFailureToast } from "./NetworkFailureToast";
 export { Portal, PortalHost } from "./Portal";
+export { default as Modal } from "./Modal";
