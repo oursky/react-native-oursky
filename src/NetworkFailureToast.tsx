@@ -60,6 +60,7 @@ interface Props {
 
 interface State {
   isNetworkConnected: boolean;
+  isHidden: boolean;
 }
 
 export default class NetworkFailureToast extends React.PureComponent<
@@ -68,6 +69,7 @@ export default class NetworkFailureToast extends React.PureComponent<
 > {
   state = {
     isNetworkConnected: true,
+    isHidden: true,
   };
 
   componentDidMount() {
@@ -85,9 +87,30 @@ export default class NetworkFailureToast extends React.PureComponent<
   }
 
   handleConnectivityChange = (isConnected: boolean) => {
-    this.setState({
-      isNetworkConnected: isConnected,
-    });
+    if (!isConnected) {
+      this.setState(
+        {
+          isHidden: false,
+        },
+        () => {
+          this.setState({
+            isNetworkConnected: isConnected,
+          });
+        }
+      );
+    } else {
+      this.setState({
+        isNetworkConnected: isConnected,
+      });
+    }
+  };
+
+  onFinishedAnimate = () => {
+    if (this.state.isNetworkConnected) {
+      this.setState({
+        isHidden: true,
+      });
+    }
   };
 
   renderErrorText = (
@@ -103,7 +126,7 @@ export default class NetworkFailureToast extends React.PureComponent<
   };
 
   render() {
-    const { isNetworkConnected } = this.state;
+    const { isNetworkConnected, isHidden } = this.state;
     const {
       style,
       errorText,
@@ -113,11 +136,15 @@ export default class NetworkFailureToast extends React.PureComponent<
       animationDuration,
     } = this.props;
 
+    if (isHidden) {
+      return null;
+    }
     return (
       <SafeAreaView style={styles.safeArea} pointerEvents={"box-none"}>
         <FadeAnimation
           visible={!isNetworkConnected}
           duration={animationDuration}
+          onFinishedAnimate={this.onFinishedAnimate}
         >
           <View style={[styles.toastContainer, style]}>
             <Image
