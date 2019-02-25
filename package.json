@@ -18,6 +18,7 @@
     "libphonenumber-js": "^1.6.8",
     "react": ">=16.3",
     "react-native": ">=0.50",
+    "react-native-dialogs": "^1.0.0",
     "react-native-open-settings": "^1.0.1",
     "react-native-permissions": "^1.1.1",
     "rn-sim-info": "^1.0.2"
