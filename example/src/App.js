@@ -12,6 +12,7 @@ import VerifyOTPScreen from "./screens/VerifyOTPScreen";
 import DialogScreen from "./screens/DialogScreen";
 import RequirePermissionScreen from "./screens/RequirePermissionScreen";
 import PortalScreen from "./screens/PortalScreen";
+import PickerScreen from "./screens/PickerScreen";
 
 const PortalScreenStackNavigator = createStackNavigator({
   PortalScreen: {
@@ -32,6 +33,9 @@ const AppNavigator = createDrawerNavigator(
     },
     RequirePermission: {
       screen: RequirePermissionScreen,
+    },
+    PickerScreen: {
+      screen: PickerScreen,
     },
     PortalScreenStackNavigator: {
       screen: PortalScreenStackNavigator,
