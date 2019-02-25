@@ -253,3 +253,20 @@ export interface ModalProps {
 }
 
 export class Modal extends React.Component<ModalProps> {}
+
+export interface PickerItem {
+  value: string;
+  label: string;
+}
+
+export interface PickerProps {
+  visible: boolean;
+  value: string;
+  items: PickerItem[];
+  onDismiss: (value: string) => void;
+  onDone: (value: string) => void;
+  onCancel: (value: string) => void;
+  doneButtonLabel?: string;
+  cancelButtonLabel?: string | null;
+  ToolbarComponent?: React.ReactType<{}>;
+}
