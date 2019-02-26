@@ -61,7 +61,7 @@ export default class PortalScreen extends React.PureComponent<{}, State> {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={this.showPicker}>
-          <Text>Show Picker</Text>
+          <Text>Show Picker: {JSON.stringify(selectedValue)}</Text>
         </TouchableOpacity>
         <Picker
           visible={visible}

@@ -108,14 +108,14 @@ class PickerImplIOS extends React.Component<Props, StateIOS> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedValue: props.value,
+      selectedValue: this._prepareValue(props),
     };
   }
 
   componentDidUpdate(prevProps: Props) {
     if (!prevProps.visible && this.props.visible) {
       this.setState({
-        selectedValue: this.props.value,
+        selectedValue: this._prepareValue(this.props),
       });
     }
   }
@@ -175,6 +175,22 @@ class PickerImplIOS extends React.Component<Props, StateIOS> {
         </View>
       </Modal>
     );
+  }
+
+  private _prepareValue(props: Props): string {
+    // Pre-select the value of the first item to
+    // match the behavior of UIPickerView.
+    // Note that we still have an unhandled edge case
+    // that the component is mounted with visible=false
+    // and then items changes, followed by visible=true.
+    // In this edge case, the pre-select value is stale.
+    if (props.items.length <= 0) {
+      return "";
+    }
+    if (props.value !== "") {
+      return props.value;
+    }
+    return props.items[0].value;
   }
 }
 
