@@ -270,3 +270,5 @@ export interface PickerProps {
   cancelButtonLabel?: string | null;
   ToolbarComponent?: React.ReactType<{}>;
 }
+
+export class Picker extends React.Component<PickerProps> {}
