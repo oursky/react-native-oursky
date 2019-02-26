@@ -3,6 +3,7 @@ package com.reactnativeourskyexample;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.aakashns.reactnativedialogs.ReactNativeDialogsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeDialogsPackage(),
           new RNGestureHandlerPackage(),
           new RNSimInfoPackage(),
           new OpenSettingsPackage()
