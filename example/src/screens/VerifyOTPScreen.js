@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import type { LayoutEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import {
   Text,
@@ -48,6 +48,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
   render() {
     return (
       <KeyboardAvoidingView
+        useSafeAreaView={true}
         style={[styles.container, { marginTop: this.state.marginTop }]}
       >
         <Text style={styles.header} onLayout={this.adjustLayout}>
