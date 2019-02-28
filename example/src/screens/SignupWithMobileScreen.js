@@ -77,6 +77,7 @@ export default class SignupWithMobileScreen extends React.PureComponent<
     const { countryCallingCode, nationalNumber } = this.state;
     return (
       <KeyboardAvoidingView
+        useSafeAreaView={true}
         style={[styles.container, { marginTop: this.state.marginTop }]}
       >
         <Text style={styles.header} onLayout={this.adjustLayout}>
