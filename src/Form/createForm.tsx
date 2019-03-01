@@ -30,7 +30,9 @@ interface FormRootState {
   containerMinHeight: number;
 }
 
-export interface FormProps extends ScrollViewProps {}
+interface FormProps extends ScrollViewProps {
+  autoScrollToFocusedInput?: boolean;
+}
 
 type FormContext = FormRootState["context"];
 
@@ -182,6 +184,10 @@ export default function createForm() {
       }
 
       this.clearAdjustContentOffsetTimeout();
+
+      if (!this.props.autoScrollToFocusedInput) {
+        return;
+      }
 
       (UIManager as any).viewIsDescendantOf(
         nodeID,

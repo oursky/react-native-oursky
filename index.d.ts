@@ -276,7 +276,10 @@ export interface PickerProps {
 
 export class Picker extends React.Component<PickerProps> {}
 
-declare class Form extends React.Component<ScrollViewProps> {}
+interface FormProps extends ScrollViewProps {
+  autoScrollToFocusedInput?: boolean;
+}
+declare class Form extends React.Component<FormProps> {}
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
