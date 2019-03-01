@@ -46,6 +46,10 @@ const defaultContextValue: ContextValue = {
 };
 
 export default function createControlGroup() {
+  if (__DEV__) {
+    console.warn("Maybe try to use createForm?");
+  }
+
   const { Provider, Consumer } = React.createContext(defaultContextValue);
 
   class Control_ extends React.Component<ControlProps> {
