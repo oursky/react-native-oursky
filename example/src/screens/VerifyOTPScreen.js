@@ -33,6 +33,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
   state = {
     error: null,
     marginTop: 0,
+    countDownFinished: false,
   };
 
   adjustLayout = (event: LayoutEvent) => {
@@ -45,7 +46,16 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
     });
   };
 
+  onCountDown = (remainingSeconds: number) => {
+    if (remainingSeconds === 0) {
+      this.setState({ countDownFinished: true });
+    }
+  };
+
   render() {
+    const resendText = this.state.countDownFinished
+      ? "OK, just hit this resend button"
+      : "Didn't receive any code? Request resend";
     return (
       <KeyboardAvoidingView
         useSafeAreaView={true}
@@ -56,7 +66,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
         </Text>
         <VerifyOTP
           description="We have sent you a 4 digit code to +852 9124 2442, please enter the code below"
-          resendText="Didn't receive any code? Request resend"
+          resendText={resendText}
           error={this.state.error}
           countDownFrom={5}
           onEnterCode={(code: string, clearCode: () => void) => {
@@ -73,7 +83,9 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
           }}
           onPressResend={(restartTimer: () => void) => {
             restartTimer();
+            this.setState({ countDownFinished: false });
           }}
+          onCountDown={this.onCountDown}
         />
       </KeyboardAvoidingView>
     );
