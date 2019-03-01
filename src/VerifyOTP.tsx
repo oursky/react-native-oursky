@@ -102,8 +102,16 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
     }
   }
 
+  invokeOnCountDown() {
+    const { onCountDown } = this.props;
+    if (onCountDown != null) {
+      onCountDown(this.state.countDownSecond);
+    }
+  }
+
   countDown = () => {
     this.setState({ countDownSecond: this.props.countDownFrom });
+    this.invokeOnCountDown();
     if (this.timerId) {
       clearInterval(this.timerId);
     }
@@ -116,10 +124,7 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
         countDownSecond: prevState.countDownSecond - 1,
       }),
       () => {
-        const { onCountDown } = this.props;
-        if (onCountDown != null) {
-          onCountDown(this.state.countDownSecond);
-        }
+        this.invokeOnCountDown();
         if (this.state.countDownSecond === 0 && this.timerId) {
           clearInterval(this.timerId);
           this.timerId = null;
