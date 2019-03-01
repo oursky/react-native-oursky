@@ -110,8 +110,9 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
   }
 
   countDown = () => {
-    this.setState({ countDownSecond: this.props.countDownFrom });
-    this.invokeOnCountDown();
+    this.setState({ countDownSecond: this.props.countDownFrom }, () => {
+      this.invokeOnCountDown();
+    });
     if (this.timerId) {
       clearInterval(this.timerId);
     }
