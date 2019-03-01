@@ -46,8 +46,10 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  onCountDownFinished = () => {
-    this.setState({ countDownFinished: true });
+  onCountDown = (remainingSeconds: number) => {
+    if (remainingSeconds === 0) {
+      this.setState({ countDownFinished: true });
+    }
   };
 
   render() {
@@ -83,7 +85,7 @@ export default class VerifyOTPScreen extends React.PureComponent<Props, State> {
             restartTimer();
             this.setState({ countDownFinished: false });
           }}
-          onCountDownFinished={this.onCountDownFinished}
+          onCountDown={this.onCountDown}
         />
       </KeyboardAvoidingView>
     );
