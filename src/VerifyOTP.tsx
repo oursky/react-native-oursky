@@ -71,7 +71,7 @@ export type Props = ExtraTextProps & {
 
   onEnterCode?: (code: string, clearCode: () => void) => void;
   onPressResend?: (restartTimer: () => void) => void;
-  onCountDownFinished?: () => void;
+  onCountDown?: (remainingSeconds: number) => void;
 };
 
 interface State {
@@ -116,13 +116,13 @@ export default class VerifyOTP extends React.PureComponent<Props, State> {
         countDownSecond: prevState.countDownSecond - 1,
       }),
       () => {
-        const { onCountDownFinished } = this.props;
+        const { onCountDown } = this.props;
+        if (onCountDown != null) {
+          onCountDown(this.state.countDownSecond);
+        }
         if (this.state.countDownSecond === 0 && this.timerId) {
           clearInterval(this.timerId);
           this.timerId = null;
-          if (onCountDownFinished != null) {
-            onCountDownFinished();
-          }
         }
       }
     );
