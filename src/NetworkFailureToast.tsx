@@ -88,6 +88,9 @@ export default class NetworkFailureToast extends React.PureComponent<
 
   handleConnectivityChange = (isConnected: boolean) => {
     if (!isConnected) {
+      // Separate the isHidden and isNetworkConnected to trigger rendering twice
+      // Otherwise, the isNetworkConnceted value changes won't take any effect as
+      // the it's rendering null
       this.setState(
         {
           isHidden: false,
