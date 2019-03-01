@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
   duration: number;
   style?: StyleProp<ViewStyle>;
-  onFinishedAnimate?: () => void;
+  onAnimationEnd?: () => void;
 }
 
 interface State {
@@ -34,8 +34,8 @@ export default class FadeAnimation extends React.PureComponent<Props, State> {
       toValue: visible ? 1 : 0,
       duration: duration,
     }).start(() => {
-      if (this.props.onFinishedAnimate != null) {
-        this.props.onFinishedAnimate();
+      if (this.props.onAnimationEnd != null) {
+        this.props.onAnimationEnd();
       }
     });
   }

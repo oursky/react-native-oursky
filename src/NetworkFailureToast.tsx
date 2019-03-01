@@ -105,7 +105,7 @@ export default class NetworkFailureToast extends React.PureComponent<
     }
   };
 
-  onFinishedAnimate = () => {
+  onAnimationEnd = () => {
     if (this.state.isNetworkConnected) {
       this.setState({
         isHidden: true,
@@ -144,7 +144,7 @@ export default class NetworkFailureToast extends React.PureComponent<
         <FadeAnimation
           visible={!isNetworkConnected}
           duration={animationDuration}
-          onFinishedAnimate={this.onFinishedAnimate}
+          onAnimationEnd={this.onAnimationEnd}
         >
           <View style={[styles.toastContainer, style]}>
             <Image
