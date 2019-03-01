@@ -6,6 +6,7 @@ interface Props {
   children: React.ReactNode;
   duration: number;
   style?: StyleProp<ViewStyle>;
+  onAnimationEnd?: () => void;
 }
 
 interface State {
@@ -32,7 +33,11 @@ export default class FadeAnimation extends React.PureComponent<Props, State> {
     Animated.timing(this.state.animatedVisibleValue, {
       toValue: visible ? 1 : 0,
       duration: duration,
-    }).start();
+    }).start(() => {
+      if (this.props.onAnimationEnd != null) {
+        this.props.onAnimationEnd();
+      }
+    });
   }
 
   render() {
