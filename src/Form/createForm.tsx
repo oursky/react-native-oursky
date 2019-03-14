@@ -36,6 +36,14 @@ interface FormRootState {
 
 interface FormProps extends ScrollViewProps {
   autoScrollToFocusedInput?: boolean;
+  scrollToInputThresholds: number;
+  getScrollToTextInputOffset?: (
+    data: {
+      inputY: number;
+      scrollViewContentHeight: number;
+      scrollViewHeight: number;
+    }
+  ) => number;
 }
 
 interface FormFieldRenderProps {
@@ -61,6 +69,10 @@ export default function createForm() {
   );
 
   class Form extends React.Component<FormProps, FormRootState> {
+    static defaultProps = {
+      scrollToInputThresholds: 100, // Magic number, don't ask
+    };
+
     instanceMap: { [index: number]: FocusableContainer | null };
     scrollViewRef: React.RefObject<ScrollView>;
     subscriptions: EmitterSubscription[];
@@ -203,24 +215,42 @@ export default function createForm() {
             scrollViewNodeID,
             () => {},
             (_x, y) => {
+              if (!this.scrollViewRef.current) {
+                return;
+              }
               const { scrollViewContentHeight, scrollViewHeight } = this.state;
-              if (scrollViewContentHeight <= scrollViewHeight) {
+              if (this.props.getScrollToTextInputOffset) {
+                const offset = this.props.getScrollToTextInputOffset({
+                  inputY: y,
+                  scrollViewContentHeight,
+                  scrollViewHeight,
+                });
+                this.scrollViewRef.current.scrollTo({
+                  x: 0,
+                  y: offset,
+                  animated: true,
+                });
+                return;
+              }
+              const { scrollToInputThresholds } = this.props;
+              if (
+                scrollViewContentHeight <= scrollViewHeight ||
+                y - scrollToInputThresholds < scrollToInputThresholds
+              ) {
                 return;
               }
               const maxContentOffsetY =
                 this.state.scrollViewContentHeight -
                 this.state.scrollViewHeight;
               const desiredContentOffsetY = Math.min(
-                y < 100 ? 0 : (y * 2) / 3,
+                y - scrollToInputThresholds,
                 maxContentOffsetY
               );
-              if (this.scrollViewRef.current) {
-                this.scrollViewRef.current.scrollTo({
-                  x: 0,
-                  y: desiredContentOffsetY,
-                  animated: true,
-                });
-              }
+              this.scrollViewRef.current.scrollTo({
+                x: 0,
+                y: desiredContentOffsetY,
+                animated: true,
+              });
             }
           );
         }
