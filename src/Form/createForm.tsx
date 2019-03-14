@@ -18,14 +18,16 @@ interface FocusableContainer {
   focusableRef: React.RefObject<any>;
 }
 
+interface FormContext {
+  focusNext: (index: number) => void;
+  setFieldInstance: (
+    index: number,
+    focusable: FocusableContainer | null
+  ) => void;
+}
+
 interface FormRootState {
-  context: {
-    focusNext: (index: number) => void;
-    setFieldInstance: (
-      index: number,
-      focusable: FocusableContainer | null
-    ) => void;
-  };
+  context: FormContext;
 
   scrollViewHeight: number;
   scrollViewContentHeight: number;
@@ -35,8 +37,6 @@ interface FormRootState {
 interface FormProps extends ScrollViewProps {
   autoScrollToFocusedInput?: boolean;
 }
-
-type FormContext = FormRootState["context"];
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
