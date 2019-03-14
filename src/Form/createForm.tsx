@@ -31,7 +31,6 @@ interface FormRootState {
 
   scrollViewHeight: number;
   scrollViewContentHeight: number;
-  containerMinHeight: number;
 }
 
 interface FormProps extends ScrollViewProps {
@@ -90,7 +89,6 @@ export default function createForm() {
         },
         scrollViewHeight: 0,
         scrollViewContentHeight: 0,
-        containerMinHeight: 0,
       };
       this.instanceMap = {};
       this.scrollViewRef = React.createRef<ScrollView>();
@@ -272,7 +270,6 @@ export default function createForm() {
     onScrollViewLayout = (e: LayoutChangeEvent) => {
       this.setState({
         scrollViewHeight: e.nativeEvent.layout.height,
-        containerMinHeight: e.nativeEvent.layout.height,
       });
       if (this.props.onLayout) {
         this.props.onLayout(e);
@@ -298,7 +295,7 @@ export default function createForm() {
             onContentSizeChange={this.onScrollViewContentSizeChange}
             onLayout={this.onScrollViewLayout}
           >
-            <View style={{ minHeight: this.state.containerMinHeight }}>
+            <View style={{ minHeight: this.state.scrollViewHeight }}>
               {children}
             </View>
           </ScrollView>
