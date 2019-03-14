@@ -46,6 +46,12 @@ const defaultContextValue: ContextValue = {
 };
 
 export default function createControlGroup() {
+  if (__DEV__) {
+    console.warn(
+      "createForm integrates ScrollView and auto scroll to TextInput. Maybe you want that instead."
+    );
+  }
+
   const { Provider, Consumer } = React.createContext(defaultContextValue);
 
   class Control_ extends React.Component<ControlProps> {

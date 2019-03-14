@@ -9,6 +9,7 @@ import {
   ViewStyle,
   TextStyle,
   ImageSourcePropType,
+  ScrollViewProps,
 } from "react-native";
 
 export function createControlGroup(): {
@@ -274,3 +275,27 @@ export interface PickerProps {
 }
 
 export class Picker extends React.Component<PickerProps> {}
+
+interface FormProps extends ScrollViewProps {
+  autoScrollToFocusedInput?: boolean;
+}
+declare class Form extends React.Component<FormProps> {}
+
+interface FormFieldRenderProps {
+  focusableRef: React.Ref<any>;
+  onSubmitEditing: (e: any) => void;
+  blurOnSubmit: false;
+}
+
+interface FormFieldProps {
+  index: number;
+  children: (props: FormFieldRenderProps) => React.ReactNode;
+  onSubmitEditing?: (e: any) => void;
+}
+
+declare class FormField extends React.Component<FormFieldProps> {}
+
+export function createForm(): {
+  Form: Form;
+  FormField: FormField;
+};
