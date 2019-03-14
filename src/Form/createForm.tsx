@@ -5,9 +5,11 @@ import {
   InteractionManager,
   LayoutChangeEvent,
   Keyboard,
+  NativeSyntheticEvent,
   ScrollView,
   ScrollViewProps,
   TextInput,
+  TextInputFocusEventData,
   UIManager,
   View,
 } from "react-native";
@@ -38,14 +40,14 @@ type FormContext = FormRootState["context"];
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
-  onSubmitEditing: (e: any) => void;
+  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   blurOnSubmit: false;
 }
 
 interface FormFieldProps {
   index: number;
   children: (props: FormFieldRenderProps) => React.ReactNode;
-  onSubmitEditing?: (e: any) => void;
+  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
 const defaultFormContextValue = {
@@ -279,7 +281,7 @@ export default function createForm() {
       this.props.setFieldInstance(this.props.index, null);
     }
 
-    onSubmitEditing = (e: any) => {
+    onSubmitEditing = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       this.props.focusNext(this.props.index);
       if (this.props.onSubmitEditing != null) {
         this.props.onSubmitEditing(e);
