@@ -10,6 +10,8 @@ import {
   TextStyle,
   ImageSourcePropType,
   ScrollViewProps,
+  TextInputFocusEventData,
+  NativeSyntheticEvent,
 } from "react-native";
 
 export function createControlGroup(): {
@@ -278,19 +280,27 @@ export class Picker extends React.Component<PickerProps> {}
 
 interface FormProps extends ScrollViewProps {
   autoScrollToFocusedInput?: boolean;
+  scrollToInputThresholds: number;
+  getScrollToTextInputOffset?: (
+    data: {
+      inputY: number;
+      scrollViewContentHeight: number;
+      scrollViewHeight: number;
+    }
+  ) => number;
 }
 declare class Form extends React.Component<FormProps> {}
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
-  onSubmitEditing: (e: any) => void;
+  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   blurOnSubmit: false;
 }
 
 interface FormFieldProps {
   index: number;
   children: (props: FormFieldRenderProps) => React.ReactNode;
-  onSubmitEditing?: (e: any) => void;
+  onSubmitEditing?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
 declare class FormField extends React.Component<FormFieldProps> {}
