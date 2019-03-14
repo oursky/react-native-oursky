@@ -256,7 +256,14 @@ export default function createForm() {
         <Provider value={this.state.context}>
           <ScrollView
             ref={this.scrollViewRef}
-            alwaysBounceVertical={false}
+            alwaysBounceVertical={
+              // Why set this false by default?
+              // It is because I dont want the form can be scrolled if the
+              // content size is smaller than the scrollview size.
+              // Imagine there is only 1 input field and if the form can be
+              // scrolled, that will be a weird UX-wise
+              false
+            }
             {...restProps}
             onContentSizeChange={this.onScrollViewContentSizeChange}
             onLayout={this.onScrollViewLayout}
