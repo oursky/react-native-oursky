@@ -295,6 +295,25 @@ export default function createForm() {
             onContentSizeChange={this.onScrollViewContentSizeChange}
             onLayout={this.onScrollViewLayout}
           >
+            {
+              // We make the content view at least have the height of scrollview
+              // to make developer able to put submit button at the bottom of
+              // the form
+              // It is a trick to workaround  we can't set flex 1 in
+              // scrollview's contentContainerStyle
+              // To achieve putting submit button at screen bottom,
+              // we simply need to do:
+              /*
+                <Form>
+                  <View style={{flex: 1}}>
+                    <FormField />
+                    <FormField />
+                    <FormField />
+                  </View>
+                  <Button />
+                </Form>
+              */
+            }
             <View style={{ minHeight: this.state.scrollViewHeight }}>
               {children}
             </View>
