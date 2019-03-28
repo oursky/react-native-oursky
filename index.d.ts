@@ -280,7 +280,7 @@ export class Picker extends React.Component<PickerProps> {}
 
 interface FormProps extends ScrollViewProps {
   autoScrollToFocusedInput?: boolean;
-  scrollToInputThresholds: number;
+  scrollToInputThresholds?: number;
   getScrollToTextInputOffset?: (
     data: {
       inputY: number;
