@@ -10,7 +10,7 @@ import {
   TextStyle,
   ImageSourcePropType,
   ScrollViewProps,
-  TextInputFocusEventData,
+  TextInputSubmitEditingEventData,
   NativeSyntheticEvent,
 } from "react-native";
 
@@ -293,14 +293,18 @@ declare class Form extends React.Component<FormProps> {}
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
-  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
   blurOnSubmit: false;
 }
 
 interface FormFieldProps {
   index: number;
   children: (props: FormFieldRenderProps) => React.ReactNode;
-  onSubmitEditing?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing?: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
 }
 
 declare class FormField extends React.Component<FormFieldProps> {}
