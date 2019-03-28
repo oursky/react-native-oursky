@@ -289,7 +289,9 @@ interface FormProps extends ScrollViewProps {
     }
   ) => number;
 }
-declare class Form extends React.Component<FormProps> {}
+declare class Form extends React.Component<FormProps> {
+  constructor(props: FormProps);
+}
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
@@ -303,9 +305,11 @@ interface FormFieldProps {
   onSubmitEditing?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
-declare class FormField extends React.Component<FormFieldProps> {}
+declare class FormField extends React.Component<FormFieldProps> {
+  constructor(props: FormFieldProps);
+}
 
 export function createForm(): {
-  Form: Form;
-  FormField: FormField;
+  Form: typeof Form;
+  FormField: typeof FormField;
 };
