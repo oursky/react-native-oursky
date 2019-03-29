@@ -10,7 +10,7 @@ import {
   TextStyle,
   ImageSourcePropType,
   ScrollViewProps,
-  TextInputFocusEventData,
+  TextInputSubmitEditingEventData,
   NativeSyntheticEvent,
 } from "react-native";
 
@@ -280,7 +280,7 @@ export class Picker extends React.Component<PickerProps> {}
 
 interface FormProps extends ScrollViewProps {
   autoScrollToFocusedInput?: boolean;
-  scrollToInputThresholds: number;
+  scrollToInputThresholds?: number;
   getScrollToTextInputOffset?: (
     data: {
       inputY: number;
@@ -293,19 +293,23 @@ declare class Form extends React.Component<FormProps> {}
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
-  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
   blurOnSubmit: false;
 }
 
 interface FormFieldProps {
   index: number;
   children: (props: FormFieldRenderProps) => React.ReactNode;
-  onSubmitEditing?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing?: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
 }
 
 declare class FormField extends React.Component<FormFieldProps> {}
 
 export function createForm(): {
-  Form: Form;
-  FormField: FormField;
+  Form: typeof Form;
+  FormField: typeof FormField;
 };

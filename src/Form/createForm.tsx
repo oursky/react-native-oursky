@@ -9,9 +9,9 @@ import {
   ScrollView,
   ScrollViewProps,
   TextInput,
-  TextInputFocusEventData,
   UIManager,
   View,
+  TextInputSubmitEditingEventData,
 } from "react-native";
 
 interface FocusableContainer {
@@ -47,14 +47,18 @@ interface FormProps extends ScrollViewProps {
 
 interface FormFieldRenderProps {
   focusableRef: React.Ref<any>;
-  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
   blurOnSubmit: false;
 }
 
 interface FormFieldProps {
   index: number;
   children: (props: FormFieldRenderProps) => React.ReactNode;
-  onSubmitEditing: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onSubmitEditing?: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => void;
 }
 
 const defaultFormContextValue = {
@@ -334,7 +338,9 @@ export default function createForm() {
       this.props.setFieldInstance(this.props.index, null);
     }
 
-    onSubmitEditing = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    onSubmitEditing = (
+      e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    ) => {
       this.props.focusNext(this.props.index);
       if (this.props.onSubmitEditing != null) {
         this.props.onSubmitEditing(e);
