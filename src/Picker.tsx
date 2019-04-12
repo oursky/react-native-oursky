@@ -29,7 +29,7 @@ export interface Props {
   ToolbarComponent?: React.ReactType<{}>;
 }
 
-interface StateIOS {
+interface State {
   selectedValue: string;
 }
 
@@ -104,18 +104,34 @@ class ToolbarIOS extends React.Component<{
   }
 }
 
-class PickerImplIOS extends React.Component<Props, StateIOS> {
+function prepareValue(props: Props): string {
+  // Pre-select the value of the first item to
+  // match the behavior of UIPickerView.
+  // Note that we still have an unhandled edge case
+  // that the component is mounted with visible=false
+  // and then items changes, followed by visible=true.
+  // In this edge case, the pre-select value is stale.
+  if (props.items.length <= 0) {
+    return "";
+  }
+  if (props.value !== "") {
+    return props.value;
+  }
+  return props.items[0].value;
+}
+
+class PickerImplIOS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedValue: this._prepareValue(props),
+      selectedValue: prepareValue(props),
     };
   }
 
   componentDidUpdate(prevProps: Props) {
     if (!prevProps.visible && this.props.visible) {
       this.setState({
-        selectedValue: this._prepareValue(this.props),
+        selectedValue: prepareValue(this.props),
       });
     }
   }
@@ -176,25 +192,16 @@ class PickerImplIOS extends React.Component<Props, StateIOS> {
       </Modal>
     );
   }
-
-  private _prepareValue(props: Props): string {
-    // Pre-select the value of the first item to
-    // match the behavior of UIPickerView.
-    // Note that we still have an unhandled edge case
-    // that the component is mounted with visible=false
-    // and then items changes, followed by visible=true.
-    // In this edge case, the pre-select value is stale.
-    if (props.items.length <= 0) {
-      return "";
-    }
-    if (props.value !== "") {
-      return props.value;
-    }
-    return props.items[0].value;
-  }
 }
 
-class PickerImplAndroid extends React.Component<Props> {
+class PickerImplAndroid extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      selectedValue: prepareValue(props),
+    };
+  }
+
   componentDidMount() {
     if (this.props.visible) {
       this._showPicker();
@@ -203,7 +210,12 @@ class PickerImplAndroid extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (!prevProps.visible && this.props.visible) {
-      this._showPicker();
+      this.setState(
+        {
+          selectedValue: prepareValue(this.props),
+        },
+        this._showPicker
+      );
     }
   }
 
@@ -211,12 +223,13 @@ class PickerImplAndroid extends React.Component<Props> {
     return null;
   }
 
-  private _showPicker() {
-    let { value, items, doneButtonLabel, cancelButtonLabel } = this.props;
+  _showPicker = () => {
+    let { items, doneButtonLabel, cancelButtonLabel } = this.props;
+    const { selectedValue } = this.state;
 
     const options: OptionsPicker = {
       type: DialogAndroid.listRadio,
-      selectedId: value,
+      selectedId: selectedValue,
       items: items.map(item => ({
         label: item.label,
         id: item.value,
@@ -241,20 +254,26 @@ class PickerImplAndroid extends React.Component<Props> {
     const content = null;
     DialogAndroid.showPicker(title, content, options)
       .then(response => {
-        if (
-          response.action === DialogAndroid.actionSelect &&
-          response.selectedItem != null
-        ) {
-          const { id } = response.selectedItem as any;
-          this.props.onDone(id);
+        if (response.action === DialogAndroid.actionSelect) {
+          // If the picker is opened with pre-selected value and
+          // the user simply presses done, selectedItem will be
+          // undefined, though we have prepareValue before we
+          // open the picker. If we really hit this case,
+          // we invoke onCancel.
+          if (response.selectedItem != null) {
+            const { id } = response.selectedItem as any;
+            this.props.onDone(id);
+          } else {
+            this.props.onCancel(selectedValue);
+          }
         } else if (response.action === DialogAndroid.actionDismiss) {
-          this.props.onDismiss(value);
+          this.props.onDismiss(selectedValue);
         } else if (response.action === DialogAndroid.actionNegative) {
-          this.props.onCancel(value);
+          this.props.onCancel(selectedValue);
         }
       })
       .catch(() => {});
-  }
+  };
 }
 
 export default function Picker(props: Props) {
