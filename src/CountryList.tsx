@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import Text from "./Text";
-import countryCodes, { Country } from "./countryCode";
+import { Country } from "./countryCode";
 import TextInput from "./TextInput";
 
 const ITEM_HEIGHT = 34;
@@ -82,6 +82,7 @@ export interface Props {
   headerTitle?: React.ReactNode;
   selectedValue?: string;
   ListEmptyComponent?: React.ComponentType<any>;
+  countryCodes: Country[];
 
   onPressBackButton?: () => void;
   onSelectCountry?: (country: Country) => void;
@@ -166,6 +167,7 @@ export default class CountryList extends React.PureComponent<Props, State> {
     const {
       visible,
       backButtonText,
+      countryCodes,
       headerTitle,
       ListEmptyComponent,
 

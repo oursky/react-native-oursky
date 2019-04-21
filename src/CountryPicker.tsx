@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import RNSimInfo from "rn-sim-info";
 import Text from "./Text";
-import countryCodes, { Country } from "./countryCode";
+import defaultCountryCodes, { Country } from "./countryCode";
 import ExtraText, { Props as ExtraTextProps } from "./ExtraText";
 import CountryList from "./CountryList";
 
@@ -77,6 +77,7 @@ export type Props = ExtraTextProps & {
   placeholderTextColor?: string;
   selectedValue?: string;
   backButtonText?: React.ReactNode;
+  countryCodes: Country[];
   headerTitle?: React.ReactNode;
   defaultBySimcardCountry: boolean;
   ListEmptyComponent?: React.ComponentType<any>;
@@ -103,15 +104,16 @@ const dropdownArrowIcon = require("./images/ic_form_dropdown.png");
 class CountryPicker extends React.PureComponent<Props, State> {
   static defaultProps = {
     defaultBySimcardCountry: false,
+    countryCodes: defaultCountryCodes,
   };
 
   constructor(props: Props) {
     super(props);
 
     let selectedValue = this.props.selectedValue || "";
-    if (this.props.defaultBySimcardCountry) {
+    if (props.defaultBySimcardCountry) {
       const upperCountryCode = RNSimInfo.getCountryCode().toUpperCase();
-      const country = countryCodes.find(code => {
+      const country = props.countryCodes.find(code => {
         return code.isoCountryCode === upperCountryCode;
       });
       selectedValue = (country && country.callingCode) || selectedValue;
@@ -128,7 +130,10 @@ class CountryPicker extends React.PureComponent<Props, State> {
 
   openCountryList = () => {
     if (this.props.openAlternativeCountryList) {
-      this.props.openAlternativeCountryList(countryCodes, this.onSelectCountry);
+      this.props.openAlternativeCountryList(
+        this.props.countryCodes,
+        this.onSelectCountry
+      );
     } else {
       this.setState({ showCountryList: true });
     }
@@ -165,6 +170,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
       textStyle,
       containerStyle,
       backButtonText,
+      countryCodes,
       headerTitle,
       ListEmptyComponent,
       error,
@@ -205,6 +211,7 @@ class CountryPicker extends React.PureComponent<Props, State> {
           onPressBackButton={this.closePicker}
           onSelectCountry={this.onSelectCountry}
           ListEmptyComponent={ListEmptyComponent}
+          countryCodes={countryCodes}
         />
       </View>
     );
