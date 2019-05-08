@@ -73,6 +73,7 @@ export default function createForm() {
 
   class Form extends React.Component<FormProps, FormRootState> {
     static defaultProps = {
+      autoScrollToFocusedInput: true,
       scrollToInputThresholds: 100, // Magic number, don't ask
     };
 
