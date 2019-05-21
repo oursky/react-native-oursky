@@ -14,6 +14,7 @@ import RequirePermissionScreen from "./screens/RequirePermissionScreen";
 import PortalScreen from "./screens/PortalScreen";
 import PickerScreen from "./screens/PickerScreen";
 import FormScreen from "./screens/FormScreen";
+import TwoColsTableScreen from "./screens/TwoColsTableScreen";
 
 const PortalScreenStackNavigator = createStackNavigator({
   PortalScreen: {
@@ -41,6 +42,9 @@ const AppNavigator = createDrawerNavigator(
     FormScreen,
     PortalScreenStackNavigator: {
       screen: PortalScreenStackNavigator,
+    },
+    TwoColsTableScreen: {
+      screen: TwoColsTableScreen,
     },
   },
   {
