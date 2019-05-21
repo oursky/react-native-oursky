@@ -313,3 +313,20 @@ export function createForm(): {
   Form: typeof Form;
   FormField: typeof FormField;
 };
+
+interface TwoColsRowProps {
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
+  valueStyle?: StyleProp<TextStyle>;
+  title: ReactNode;
+  value: ReactNode;
+}
+
+interface TwoColsGroupProps {
+  style?: StyleProp<ViewStyle>;
+  alignTitle: boolean;
+}
+
+declare class TwoColsRow extends React.Component<TwoColsRowProps> {}
+
+declare class TwoColsGroup extends React.Component<TwoColsGroupProps> {}
