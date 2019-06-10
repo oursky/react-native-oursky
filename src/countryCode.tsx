@@ -5,7 +5,7 @@ export interface Country {
   name: string;
 }
 
-const countryCodes: Country[] = [
+const defaultCountryCodes: Country[] = [
   {
     isoCountryCode: "AD",
     callingCode: "376",
@@ -1483,4 +1483,4 @@ const countryCodes: Country[] = [
     name: "Zimbabwe",
   },
 ];
-export default countryCodes;
+export default defaultCountryCodes;
