@@ -7,10 +7,6 @@ import {
 } from "react-navigation";
 import { PortalHost } from "@oursky/react-native-oursky";
 
-import SignupWithMobileScreen from "./screens/SignupWithMobileScreen";
-import VerifyOTPScreen from "./screens/VerifyOTPScreen";
-import DialogScreen from "./screens/DialogScreen";
-import RequirePermissionScreen from "./screens/RequirePermissionScreen";
 import PortalScreen from "./screens/PortalScreen";
 import PickerScreen from "./screens/PickerScreen";
 import FormScreen from "./screens/FormScreen";
@@ -23,18 +19,6 @@ const PortalScreenStackNavigator = createStackNavigator({
 
 const AppNavigator = createDrawerNavigator(
   {
-    SignupWithMobile: {
-      screen: SignupWithMobileScreen,
-    },
-    VerifyOTP: {
-      screen: VerifyOTPScreen,
-    },
-    Dialog: {
-      screen: DialogScreen,
-    },
-    RequirePermission: {
-      screen: RequirePermissionScreen,
-    },
     PickerScreen: {
       screen: PickerScreen,
     },
@@ -44,7 +28,7 @@ const AppNavigator = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: "SignupWithMobile",
+    initialRouteName: "PickerScreen",
   }
 );
 
