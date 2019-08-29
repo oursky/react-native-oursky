@@ -5,9 +5,9 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import DialogAndroid, { OptionsPicker } from "react-native-dialogs";
-import Text from "./Text";
 import Modal from "./Modal";
 
 export interface Item {
@@ -91,12 +91,16 @@ class ToolbarIOS extends React.Component<{
             style={styles.toolbarButton}
             onPress={onCancelPress}
           >
-            <Text style={styles.toolbarButtonCancel}>{cancelButtonLabel}</Text>
+            <Text allowFontScaling={false} style={styles.toolbarButtonCancel}>
+              {cancelButtonLabel}
+            </Text>
           </TouchableOpacity>
         ) : null}
         {typeof doneButtonLabel === "string" ? (
           <TouchableOpacity style={styles.toolbarButton} onPress={onDonePress}>
-            <Text style={styles.toolbarButtonDone}>{doneButtonLabel}</Text>
+            <Text allowFontScaling={false} style={styles.toolbarButtonDone}>
+              {doneButtonLabel}
+            </Text>
           </TouchableOpacity>
         ) : null}
       </View>

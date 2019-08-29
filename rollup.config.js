@@ -2,7 +2,6 @@ import typescript from "rollup-plugin-typescript";
 import commonjs from "rollup-plugin-commonjs";
 import json from "rollup-plugin-json";
 import resolve from "rollup-plugin-node-resolve";
-import copy from "rollup-plugin-copy-assets";
 import pkg from "./package.json";
 
 const deps = Object.keys(pkg.dependencies || {});
@@ -23,9 +22,6 @@ const plugins = [
     include: "node_modules/**",
   }),
   typescript(),
-  copy({
-    assets: ["./src/images"],
-  }),
 ];
 
 const output = [
