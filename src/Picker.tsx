@@ -6,6 +6,8 @@ import {
   View,
   TouchableOpacity,
   Text,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
 import DialogAndroid, { OptionsPicker } from "react-native-dialogs";
 import Modal from "./Modal";
@@ -27,6 +29,8 @@ export interface Props {
   doneButtonLabel?: string;
   cancelButtonLabel?: string | null;
   ToolbarComponent?: React.ReactType<{}>;
+  toolbarStyle?: StyleProp<ViewStyle>;
+  itemsStyle?: StyleProp<ViewStyle>;
 }
 
 interface State {
@@ -63,6 +67,7 @@ class ToolbarIOS extends React.Component<{
   doneButtonLabel?: string;
   onDonePress: () => void;
   onCancelPress: () => void;
+  toolbarStyle?: StyleProp<ViewStyle>;
 }> {
   render() {
     let {
@@ -70,6 +75,7 @@ class ToolbarIOS extends React.Component<{
       doneButtonLabel,
       onDonePress,
       onCancelPress,
+      toolbarStyle,
     } = this.props;
     let justifyContent: any = "";
     if (cancelButtonLabel === null && doneButtonLabel !== null) {
@@ -85,7 +91,7 @@ class ToolbarIOS extends React.Component<{
       doneButtonLabel = "Done";
     }
     return (
-      <View style={[styles.toolbar, { justifyContent }]}>
+      <View style={[styles.toolbar, { justifyContent }, toolbarStyle]}>
         {typeof cancelButtonLabel === "string" ? (
           <TouchableOpacity
             style={styles.toolbarButton}
@@ -171,6 +177,8 @@ class PickerImplIOS extends React.Component<Props, State> {
       cancelButtonLabel,
       doneButtonLabel,
       ToolbarComponent,
+      toolbarStyle,
+      itemsStyle,
     } = this.props;
     const { selectedValue } = this.state;
     return (
@@ -184,11 +192,13 @@ class PickerImplIOS extends React.Component<Props, State> {
               doneButtonLabel={doneButtonLabel}
               onDonePress={this.onDonePress}
               onCancelPress={this.onCancelPress}
+              toolbarStyle={toolbarStyle}
             />
           )}
           <PickerIOS
             selectedValue={selectedValue}
             onValueChange={this.onValueChange}
+            itemStyle={itemsStyle}
           >
             {items.map(this.renderItem)}
           </PickerIOS>
