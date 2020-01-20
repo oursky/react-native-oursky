@@ -26,6 +26,31 @@ git commit
 git push <your-remote> <your-branch>
 ```
 
+## How to Run Example Project in iOS
+
+After cloning the proejct fresh, run :
+
+```sh
+yarn install
+cd example
+yarn install
+```
+
+Then in `/example/node_modules/react-native/React/Base/RCTModuleMethod.mm`, find method `RCTParseUnused`
+add the line :`RCTReadString(input, "__attribute__((__unused__))") ||` after `return RCTReadString(input, "__unused") ||`
+the method should become:
+
+```
+static BOOL RCTParseUnused(const char **input)
+{
+  return RCTReadString(input, "__unused") ||
+         RCTReadString(input, "__attribute__((__unused__))") ||
+         RCTReadString(input, "__attribute__((unused))");
+}
+```
+
+then the example project can be compiled.
+
 ## Principle
 
 - Written in TypeScript
