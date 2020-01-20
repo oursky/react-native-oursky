@@ -5,6 +5,7 @@ import {
   ScrollViewProps,
   TextInputSubmitEditingEventData,
   NativeSyntheticEvent,
+  StyleProp,
 } from "react-native";
 
 export type AndroidKeyboardDidHideEvent = null | undefined;
@@ -74,6 +75,8 @@ export interface PickerProps {
   doneButtonLabel?: string;
   cancelButtonLabel?: string | null;
   ToolbarComponent?: React.ReactType<{}>;
+  toolbarStyle?: StyleProp<ViewStyle>;
+  itemsStyle?: StyleProp<ViewStyle>;
 }
 
 export class Picker extends React.Component<PickerProps> {}
