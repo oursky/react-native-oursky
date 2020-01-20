@@ -70,6 +70,11 @@ export default class PortalScreen extends React.PureComponent<{}, State> {
           onDismiss={this.onDismiss}
           onDone={this.onDone}
           onCancel={this.onCancel}
+          toolbarStyle={{ backgroundColor: "rgb(72,72,74)" }}
+          itemsStyle={{
+            backgroundColor: "rgb(58,58,60)",
+            color: "rgb(242,242,247)",
+          }}
         />
       </View>
     );
