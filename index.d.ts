@@ -39,7 +39,6 @@ export type KeyboardEvent =
   | IOSKeyboardEvent;
 
 export interface KeyboardAvoidingViewProps extends ViewProps {
-  useSafeAreaView?: boolean;
   behavior?: "margin";
   androidSoftInputMode?: "adjustResize";
 }
