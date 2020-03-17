@@ -7,10 +7,7 @@ import {
   EmitterSubscription,
 } from "react-native";
 
-import { SafeAreaView } from "react-navigation";
-
 export type Props = ViewProps & {
-  useSafeAreaView: boolean;
   behavior: "margin";
   androidSoftInputMode: "adjustResize";
 };
@@ -109,33 +106,14 @@ export default class KeyboardAvoidingView extends React.PureComponent<
   };
 
   render() {
-    const {
-      style,
-      androidSoftInputMode,
-      behavior,
-      useSafeAreaView,
-      ...rest
-    } = this.props;
+    const { style, androidSoftInputMode, behavior, ...rest } = this.props;
     const { keyboardHeight } = this.state;
-    const isShowingKeyboard = this.state.keyboardHeight > 0;
     let marginBottom = 0;
     if (
       Platform.OS === "ios" ||
       (Platform.OS === "android" && androidSoftInputMode !== "adjustResize")
     ) {
       marginBottom = keyboardHeight;
-    }
-
-    if (useSafeAreaView) {
-      return (
-        <SafeAreaView
-          {...rest}
-          style={[this.props.style, { marginBottom }]}
-          forceInset={{
-            bottom: isShowingKeyboard ? "never" : "always",
-          }}
-        />
-      );
     }
 
     return <View {...rest} style={[style, { marginBottom }]} />;
