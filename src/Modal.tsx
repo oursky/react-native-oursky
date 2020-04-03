@@ -76,6 +76,7 @@ export default class Modal extends React.Component<Props, State> {
             toValue: 1,
             duration: 280,
             easing: Easing.elastic(0.5),
+            useNativeDriver: true,
           }).start(finished => {
             if (finished && this.props.onShow) {
               this.props.onShow();
@@ -149,6 +150,7 @@ export default class Modal extends React.Component<Props, State> {
       toValue: 0,
       duration: 280,
       easing: Easing.elastic(0.5),
+      useNativeDriver: true,
     }).start(finished => {
       if (finished) {
         this.setState({ visible: false });
