@@ -1,6 +1,6 @@
 {
   "name": "@oursky/react-native-oursky",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/index.cjs.js",
   "files": [
     "dist",
