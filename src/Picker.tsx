@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Platform,
-  PickerIOS,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -9,6 +8,7 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
+import {PickerIOS} from "@react-native-picker/picker"
 import DialogAndroid, { OptionsPicker } from "react-native-dialogs";
 import Modal from "./Modal";
 
